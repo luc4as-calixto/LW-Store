@@ -22,7 +22,7 @@ CREATE TABLE usuarios (
 CREATE TABLE vendedor (
     id_vendedor INT PRIMARY KEY AUTO_INCREMENT,
     fk_id_usuario INT,
-    foto VARCHAR(255),
+    foto VARCHAR(255),  
 
     CONSTRAINT fk_usuario FOREIGN KEY (fk_id_usuario) REFERENCES usuarios(id_usuario)
 )
