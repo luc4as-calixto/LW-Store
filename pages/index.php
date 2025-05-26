@@ -14,6 +14,7 @@
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/style-painel.css">
     <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="../css/styles_bootstrap.css">
 </head>
 
 <body>
