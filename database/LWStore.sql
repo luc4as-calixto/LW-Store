@@ -5,57 +5,58 @@ USE lwstore
 
 -- create table
 
-CREATE TABLE usuarios (
-    id_usuario INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(100) NOT NULL,
-    login VARCHAR(50) NOT NULL UNIQUE,
-    senha VARCHAR(100) NOT NULL,
+CREATE TABLE users (
+    id_user INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL,
+    password VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL,
     cpf VARCHAR(11) NOT NULL,
-    telefone VARCHAR(15) NOT NULL,
-    endereco VARCHAR(255) NOT NULL,
-    genero CHAR(1) NOT NULL,
-    data_nascimento DATE NOT NULL,
-    tipo_usuario VARCHAR(20) NOT NULL,
-    foto VARCHAR(255)
+    telephone VARCHAR(15) NOT NULL,
+    address VARCHAR(255) NOT NULL,
+    gender CHAR(1) NOT NULL,
+    birthdate DATE NOT NULL,
+    type_user VARCHAR(20) NOT NULL,
+    photo VARCHAR(255)
 )
 
-CREATE TABLE vendedor (
-    id_vendedor INT PRIMARY KEY AUTO_INCREMENT,
-    fk_id_usuario INT,
-    foto VARCHAR(255),  
+INSERT INTO users (name, password, email, cpf, telephone, address, gender, birthdate, type_user, photo)
+VALUES ('admin', 'admin123', 'admin@admin.com', '12345678901', '1234567890', '123 Main St', 'M', '2000-01-01', 'admin', NULL);
 
-    CONSTRAINT fk_usuario FOREIGN KEY (fk_id_usuario) REFERENCES usuarios(id_usuario)
+CREATE TABLE sellers (
+    id_seller INT PRIMARY KEY AUTO_INCREMENT,
+    fk_id_user INT,
+    photo VARCHAR(255),
+
+    CONSTRAINT fk_user FOREIGN KEY (fk_id_user) REFERENCES users(id_user)
 )
 
-CREATE TABLE carrinho (
-    id_carrinho INT PRIMARY KEY AUTO_INCREMENT,
-    fk_id_usuario INT,
+CREATE TABLE cart (
+    id_cart INT PRIMARY KEY AUTO_INCREMENT,
+    fk_id_user INT,
     status VARCHAR(100) NOT NULL
 )
 
-CREATE TABLE itens_carrinho (
-    id_itens_carrinho INT PRIMARY KEY AUTO_INCREMENT,
-    fk_id_carrinho INT,
-    fk_id_produto INT,
-    quantidade INT NOT NULL,
-    valor_unitario DECIMAL(10, 2) NOT NULL
+CREATE TABLE itens_cart (
+    id_itens_cart INT PRIMARY KEY AUTO_INCREMENT,
+    fk_id_cart INT,
+    fk_id_product INT,
+    amount INT NOT NULL,
+    unit_value DECIMAL(10, 2) NOT NULL
 )
 
-CREATE TABLE produto (
-    codigo_produto INT PRIMARY KEY AUTO_INCREMENT,
-    nome VARCHAR(100) NOT NULL, 
-    preco DECIMAL(10, 2) NOT NULL,
-    quantidade INT NOT NULL,
-    tipo_embalagem VARCHAR(100) NOT NULL,
-    descricao VARCHAR(255) NOT NULL,
-    foto VARCHAR(255)
+CREATE TABLE product (
+    product_code INT PRIMARY KEY AUTO_INCREMENT,
+    name VARCHAR(100) NOT NULL, 
+    price DECIMAL(10, 2) NOT NULL,
+    amount INT NOT NULL,
+    type_packaging VARCHAR(100) NOT NULL,
+    description VARCHAR(255) NOT NULL,
+    photo VARCHAR(255)
 )
 
-CREATE TABLE venda(
-    id_venda INT PRIMARY KEY AUTO_INCREMENT,
-    fk_id_usuario INT,
-    fk_id_produto INT,
-    data_venda DATE NOT NULL,
-    valor_total DECIMAL(10, 2) NOT NULL
-)
+CREATE TABLE sales(
+    id_sale INT PRIMARY KEY AUTO_INCREMENT,
+    fk_id_user INT,
+    fk_id_product INT,
+    sale_date DATE NOT NULL,
+    total_price DECIMAL(10, 2) NOT NULL
