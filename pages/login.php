@@ -1,3 +1,10 @@
+<?php
+    session_start();
+    $_SESSION['logado'] = false;
+?>
+
+
+
 <!doctype html>
 <html lang="pt-br">
 
@@ -21,7 +28,7 @@
 
 </head>
 
-<body style="background-color: #ecf3f9;">
+<body style="background: linear-gradient(135deg, #fdfcfb, #d4f5f5, #89c4c4);"> 
     <div class="container-painel painel-login">
         <div class="row">
             <div class="col-12">
@@ -29,12 +36,12 @@
                 <form id="FormLogin" method="post">
                     <div class="label-input">
                         <label for="login">Login</label>
-                        <input type="text" id="login" name="login" autocomplete="username" required>
+                        <input type="text" id="login" name="login" autocomplete="username" placeholder="Insira seu login" required>
                     </div>
 
                     <div class="label-input">
                         <label for="password">Senha</label>
-                        <input type="password" id="password" name="password" autocomplete="current-password" required>
+                        <input type="password" id="password" name="password" autocomplete="current-password" placeholder="Insira sua senha" required>
                     </div>
 
                     <button type="submit" class="btn-login"><i class="bi bi-box-arrow-in-right"></i> Login</button>

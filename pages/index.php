@@ -1,3 +1,11 @@
+<?php
+session_start();
+if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
+    header('Location: ../pages/login.php');
+    exit();
+}
+?>
+
 <!doctype html>
 <html lang="pt-br">
 
@@ -19,14 +27,12 @@
 
 <body>
 
-    <?php session_start(); ?>
-
     <!-- Barra superior -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div class="container-painel container-fluid" style="margin-top: -10px;">
-            <div style="margin-right: 15px;"  class="ms-auto dropdown">
+            <div style="margin-right: 15px;" class="ms-auto dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
-                    <i  class="bi bi-person-circle"></i> <?php //echo $_SESSION['nm_login'];  ?>
+                    <i class="bi bi-person-circle"></i> <?php echo $_SESSION['name'];  ?>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li>
@@ -105,10 +111,78 @@
         </nav>
     </div>
 
+
+    <!-- ================================================================================================================= -->
+    <!-- Precisa arrumar aqui , os card dos produtos estao ficando um em cima do outro e tbm estao ficando em baixo do nav -->
+    <!-- ================================================================================================================= -->
+
     <!-- Conteúdo principal -->
     <div id="main">
-        <h2>Bem-vindo!</h2>
-        <p>Selecione um item do menu à esquerda.</p>
+        <div class="container my-4">
+            <div class="row g-4">
+                <!-- Produto -->
+                <div class="col-sm-6 col-md-4 col-lg-3 produto">
+                    <div class="card h-100 shadow-sm produto-card">
+                        <img src="../uploads/sem-foto.jpg" class="card-img-top" alt="Produto">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">Produto</h5>
+                            <p class="card-text">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                Doloremque asperiores, placeat dolorum iure.
+                            </p>
+                            <div class="mt-auto">
+                                <p class="fw-bold text-primary fs-5">R$ 9.999,99</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3 produto">
+                    <div class="card h-100 shadow-sm produto-card">
+                        <img src="../uploads/sem-foto.jpg" class="card-img-top" alt="Produto">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">Produto</h5>
+                            <p class="card-text">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                Doloremque asperiores, placeat dolorum iure.
+                            </p>
+                            <div class="mt-auto">
+                                <p class="fw-bold text-primary fs-5">R$ 9.999,99</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3 produto">
+                    <div class="card h-100 shadow-sm produto-card">
+                        <img src="../uploads/sem-foto.jpg" class="card-img-top" alt="Produto">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">Produto</h5>
+                            <p class="card-text">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                Doloremque asperiores, placeat dolorum iure.
+                            </p>
+                            <div class="mt-auto">
+                                <p class="fw-bold text-primary fs-5">R$ 9.999,99</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-md-4 col-lg-3 produto">
+                    <div class="card h-100 shadow-sm produto-card">
+                        <img src="../uploads/sem-foto.jpg" class="card-img-top" alt="Produto">
+                        <div class="card-body d-flex flex-column">
+                            <h5 class="card-title">Produto</h5>
+                            <p class="card-text">
+                                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+                                Doloremque asperiores, placeat dolorum iure.
+                            </p>
+                            <div class="mt-auto">
+                                <p class="fw-bold text-primary fs-5">R$ 9.999,99</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
     <!-- Modal de dados do  usuário -->
@@ -128,24 +202,24 @@
                         <div class="row mb-3">
                             <div class="col-md-6">
                                 <label for="nm_nome" class="form-label">Nome</label>
-                                <input type="text" class="form-control" id="nm_nome" name="nm_nome" value="<?php echo $_SESSION['nm_nome'] ?? ''; ?>">
+                                <input type="text" class="form-control" id="nm_nome" name="nm_nome" value="<?php echo $_SESSION['name'] ?? ''; ?>">
                             </div>
                             <div class="col-md-6">
                                 <label for="nm_login" class="form-label">Login</label>
-                                <input type="text" class="form-control" id="nm_login" name="nm_login" value="<?php echo $_SESSION['nm_login'] ?? ''; ?>">
+                                <input type="text" class="form-control" id="nm_login" name="nm_login" value="<?php echo $_SESSION['login'] ?? ''; ?>">
                             </div>
                         </div>
 
                         <!-- Email -->
                         <div class="mb-3">
                             <label for="ds_email" class="form-label">Email</label>
-                            <input type="text" class="form-control" id="ds_email" name="ds_email" value="<?php echo $_SESSION['ds_email'] ?? ''; ?>">
+                            <input type="text" class="form-control" id="ds_email" name="ds_email" value="<?php echo $_SESSION['email'] ?? ''; ?>">
                         </div>
 
                         <!-- Senha -->
                         <div class="mb-3">
                             <label for="ds_password" class="form-label">Nova Senha</label>
-                            <input type="password" class="form-control" id="ds_password" name="senha" value="<?php echo $_SESSION['ds_password'] ?? ''; ?>">
+                            <input type="password" class="form-control" id="ds_password" name="senha" value="<?php echo $_SESSION['password'] ?? ''; ?>">
                         </div>
 
                         <!-- Foto de Perfil (quadrada) -->
@@ -159,8 +233,8 @@
 
                             <!-- Imagem de pré-visualização (lado direito) -->
                             <div id="preview-container">
-                                <?php if (!empty($_SESSION['foto_perfil']) && isset($_SESSION['foto_perfil'])): ?>
-                                    <img src="uploads/<?php echo $_SESSION['foto_perfil']; ?>" alt="Foto de Perfil"
+                                <?php if (!empty($_SESSION['photo']) && isset($_SESSION['photo'])): ?>
+                                    <img src="../uploads/<?php echo $_SESSION['photo']; ?>" alt="Foto de Perfil"
                                         width="150" height="150"
                                         style="object-fit: cover; border-radius: 8px;">
                                 <?php endif; ?>
@@ -169,7 +243,7 @@
 
                         <!-- Checkbox Administrador -->
                         <div class="form-check mb-3">
-                            <input class="form-check-input" type="checkbox" id="inadim" name="inadmin" <?php echo ($_SESSION['in_admin'] == 1) ? 'checked' : ''; ?>>
+                            <input class="form-check-input" type="checkbox" id="inadim" name="inadmin" <?php echo ($_SESSION['type_user'] == "admin") ? 'checked' : ''; ?>>
                             <label class="form-check-label" for="inadim">Administrador</label>
                         </div>
 
@@ -193,7 +267,7 @@
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script>
-    
+
 </script>
 
 <script src="js/script.js"></script>

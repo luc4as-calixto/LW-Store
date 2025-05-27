@@ -26,11 +26,15 @@ body {
     max-height: 500px;
     border-radius: 8px;
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.6);
-
 }
 
 .painel-login h1 {
     margin-bottom: 30px;
+    font-family: Open Sans, Arial, sans-serif;
+}
+
+.painel-login label {
+    font-family: Roboto, Arial, sans-serif;
 }
 
 #login,
@@ -44,7 +48,7 @@ body {
     display: block;
     min-width: 80px;
     border-radius: 8px;
-    background: #424bf1;
+    background: #353ff5;
     color: white;
     padding: 10px;
     border: none;
@@ -53,7 +57,8 @@ body {
 }
 
 .btn-login:hover {
-    background: #2731ec;
+    background: #050eb8;
+    box-shadow: 0 0 50px #424bf133;
 }
 
 .label-input {
@@ -230,5 +235,37 @@ tr {
 .login-btn {
     display: flex;
     position: relative;
+}
 
+h2, p {
+    text-align: center;
+}
+
+main {
+    padding-top: 60px;
+  }
+  
+
+/* Estilo para os cards de produto */
+.produto-card {
+    transition: transform 0.3s, box-shadow 0.3s;
+    border-radius: 15px;
+    height: 500px;
+    width: 350px;
+}
+
+.produto-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+}
+
+.card-img-top {
+    object-fit: cover;
+    height: 350px;
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+}
+
+.produto {
+    margin: 50px;
 }
