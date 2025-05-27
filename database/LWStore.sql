@@ -1,12 +1,13 @@
 -- create database
-CREATE DATABASE lwstore
+CREATE DATABASE lwstore;
 
-USE lwstore 
+USE lwstore;
 
 -- create table
 
 CREATE TABLE users (
     id_user INT PRIMARY KEY AUTO_INCREMENT,
+    login VARCHAR(50) NOT NULL UNIQUE,
     name VARCHAR(100) NOT NULL,
     password VARCHAR(100) NOT NULL,
     email VARCHAR(100) NOT NULL,
@@ -17,24 +18,23 @@ CREATE TABLE users (
     birthdate DATE NOT NULL,
     type_user VARCHAR(20) NOT NULL,
     photo VARCHAR(255)
-)
+);
 
 INSERT INTO users (name, password, email, cpf, telephone, address, gender, birthdate, type_user, photo)
-VALUES ('admin', 'admin123', 'admin@admin.com', '12345678901', '1234567890', '123 Main St', 'M', '2000-01-01', 'admin', NULL);
+VALUES ('admin', 'admin', 'admin@admin.com', '12345678901', '1234567890', '123 Main St', 'M', '2000-01-01', 'admin', NULL);
 
 CREATE TABLE sellers (
     id_seller INT PRIMARY KEY AUTO_INCREMENT,
     fk_id_user INT,
     photo VARCHAR(255),
-
     CONSTRAINT fk_user FOREIGN KEY (fk_id_user) REFERENCES users(id_user)
-)
+);
 
 CREATE TABLE cart (
     id_cart INT PRIMARY KEY AUTO_INCREMENT,
     fk_id_user INT,
     status VARCHAR(100) NOT NULL
-)
+);
 
 CREATE TABLE itens_cart (
     id_itens_cart INT PRIMARY KEY AUTO_INCREMENT,
@@ -42,7 +42,7 @@ CREATE TABLE itens_cart (
     fk_id_product INT,
     amount INT NOT NULL,
     unit_value DECIMAL(10, 2) NOT NULL
-)
+);
 
 CREATE TABLE product (
     product_code INT PRIMARY KEY AUTO_INCREMENT,
@@ -52,7 +52,7 @@ CREATE TABLE product (
     type_packaging VARCHAR(100) NOT NULL,
     description VARCHAR(255) NOT NULL,
     photo VARCHAR(255)
-)
+);
 
 CREATE TABLE sales(
     id_sale INT PRIMARY KEY AUTO_INCREMENT,
@@ -60,3 +60,4 @@ CREATE TABLE sales(
     fk_id_product INT,
     sale_date DATE NOT NULL,
     total_price DECIMAL(10, 2) NOT NULL
+)

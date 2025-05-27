@@ -22,7 +22,8 @@ body {
 
 .painel-login {
     width: 400px;
-    height: 430px;
+    height: 460px;
+    max-height: 500px;
     border-radius: 8px;
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.6);
 

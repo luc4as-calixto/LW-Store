@@ -15,6 +15,10 @@
     <link rel="stylesheet" href="../css/style-painel.css">
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/styles_bootstrap.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 </head>
 
 <body style="background-color: #ecf3f9;">
@@ -25,13 +29,12 @@
                 <form id="FormLogin" method="post">
                     <div class="label-input">
                         <label for="login">Login</label>
-                        <input class="" type="text" name="login" id="login" placeholder="Insira seu login" required>
+                        <input type="text" id="login" name="login" autocomplete="username" required>
                     </div>
 
                     <div class="label-input">
                         <label for="password">Senha</label>
-                        <input class="" type="password" name="password" id="password" placeholder="Insira sua senha"
-                            required>
+                        <input type="password" id="password" name="password" autocomplete="current-password" required>
                     </div>
 
                     <button type="submit" class="btn-login"><i class="bi bi-box-arrow-in-right"></i> Login</button>
@@ -65,7 +68,7 @@
     });
 
     password.addEventListener('blur', (event) => {
-        if (login.value === '') {
+        if (password.value === '') {
             password.classList.add('erro');
         } else {
             password.classList.remove('erro');
@@ -73,3 +76,5 @@
     });
 
 </script>
+
+<script src="../js/enviarDados.js"></script>
