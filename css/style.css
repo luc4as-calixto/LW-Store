@@ -19,6 +19,23 @@ body {
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
+.painel-login {
+    width: 300px;
+    border-radius: 8px;
+    box-shadow: 0 10px 15px rgba(0, 0, 0, 0.6);
+}
+
+#login, #password {
+    min-width: 150px;
+}
+
+.btn-login {
+    max-width: 50%;	
+    margin: 0 auto; 
+    display: block;
+    min-width: 80px;
+}
+
 h1 {
     text-align: center;
     margin-bottom: 20px;
@@ -71,7 +88,7 @@ button {
     width: 100%;
     padding: 10px;
     margin-top: 15px !important;
-    background: blue;
+    background: #454EF9;
     color: white;
     border: none;
     border-radius: 4px;
@@ -79,7 +96,7 @@ button {
 }
 
 button:hover {
-    background: #2264afe9;
+    background: #2d37f7;
 }
 
 

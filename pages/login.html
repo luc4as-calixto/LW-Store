@@ -18,19 +18,24 @@
 </head>
 
 <body style="background-color: #d4f5f5;">
-    <div class="container-painel">
-        <h1>LOGIN</h1>
-        <form id="FormLogin" method="post">
-            <label for="login">Login</label>
-            <input type="text" name="login" id="login" placeholder="Insira seu login" required>
+    <div class="container-painel painel-login">
+        <div class="row">
+            <div class="col-12">
 
-            <label for="password">Senha</label>
-            <input type="password" name="password" id="password" placeholder="Insira sua senha" required>
+                <h1>LOGIN</h1>
+                <form id="FormLogin" method="post">
+                    <label for="login">Login</label>
+                    <input type="text" name="login" id="login" placeholder="Insira seu login" required>
 
-            <button type="submit" class="btn btn-primary login-btn">Login</button>
+                    <label for="password">Senha</label>
+                    <input type="password" name="password" id="password" placeholder="Insira sua senha" required>
 
-            <div id="message" style="display: none;"></div>
-        </form>
+                    <button type="submit" class="btn-login"><i class="bi bi-box-arrow-in-right"></i> Login</button>
+
+                    <div id="message" style="display: none;"></div>
+                </form>
+            </div>
+        </div>
     </div>
 </body>
 
