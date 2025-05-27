@@ -17,18 +17,22 @@
     <link rel="stylesheet" href="../css/styles_bootstrap.css">
 </head>
 
-<body style="background-color: #d4f5f5;">
+<body style="background-color: #ecf3f9;">
     <div class="container-painel painel-login">
         <div class="row">
             <div class="col-12">
-
-                <h1>LOGIN</h1>
+                <h1>Acessar conta</h1>
                 <form id="FormLogin" method="post">
-                    <label for="login">Login</label>
-                    <input type="text" name="login" id="login" placeholder="Insira seu login" required>
+                    <div class="label-input">
+                        <label for="login">Login</label>
+                        <input class="" type="text" name="login" id="login" placeholder="Insira seu login" required>
+                    </div>
 
-                    <label for="password">Senha</label>
-                    <input type="password" name="password" id="password" placeholder="Insira sua senha" required>
+                    <div class="label-input">
+                        <label for="password">Senha</label>
+                        <input class="" type="password" name="password" id="password" placeholder="Insira sua senha"
+                            required>
+                    </div>
 
                     <button type="submit" class="btn-login"><i class="bi bi-box-arrow-in-right"></i> Login</button>
 
@@ -40,3 +44,32 @@
 </body>
 
 </html>
+
+<style>
+    .erro {
+        border: 1px solid red !important;
+        box-shadow: 0 0 50px #f1424233 !important;
+    }
+</style>
+
+<script>
+    const login = document.getElementById('login');
+    const password = document.getElementById('password');
+
+    login.addEventListener('blur', (event) => {
+        if (login.value === '') {
+            login.classList.add('erro');
+        } else {
+            login.classList.remove('erro');
+        }
+    });
+
+    password.addEventListener('blur', (event) => {
+        if (login.value === '') {
+            password.classList.add('erro');
+        } else {
+            password.classList.remove('erro');
+        }
+    });
+
+</script>

@@ -17,23 +17,53 @@ body {
     background: white;
     padding: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
 }
 
 .painel-login {
-    width: 300px;
+    width: 400px;
+    height: 430px;
     border-radius: 8px;
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.6);
+
 }
 
-#login, #password {
+.painel-login h1 {
+    margin-bottom: 30px;
+}
+
+#login,
+#password {
     min-width: 150px;
 }
 
 .btn-login {
-    max-width: 50%;	
-    margin: 0 auto; 
+    max-width: 50%;
+    margin: 40px auto 0 auto;
     display: block;
     min-width: 80px;
+    border-radius: 8px;
+    background: #424bf1;
+    color: white;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
+    transition: background 0.5s ease;
+}
+
+.btn-login:hover {
+    background: #2731ec;
+}
+
+.label-input {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 30px;
+}
+
+.label-input label {
+    margin-bottom: 5px;
+    font-size: 20px;
 }
 
 h1 {
@@ -58,7 +88,26 @@ select {
     margin-top: 5px;
     border: 1px solid #ccc;
     border-radius: 4px;
+    transition: border-color 0.5s ease, box-shadow 0.3s ease;
+}
 
+input[type="text"]:hover,
+input[type="tel"]:hover,
+input[type="email"]:hover,
+input[type="password"]:hover,
+input[type="number"]:hover {
+    border-color: #424bf1;
+    box-shadow: 0 0 50px #424bf133;
+}
+
+input[type="text"]:focus,
+input[type="tel"]:focus,
+input[type="email"]:focus,
+input[type="password"]:focus,
+input[type="number"]:focus,
+select:focus {
+    border-color: #424bf1;
+    box-shadow: 0 0 50px #424bf133;
 }
 
 select:hover {
