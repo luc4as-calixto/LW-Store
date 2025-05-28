@@ -22,14 +22,14 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/style-painel.css">
     <link rel="stylesheet" href="../css/style.css">
-    <link rel="stylesheet" href="../css/styles_bootstrap.css">
+    <!-- <link rel="stylesheet" href="../css/styles_bootstrap.css"> -->
 </head>
 
-<body>
+<body class="pt-5" style="padding-top: 100px !important;">
 
     <!-- Barra superior -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <div class="container-painel container-fluid" style="margin-top: -10px;">
+        <div class="container-painel container-fluid" style="margin-top: -6px;">
             <div style="margin-right: 15px;" class="ms-auto dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
                     <i class="bi bi-person-circle"></i> <?php echo $_SESSION['name'];  ?>
@@ -44,7 +44,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                         <hr class="dropdown-divider">
                     </li>
                     <li>
-                        <a class="dropdown-item text-danger" href="logout.php">
+                        <a class="dropdown-item text-danger" href="../php/logout.php">
                             <i class="bi bi-box-arrow-right me-2"></i> Sair
                         </a>
                     </li>
@@ -119,68 +119,15 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
     <!-- Conteúdo principal -->
     <div id="main">
         <div class="container my-4">
-            <div class="row g-4">
-                <!-- Produto -->
-                <div class="col-sm-6 col-md-4 col-lg-3 produto">
-                    <div class="card h-100 shadow-sm produto-card">
-                        <img src="../uploads/sem-foto.jpg" class="card-img-top" alt="Produto">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">Produto</h5>
-                            <p class="card-text">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                Doloremque asperiores, placeat dolorum iure.
-                            </p>
-                            <div class="mt-auto">
-                                <p class="fw-bold text-primary fs-5">R$ 9.999,99</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3 produto">
-                    <div class="card h-100 shadow-sm produto-card">
-                        <img src="../uploads/sem-foto.jpg" class="card-img-top" alt="Produto">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">Produto</h5>
-                            <p class="card-text">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                Doloremque asperiores, placeat dolorum iure.
-                            </p>
-                            <div class="mt-auto">
-                                <p class="fw-bold text-primary fs-5">R$ 9.999,99</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3 produto">
-                    <div class="card h-100 shadow-sm produto-card">
-                        <img src="../uploads/sem-foto.jpg" class="card-img-top" alt="Produto">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">Produto</h5>
-                            <p class="card-text">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                Doloremque asperiores, placeat dolorum iure.
-                            </p>
-                            <div class="mt-auto">
-                                <p class="fw-bold text-primary fs-5">R$ 9.999,99</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6 col-md-4 col-lg-3 produto">
-                    <div class="card h-100 shadow-sm produto-card">
-                        <img src="../uploads/sem-foto.jpg" class="card-img-top" alt="Produto">
-                        <div class="card-body d-flex flex-column">
-                            <h5 class="card-title">Produto</h5>
-                            <p class="card-text">
-                                Lorem ipsum dolor sit amet, consectetur adipisicing elit.
-                                Doloremque asperiores, placeat dolorum iure.
-                            </p>
-                            <div class="mt-auto">
-                                <p class="fw-bold text-primary fs-5">R$ 9.999,99</p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+            <div class="main-menu">
+                <a href="#" class="submenu menu-item32" data-page="vendas">
+                    <p>Vendas</p>
+                    <i class="bi bi-cart-plus"></i>
+                </a>
+                <a href="#" class="submenu menu-item32" data-page="produtos">
+                    <p>Produtos</p>
+                    <i class="bi bi-box-seam"></i>
+                </a>
             </div>
         </div>
     </div>
@@ -260,6 +207,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
 
     <!--Fim do modal de Cadastro de usuários-->
     <script src="js/enviardados.js"></script>
+    <script src="js/script.js"></script>
 
 </body>
 
@@ -270,8 +218,8 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
 
 </script>
 
-<script src="js/script.js"></script>
-<script src="js/enviardados.js"></script>
+<script src="../js/script.js"></script>
+<script src="../js/enviardados.js"></script>
 
 </html>
 
@@ -302,5 +250,13 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
             container.appendChild(preview);
         };
         reader.readAsDataURL(file);
+    });
+</script>
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const navbar = document.querySelector(".navbar");
+        if (navbar) {
+            console.log("Altura da navbar:", navbar.offsetHeight + "px");
+        }
     });
 </script>
