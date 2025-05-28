@@ -26,7 +26,7 @@ try {
         $_SESSION['birthdate'] = $user['birthdate'];
         $_SESSION['type_user'] = $user['type_user'];
         $_SESSION['logado'] = true;
-        $_SESSION['foto_perfil'] = !empty($user['foto_perfil']) ? $user['foto_perfil'] : 'sem-foto.jpg';
+        $_SESSION['photo'] = !empty($user['photo']) ? $user['photo'] : 'sem-foto.jpg';
 
         echo json_encode([
             'success' => true,

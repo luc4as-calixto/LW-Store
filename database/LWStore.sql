@@ -20,8 +20,8 @@ CREATE TABLE users (
     photo VARCHAR(255)
 );
 
-INSERT INTO users (name, password, email, cpf, telephone, address, gender, birthdate, type_user, photo)
-VALUES ('admin', 'admin', 'admin@admin.com', '12345678901', '1234567890', '123 Main St', 'M', '2000-01-01', 'admin', NULL);
+INSERT INTO users (login, name, password, email, cpf, telephone, address, gender, birthdate, type_user, photo)
+VALUES ('admin', 'administrador', 'admin', 'admin@admin.com', '12345678901', '1234567890', '123 Main St', 'M', '2000-01-01', 'admin', NULL);
 
 CREATE TABLE sellers (
     id_seller INT PRIMARY KEY AUTO_INCREMENT,

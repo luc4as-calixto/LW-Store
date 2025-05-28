@@ -44,7 +44,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                         <hr class="dropdown-divider">
                     </li>
                     <li>
-                        <a class="dropdown-item text-danger" href="logout.php">
+                        <a class="dropdown-item text-danger" href="../php/logout.php">
                             <i class="bi bi-box-arrow-right me-2"></i> Sair
                         </a>
                     </li>
@@ -270,7 +270,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
 
 </script>
 
-<script src="js/script.js"></script>
+<script src="../js/script.js"></script>
 <script src="js/enviardados.js"></script>
 
 </html>

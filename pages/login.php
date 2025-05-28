@@ -44,7 +44,7 @@
                         <input type="password" id="password" name="password" autocomplete="current-password" placeholder="Insira sua senha" required>
                     </div>
 
-                    <button type="submit" class="btn-login"><i class="bi bi-box-arrow-in-right"></i> Login</button>
+                    <button type="submit" class="btn-normal"><i class="bi bi-box-arrow-in-right"></i> Login</button>
 
                     <div id="message" style="display: none;"></div>
                 </form>
