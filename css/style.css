@@ -13,6 +13,10 @@ body {
     background-color: #f4f4f4;
 }
 
+a {
+    text-decoration: none !important;
+}
+
 .container-painel {
     background: white;
     padding: 30px;
@@ -272,4 +276,45 @@ main {
 
 .produto {
     margin: 50px;
+}
+
+.main-menu {
+    scale: 1.2;
+    height: 60%;
+    margin: 10px auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    justify-items: center;
+    align-items: center;
+}
+
+.menu-item32 {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+    padding: 10px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: #ffffff;
+    color: black;
+    text-align: center;
+    transition: transform 0.5s ease, box-shadow 0.5s ease !important; /* suavidade */
+    width: 90px;
+    height: 90px;
+    cursor: pointer;
+    transform: scale(1); /* Inicializa o transform aqui */
+}
+
+.menu-item32:hover {
+    transform: scale(1.1); /* Suavemente aumenta */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Mais destaque */
+    color: black;
+}
+
+.menu-item32 p,
+.menu-item32 i {
+    scale: 1.2;
 }
