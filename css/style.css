@@ -26,7 +26,7 @@ a {
 
 .painel-login {
     width: 400px;
-    height: 460px;
+    height: auto;
     border-radius: 8px;
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.6);
 }
@@ -83,7 +83,7 @@ a {
 
 .btn-normal {
     max-width: 50%;
-    margin: 40px auto 0 auto;
+    margin: 0 auto;
     display: block;
     min-width: 80px;
     border-radius: 8px;
@@ -201,7 +201,7 @@ select:hover {
 #message {
     display: none;
     padding: 10px;
-    margin-top: 10px;
+    margin-top: 20px;
     border-radius: 5px;
 }
 
@@ -352,4 +352,19 @@ main {
 .menu-item32 p,
 .menu-item32 i {
     scale: 1.2;
+}
+
+#pagina {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+}
+
+#pagina-produtos {
+    background-color: white;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
+    margin-top: 800px !important;
 }

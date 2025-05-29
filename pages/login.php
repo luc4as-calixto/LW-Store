@@ -56,8 +56,9 @@ $_SESSION['logado'] = false;
     
                     <button id="btn" type="submit" class="btn-normal"><i class="bi bi-box-arrow-in-right"></i> Entrar</button>
 
-                    <div id="message" style="display: none;"></div>
                 </form>
+                
+                <div id="message" style="display: none;"></div>
             </div>
         </div>
     </div>

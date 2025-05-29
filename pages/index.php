@@ -68,7 +68,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
             <div class="collapse" id="cadastros">
                 <a href="#" class="nav-link submenu" data-page="clientes">Clientes</a>
                 <a href="#" class="nav-link submenu" data-page="vendedores">Vendedores</a>
-                <a href="#" class="nav-link submenu" data-page="produtos">Produtos</a>
+                <a href="#" class="nav-link submenu" data-page="cadastrar-produtos">Produtos</a>
             </div>
 
             <!--Movimentos-->

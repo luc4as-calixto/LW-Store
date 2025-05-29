@@ -24,7 +24,7 @@ $stmt->execute();
 $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<div class="container my-4 pt-5">
+<div class="container my-4 pt-5" id="pagina-produtos">
     <div class="row g-4">
         <?php foreach ($produtos as $produto): ?>
             <?php

@@ -1,4 +1,4 @@
-    <div class="container mt-4">
+    <div class="container mt-4" id="pagina">
         <h1>Cadastro de Produtos</h1>
         <form id="formProduto" action="formProduto" method="POST" enctype="multipart/form-data">
 
