@@ -27,7 +27,6 @@ a {
 .painel-login {
     width: 400px;
     height: 460px;
-    max-height: 500px;
     border-radius: 8px;
     box-shadow: 0 10px 15px rgba(0, 0, 0, 0.6);
 }
@@ -41,9 +40,45 @@ a {
     font-family: Roboto, Arial, sans-serif;
 }
 
-#login,
-#password {
+#password,
+#login {
     min-width: 150px;
+    padding-left: 30px; /* Espaço para o ícone na esquerda */
+    padding-right: 35px; /* Espaço para o toggle na direita */
+}
+
+.input {
+    position: relative;
+    width: 100%;
+    display: flex;
+    align-items: center;
+}
+
+.input i {
+    position: absolute;
+    left: 10px;
+    top: 55%;
+    transform: translateY(-50%);
+    color: #888;
+    pointer-events: none;
+}
+
+#togglePassword {
+    position: absolute;
+    right: 10px;
+    top: 55%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: #888;
+    height: 24px;
+    width: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    pointer-events: auto;
+    background: transparent;
+    border: none;
+    padding: 0;
 }
 
 .btn-normal {
@@ -146,7 +181,7 @@ select:hover {
     border: 1px solid red
 }
 
-button {
+#btn {
     width: 100%;
     padding: 10px;
     margin-top: 15px !important;
@@ -157,7 +192,7 @@ button {
     cursor: pointer;
 }
 
-button:hover {
+#btn:hover {
     background: #2d37f7;
 }
 

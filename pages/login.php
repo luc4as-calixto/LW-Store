@@ -1,6 +1,6 @@
 <?php
-    session_start();
-    $_SESSION['logado'] = false;
+session_start();
+$_SESSION['logado'] = false;
 ?>
 
 
@@ -28,7 +28,7 @@
 
 </head>
 
-<body style="background: linear-gradient(135deg, #fdfcfb, #d4f5f5, #89c4c4);"> 
+<body style="background: linear-gradient(135deg, #fdfcfb, #d4f5f5, #89c4c4);">
     <div class="container-painel painel-login">
         <div class="row">
             <div class="col-12">
@@ -36,15 +36,25 @@
                 <form id="FormLogin" method="post">
                     <div class="label-input">
                         <label for="login">Login</label>
-                        <input type="text" id="login" name="login" autocomplete="username" placeholder="Insira seu login" required>
+                        <div class="input">
+                            <i class="bi bi-person"></i>
+                            <input type="text" id="login" name="login" autocomplete="username" placeholder="Insira seu login" required>
+                        </div>
                     </div>
 
                     <div class="label-input">
                         <label for="password">Senha</label>
-                        <input type="password" id="password" name="password" autocomplete="current-password" placeholder="Insira sua senha" required>
-                    </div>
+                        <div class="input">
+                            <i class="bi bi-lock"></i>
+                            <input type="password" id="password" name="password" autocomplete="current-password" placeholder="Insira sua senha" required>
 
-                    <button type="submit" class="btn-normal"><i class="bi bi-box-arrow-in-right"></i> Login</button>
+                            <button type="button" id="togglePassword" tabindex="-1">
+                                <i class="bi bi-eye" id="eyeIcon"></i>
+                            </button>
+                        </div>
+                    </div>
+    
+                    <button id="btn" type="submit" class="btn-normal"><i class="bi bi-box-arrow-in-right"></i> Entrar</button>
 
                     <div id="message" style="display: none;"></div>
                 </form>
@@ -63,6 +73,10 @@
 </style>
 
 <script>
+
+    // Deixa vermelho o campo de login e senha quando estiverem vazios
+    // e remove o vermelho quando o usuário digitar algo
+    
     const login = document.getElementById('login');
     const password = document.getElementById('password');
 
@@ -80,6 +94,19 @@
         } else {
             password.classList.remove('erro');
         }
+    });
+
+    // Olho da senha para mostrar/esconder a senha
+
+    const togglePassword = document.getElementById('togglePassword');
+    const passwordInput = document.getElementById('password');
+    const eyeIcon = document.getElementById('eyeIcon');
+
+    togglePassword.addEventListener('click', function() {
+        const type = passwordInput.type === 'password' ? 'text' : 'password';
+        passwordInput.type = type;
+        eyeIcon.classList.toggle('bi-eye');
+        eyeIcon.classList.toggle('bi-eye-slash');
     });
 
 </script>
