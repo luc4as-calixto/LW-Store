@@ -23,38 +23,40 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             exit;
         }
 
-        // Validação do arquivo de foto
-        $pasta = "../uploads/";
-        // Pega o nome original da foto e cria um nome único para evitar conflito
-        $nome_original = basename($_FILES["foto"]["name"]);
-        $extensao = pathinfo($nome_original, PATHINFO_EXTENSION);
-        $novo_nome = uniqid() . "." . $extensao;
-        // Caminho completo para salvar no servidor
-        $caminho_salvar = $pasta . $novo_nome;
+        $caminho_salvar = null; // Caminho da foto que será salva no banco
 
-        // Mover o arquivo enviado para a pasta
-        if (move_uploaded_file($_FILES["foto"]["tmp_name"], $caminho_salvar)) {
+        if ($photo && $photo['error'] === UPLOAD_ERR_OK) {
+            $pasta = "../uploads/";
+            $nome_original = basename($photo["name"]);
+            $extensao = pathinfo($nome_original, PATHINFO_EXTENSION);
+            $novo_nome = uniqid() . "." . $extensao;
+            $caminho_salvar = $pasta . $novo_nome;
 
-            // Inserindo no banco de dados
-            $sql = "INSERT INTO product (product_code, name, price, amount, type_packaging, description, photo) 
+            if (!move_uploaded_file($photo["tmp_name"], $caminho_salvar)) {
+                echo json_encode(['error' => 'Erro ao salvar a foto no servidor.']);
+                exit;
+            }
+        }
+
+        // Inserindo no banco de dados
+        $sql = "INSERT INTO product (product_code, name, price, amount, type_packaging, description, photo) 
                 VALUES (:product_code, :name, :price, :amount, :type_packaging, :description, :photo)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bindParam(':product_code', $product_code);
-            $stmt->bindParam(':name', $name);
-            $stmt->bindParam(':price', $price);
-            $stmt->bindParam(':amount', $amount);
-            $stmt->bindParam(':type_packaging', $type_packaging);
-            $stmt->bindParam(':description', $description);
-            $stmt->bindParam(':photo', $caminho_salvar);
-            $stmt->execute();
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':product_code', $product_code);
+        $stmt->bindParam(':name', $name);
+        $stmt->bindParam(':price', $price);
+        $stmt->bindParam(':amount', $amount);
+        $stmt->bindParam(':type_packaging', $type_packaging);
+        $stmt->bindParam(':description', $description);
+        $stmt->bindParam(':photo', $caminho_salvar); // salva o caminho da imagem ou NULL se não tiver
 
-            echo json_encode([
-                'success' => true,
-                'message' => 'Produto cadastrado com sucesso!'
-            ]);
-        } else {
-            echo "Erro ao salvar a foto no servidor.";
-        };
+        $stmt->execute();
+
+        echo json_encode([
+            'success' => true,
+            'message' => 'Produto cadastrado com sucesso!'
+        ]);
+
     } catch (Exception $e) {
         echo json_encode(['error' => 'Erro ao cadastrar produto: ' . $e->getMessage()]);
         exit;
