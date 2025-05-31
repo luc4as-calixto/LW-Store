@@ -25,9 +25,9 @@
                         <input type="text" class="form-control" id="product_code" name="product_code" placeholder="Digite o código do produto*" required>
                     </div>
 
-                    <div class="mb-4">
+                    <div class="mb-3">
                         <label for="type_packaging" class="form-label">Tipo da embalagem</label>
-                        <select name="type_packaging" id="type_packaging" style="width: 365px; height: 40px; border-radius: 5px; border: 1px solid #ced4da;" class="form-select" required>
+                        <select name="type_packaging" id="type_packaging"  class="form-select" required>
                             <option value="" disabled selected>Selecione o tipo de embalagem</option>
                             <option value="Caixa">Caixa</option>
                             <option value="Saco">Saco</option>
@@ -38,6 +38,8 @@
                         </select>
                     </div>
 
+                    <p style="text-align: left;">( * ) campos obrigatórios</p>
+
                 </div>
 
                 <!-- Coluna da direita -->
@@ -46,7 +48,7 @@
                         <label for="photo" class="form-label">Foto do Produto</label>
                         <div class="d-flex align-items-center gap-3">
                             <!-- Input de arquivo -->
-                            <input type="file" class="form-control" id="photo" name="photo" accept="image/*" style="max-width: 250px;">
+                            <input type="file" class="form-control" id="photo" name="photo" accept="image/*" >
 
                             <!-- Pré-visualização da imagem -->
                             <div id="preview-container">
@@ -66,7 +68,7 @@
 
                     <div class="mb-3">
                         <label for="description" class="form-label">Descrição</label>
-                        <textarea name="description" id="description" class="form-control" style="resize: none;" rows="11" placeholder="Descreva o produto aqui..." required></textarea>
+                        <textarea name="description" id="description" class="form-control" style="resize: none;" rows="9" placeholder="Descreva o produto aqui..." required></textarea>
                     </div>
                 </div>
             </div>
