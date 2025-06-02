@@ -20,7 +20,6 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
     <!-- Custom CSS -->
-    <link rel="stylesheet" href="../css/style-painel.css">
     <link rel="stylesheet" href="../css/style.css">
     <!-- <link rel="stylesheet" href="../css/styles_bootstrap.css"> -->
 </head>
@@ -29,6 +28,9 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
 
     <!-- Barra superior -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
+        <div class="text-center fw-bold py-3">
+            <a href="../pages/index.php"><i class="bi bi-speedometer2 me-2"></i> LW Store</a>
+        </div>
         <div class="container-painel container-fluid d-flex justify-content-end" style="margin-top: -6px;">
             <div style="margin-right: 15px;" class="ms-auto dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
@@ -55,10 +57,8 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
 
     <!-- Menu Lateral -->
     <div id="sidebar">
-        <div class="text-center fw-bold py-3">
-            <a href="../pages/index.php" style="text-decoration: none; color: white;"><i class="bi bi-speedometer2 me-2"></i> LW Store</a>
-        </div>
-        <nav class="nav flex-column">
+
+        <nav class="nav flex-column pt-2">
             <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#cadastros" role="button" aria-expanded="false" aria-controls="cadastros">
                 <span><i class="bi bi-folder"></i> Cadastros</span>
                 <i class="bi bi-chevron-down"></i>
@@ -99,36 +99,46 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
     </div>
 
     <!-- Conteúdo principal -->
-    <div id="main" class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
-        <div class="container my-4">
-            <div class="main-menu row row-cols-1 row-cols-sm-2 row-cols-md-3 justify-content-center">
-                <div class="col d-flex justify-content-center">
-                    <a href="#" class="submenu menu-item32 text-center" data-page="vendas">
-                        <p style="font-size: 15px;">Vendas</p>
-                        <i class="bi bi-cart-plus" style="font-size: 2rem;"></i>
-                    </a>
-                </div>
-                <div class="col d-flex justify-content-center">
-                    <a href="#" class="submenu menu-item32 text-center" data-page="produtos">
-                        <p style="font-size: 15px;">Produtos</p>
-                        <i class="bi bi-box-seam" style="font-size: 2rem;"></i>
-                    </a>
-                </div>
-                <div class="col d-flex justify-content-center">
-                    <a href="#" class="submenu menu-item32 text-center" data-page="cadastro-produtos">
-                        <p style="font-size: 15px;">Cadastrar produto</p>
-                        <i class="bi bi-box-seam" style="font-size: 2rem;"></i>
-                    </a>
-                </div>
-                <div class="col d-flex justify-content-center">
-                    <a href="#" class="submenu menu-item32 text-center" data-page="cadastro-vendedores">
-                        <p style="font-size: 15px;">Cadastrar vendedor</p>
-                        <i class="bi bi-box-seam" style="font-size: 2rem;"></i>
-                    </a>
-                </div>
-            </div>
+    <div id="main">
+        <div class="dashboard-grid">
+            <a href="#" class="dashboard-item submenu" data-page="vendas">
+                <i class="bi bi-cart-plus"></i>
+                <p>Vendas</p>
+            </a>
+            <a href="#" class="dashboard-item submenu" data-page="produtos">
+                <i class="bi bi-box-seam"></i>
+                <p>Produtos</p>
+            </a>
+            <a href="#" class="dashboard-item submenu" data-page="clientes">
+                <i class="bi bi-people"></i>
+                <p>Clientes</p>
+            </a>
+            <a href="#" class="dashboard-item submenu" data-page="relatorios">
+                <i class="bi bi-bar-chart-line"></i>
+                <p>Relatórios</p>
+            </a>
+            <a href="#" class="dashboard-item submenu" data-page="historico">
+                <i class="bi bi-clock-history"></i>
+                <p>Histórico</p>
+            </a>
+            <a href="#" class="dashboard-item submenu" data-page="financeiro">
+                <i class="bi bi-cash-coin"></i>
+                <p>Financeiro</p>
+            </a>
+            <a href="#" class="dashboard-item submenu" data-page="configuracoes">
+                <i class="bi bi-gear"></i>
+                <p>Configurações</p>
+            </a>
+            <a href="#" class="dashboard-item submenu" data-page="suporte">
+                <i class="bi bi-headset"></i>
+                <p>Suporte</p>
+            </a>
         </div>
     </div>
+
+
+
+
 
     <!-- Modal de dados do  usuário -->
     <div class="modal fade" id="modalCadastroUsuario" tabindex="-1" aria-labelledby="modalCadastroUsuarioLabel" aria-hidden="true">
