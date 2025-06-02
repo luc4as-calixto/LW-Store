@@ -41,8 +41,10 @@ a {
 #password,
 #login {
     min-width: 150px;
-    padding-left: 30px; /* Espaço para o ícone na esquerda */
-    padding-right: 35px; /* Espaço para o toggle na direita */
+    padding-left: 30px;
+    /* Espaço para o ícone na esquerda */
+    padding-right: 35px;
+    /* Espaço para o toggle na direita */
 }
 
 .input {
@@ -311,6 +313,41 @@ main {
     margin: 50px;
 }
 
+
+
+#main .main-menu {
+    display: flex;
+    justify-content: center;
+    gap: 3rem;
+}
+
+#main .main-menu .menu-item32 {
+    min-width: 180px;
+    padding: 2rem 1rem;
+    border-radius: 12px;
+    background: #f8f9fa;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+    transition: box-shadow 0.2s;
+}
+
+#main .main-menu .menu-item32:hover {
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.12);
+    background: #e9ecef;
+}
+
+.modal-content.width-modal {
+    max-width: 500px;
+    margin: 0 auto;
+}
+
+@media (max-width: 768px) {
+    #main .main-menu {
+        flex-direction: column;
+        gap: 1.5rem;
+    }
+}
+
+
 .main-menu {
     scale: 1.2;
     height: 60%;
@@ -334,16 +371,20 @@ main {
     background-color: #ffffff;
     color: black;
     text-align: center;
-    transition: transform 0.5s ease, box-shadow 0.5s ease !important; /* suavidade */
+    transition: transform 0.5s ease, box-shadow 0.5s ease !important;
+    /* suavidade */
     width: 90px;
     height: 90px;
     cursor: pointer;
-    transform: scale(1); /* Inicializa o transform aqui */
+    transform: scale(1);
+    /* Inicializa o transform aqui */
 }
 
 .menu-item32:hover {
-    transform: scale(1.1); /* Suavemente aumenta */
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* Mais destaque */
+    transform: scale(1.1);
+    /* Suavemente aumenta */
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+    /* Mais destaque */
     color: black;
 }
 

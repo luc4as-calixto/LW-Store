@@ -25,7 +25,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
     <!-- <link rel="stylesheet" href="../css/styles_bootstrap.css"> -->
 </head>
 
-<body class="pt-5" style="padding-top: 100px !important;">
+<body style="padding-top: 65px !important;">
 
     <!-- Barra superior -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
@@ -101,15 +101,31 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
     <!-- Conteúdo principal -->
     <div id="main" class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
         <div class="container my-4">
-            <div class="main-menu d-flex justify-content-center gap-5">
-                <a href="#" class="submenu menu-item32 text-center" data-page="vendas">
-                    <p>Vendas</p>
-                    <i class="bi bi-cart-plus" style="font-size: 2rem;"></i>
-                </a>
-                <a href="#" class="submenu menu-item32 text-center" data-page="produtos">
-                    <p>Produtos</p>
-                    <i class="bi bi-box-seam" style="font-size: 2rem;"></i>
-                </a>
+            <div class="main-menu row row-cols-1 row-cols-sm-2 row-cols-md-3 justify-content-center">
+                <div class="col d-flex justify-content-center">
+                    <a href="#" class="submenu menu-item32 text-center" data-page="vendas">
+                        <p style="font-size: 15px;">Vendas</p>
+                        <i class="bi bi-cart-plus" style="font-size: 2rem;"></i>
+                    </a>
+                </div>
+                <div class="col d-flex justify-content-center">
+                    <a href="#" class="submenu menu-item32 text-center" data-page="produtos">
+                        <p style="font-size: 15px;">Produtos</p>
+                        <i class="bi bi-box-seam" style="font-size: 2rem;"></i>
+                    </a>
+                </div>
+                <div class="col d-flex justify-content-center">
+                    <a href="#" class="submenu menu-item32 text-center" data-page="cadastro-produtos">
+                        <p style="font-size: 15px;">Cadastrar produto</p>
+                        <i class="bi bi-box-seam" style="font-size: 2rem;"></i>
+                    </a>
+                </div>
+                <div class="col d-flex justify-content-center">
+                    <a href="#" class="submenu menu-item32 text-center" data-page="cadastro-vendedores">
+                        <p style="font-size: 15px;">Cadastrar vendedor</p>
+                        <i class="bi bi-box-seam" style="font-size: 2rem;"></i>
+                    </a>
+                </div>
             </div>
         </div>
     </div>
@@ -178,35 +194,6 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
     <script src="js/enviardados.js"></script>
     <script src="js/script.js"></script>
 
-    <style>
-        #main .main-menu {
-            display: flex;
-            justify-content: center;
-            gap: 3rem;
-        }
-        #main .main-menu .menu-item32 {
-            min-width: 180px;
-            padding: 2rem 1rem;
-            border-radius: 12px;
-            background: #f8f9fa;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-            transition: box-shadow 0.2s;
-        }
-        #main .main-menu .menu-item32:hover {
-            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
-            background: #e9ecef;
-        }
-        .modal-content.width-modal {
-            max-width: 500px;
-            margin: 0 auto;
-        }
-        @media (max-width: 768px) {
-            #main .main-menu {
-                flex-direction: column;
-                gap: 1.5rem;
-            }
-        }
-    </style>
 </body>
 
 <!-- Bootstrap JS -->
