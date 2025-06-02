@@ -29,13 +29,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $pasta = "../uploads/";
             $nome_original = basename($photo["name"]);
             $extensao = pathinfo($nome_original, PATHINFO_EXTENSION);
-            $novo_nome = uniqid() . "." . $extensao;
+            $novo_nome = uniqid() . "." . $extensao;    
             $caminho_salvar = $pasta . $novo_nome;
 
             if (!move_uploaded_file($photo["tmp_name"], $caminho_salvar)) {
                 echo json_encode(['error' => 'Erro ao salvar a foto no servidor.']);
                 exit;
             }
+        } else {
+            $caminho_salvar = "../uploads/produto-sem-imagem.webp";
         }
 
         // Inserindo no banco de dados

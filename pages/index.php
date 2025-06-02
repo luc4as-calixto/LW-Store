@@ -29,7 +29,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
 
     <!-- Barra superior -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <div class="container-painel container-fluid" style="margin-top: -6px;">
+        <div class="container-painel container-fluid d-flex justify-content-end" style="margin-top: -6px;">
             <div style="margin-right: 15px;" class="ms-auto dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
                     <i class="bi bi-person-circle"></i> <?php echo $_SESSION['name'];  ?>
@@ -51,7 +51,6 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                 </ul>
             </div>
         </div>
-
     </nav>
 
     <!-- Menu Lateral -->
@@ -61,7 +60,6 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
         </div>
         <nav class="nav flex-column">
             <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#cadastros" role="button" aria-expanded="false" aria-controls="cadastros">
-
                 <span><i class="bi bi-folder"></i> Cadastros</span>
                 <i class="bi bi-chevron-down"></i>
             </a>
@@ -70,63 +68,47 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                 <a href="#" class="nav-link submenu" data-page="cadastro-vendedores">Vendedores</a>
                 <a href="#" class="nav-link submenu" data-page="cadastro-produtos">Produtos</a>
             </div>
-
             <!--Movimentos-->
             <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#movimentacoes" role="button" aria-expanded="false" aria-controls="movimentacao">
-
                 <span><i class="bi-cart"></i> Movimentações</span>
                 <i class="bi bi-chevron-down"></i>
             </a>
-
             <div class="collapse" id="movimentacoes">
                 <a href="#" class="nav-link submenu" data-page="vendas">Vendas</a>
-            </div>
-
-            <div class="collapse" id="movimentacoes">
                 <a href="#" class="nav-link submenu" data-page="historico-vendas">Histórico de Vendas</a>
             </div>
-
             <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#relatorios" role="button" aria-expanded="false" aria-controls="relatorios">
                 <span><i class="bi bi-graph-up"></i> Relatórios</span>
                 <i class="bi bi-chevron-down"></i>
             </a>
-
             <div class="collapse" id="relatorios">
                 <a href="#" class="nav-link submenu" data-page="relatoriocliente">Clientes</a>
                 <a href="#" class="nav-link submenu" data-page="relatoriovendedores">Vendedores</a>
                 <a href="#" class="nav-link submenu" data-page="relatorioproduto">Produtos</a>
             </div>
-
             <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#administracao" role="button" aria-expanded="false" aria-controls="administracao">
                 <span><i class="bi bi-person-gear"></i>Administração</span>
                 <i class="bi bi-chevron-down"></i>
             </a>
-
             <div class="collapse" id="administracao">
                 <a href="#" class="nav-link submenu" data-page="usuarios">Usuários</a>
                 <a href="#" class="nav-link submenu" data-page="permissoes">Permissões</a>
                 <a href="#" class="nav-link submenu" data-page="configuracoes">Configurações</a>
             </div>
-
         </nav>
     </div>
 
-
-    <!-- ================================================================================================================= -->
-    <!-- Precisa arrumar aqui , os card dos produtos estao ficando um em cima do outro e tbm estao ficando em baixo do nav -->
-    <!-- ================================================================================================================= -->
-
     <!-- Conteúdo principal -->
-    <div id="main">
+    <div id="main" class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
         <div class="container my-4">
-            <div class="main-menu">
-                <a href="#" class="submenu menu-item32" data-page="vendas">
+            <div class="main-menu d-flex justify-content-center gap-5">
+                <a href="#" class="submenu menu-item32 text-center" data-page="vendas">
                     <p>Vendas</p>
-                    <i class="bi bi-cart-plus"></i>
+                    <i class="bi bi-cart-plus" style="font-size: 2rem;"></i>
                 </a>
-                <a href="#" class="submenu menu-item32" data-page="produtos">
+                <a href="#" class="submenu menu-item32 text-center" data-page="produtos">
                     <p>Produtos</p>
-                    <i class="bi bi-box-seam"></i>
+                    <i class="bi bi-box-seam" style="font-size: 2rem;"></i>
                 </a>
             </div>
         </div>
@@ -136,14 +118,11 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
     <div class="modal fade" id="modalCadastroUsuario" tabindex="-1" aria-labelledby="modalCadastroUsuarioLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content width-modal">
-
                 <form id="formCadUsuario" enctype="multipart/form-data">
-
                     <div class="modal-header">
                         <h5 class="modal-title" id="modalConfiguracoesLabel">Dados do Usuário</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                     </div>
-
                     <div class="modal-body">
                         <!-- Nome e Login na mesma linha -->
                         <div class="row mb-3">
@@ -156,28 +135,23 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                                 <input type="text" class="form-control" id="nm_login" name="nm_login" value="<?php echo $_SESSION['login'] ?? ''; ?>">
                             </div>
                         </div>
-
                         <!-- Email -->
                         <div class="mb-3">
                             <label for="ds_email" class="form-label">Email</label>
                             <input type="text" class="form-control" id="ds_email" name="ds_email" value="<?php echo $_SESSION['email'] ?? ''; ?>">
                         </div>
-
                         <!-- Senha -->
                         <div class="mb-3">
                             <label for="ds_password" class="form-label">Nova Senha</label>
                             <input type="password" class="form-control" id="ds_password" name="senha" value="<?php echo $_SESSION['password'] ?? ''; ?>">
                         </div>
-
-                        <!-- Foto de Perfil (quadrada) -->
                         <!-- Foto de Perfil (imagem ao lado do input file) -->
-                        <div class="mb-3 d-flex align-items-center gap-3">
+                        <div class="mb-3 d-flex align-items-center gap-3 justify-content-center">
                             <!-- Input de arquivo (lado esquerdo) -->
                             <div>
                                 <label for="foto_perfil" class="form-label">Foto de Perfil</label>
                                 <input type="file" class="form-control" id="foto_perfil" name="foto_perfil" accept="image/*">
                             </div>
-
                             <!-- Imagem de pré-visualização (lado direito) -->
                             <div id="preview-container">
                                 <?php if (!empty($_SESSION['photo']) && isset($_SESSION['photo'])): ?>
@@ -187,28 +161,52 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                                 <?php endif; ?>
                             </div>
                         </div>
-
                         <!-- Checkbox Administrador -->
-                        <div class="form-check mb-3">
+                        <div class="form-check mb-3 text-center">
                             <input class="form-check-input" type="checkbox" id="inadim" name="inadmin" <?php echo ($_SESSION['type_user'] == "admin") ? 'checked' : ''; ?>>
                             <label class="form-check-label" for="inadim">Administrador</label>
                         </div>
-
                     </div>
-
-                    <div class="modal-footer">
+                    <div class="modal-footer d-flex justify-content-center">
                         <button type="submit" class="btn btn-primary">Editar dados</button>
                     </div>
                 </form>
-
             </div>
         </div>
     </div>
-
     <!--Fim do modal de Cadastro de usuários-->
     <script src="js/enviardados.js"></script>
     <script src="js/script.js"></script>
 
+    <style>
+        #main .main-menu {
+            display: flex;
+            justify-content: center;
+            gap: 3rem;
+        }
+        #main .main-menu .menu-item32 {
+            min-width: 180px;
+            padding: 2rem 1rem;
+            border-radius: 12px;
+            background: #f8f9fa;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+            transition: box-shadow 0.2s;
+        }
+        #main .main-menu .menu-item32:hover {
+            box-shadow: 0 4px 16px rgba(0,0,0,0.12);
+            background: #e9ecef;
+        }
+        .modal-content.width-modal {
+            max-width: 500px;
+            margin: 0 auto;
+        }
+        @media (max-width: 768px) {
+            #main .main-menu {
+                flex-direction: column;
+                gap: 1.5rem;
+            }
+        }
+    </style>
 </body>
 
 <!-- Bootstrap JS -->
