@@ -1,6 +1,6 @@
     <div class="container mt-4" id="pagina">
         <h1>Cadastro de Vendedores</h1>
-        <form id="formProduto" action="formProduto" method="POST" enctype="multipart/form-data">
+        <form id="formVendedor" method="POST" enctype="multipart/form-data">
 
             <div class="row mb-3">
                 <!-- Coluna da esquerda -->
@@ -8,6 +8,11 @@
                     <div class="mb-3">
                         <label for="name" class="form-label">Nome do Vendedor</label>
                         <input type="text" class="form-control" id="name" name="name" placeholder="Digite o nome do vendedor*" required>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="login_ven" class="form-label">login do Vendedor</label>
+                        <input type="text" class="form-control" id="login_ven" name="login_ven" placeholder="Digite o login do vendedor*" required>
                     </div>
 
                     <div class="mb-3">
@@ -21,7 +26,7 @@
 
                     <div class="mb-3">
                         <label for="telephone" class="form-label">Telefone</label>
-                        <input type="number" class="form-control" id="telephone" name="telephone" placeholder="Digite o telefone*" required>
+                        <input type="text" class="form-control" id="telephone" name="telephone" placeholder="Digite o telefone*" required>
                     </div>
 
                     <div class="mb-3">
@@ -64,7 +69,7 @@
 
                     <div class="mb-3" style="margin-top: 40px;">
                         <label for="CPF" class="form-label">CPF</label>
-                        <input type="number" class="form-control" id="CPF" name="CPF" placeholder="Digite o CPF*" required>
+                        <input type="text" class="form-control" id="CPF" name="CPF" placeholder="Digite o CPF*" required>
                     </div>
 
                     <div class="mb-3">
@@ -74,12 +79,12 @@
 
                     <div class="mb-3">
                         <label for="email" class="form-label">E-mail</label>
-                        <input type="password" class="form-control" id="email" name="email" placeholder="Digite o email*" required>
+                        <input type="text" class="form-control" id="email" name="email" placeholder="Digite o email*" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="address" class="form-label">Endereço</label>
-                        <input type="number" class="form-control" id="address" name="address" placeholder="Digite o endereço*" required>
+                        <input type="text" class="form-control" id="address" name="address" placeholder="Digite o endereço*" required>
                     </div>
                     
                 </div>

@@ -23,7 +23,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             exit;
         }
 
-        $caminho_salvar = null; // Caminho da foto que será salva no banco
+        // Caminho da foto que será salva no banco
 
         if ($photo && $photo['error'] === UPLOAD_ERR_OK) {
             $pasta = "../uploads/";
