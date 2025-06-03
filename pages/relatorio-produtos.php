@@ -34,8 +34,8 @@
                     echo "<td>" . htmlspecialchars($row['type_packaging']) . "</td>";
                     echo "<td>" . htmlspecialchars($row['description']) . "</td>";
                     echo "<td>
-                            <a style='color: black; cursor: pointer;' onclick=\"carregar_pagina_editar('editar-produto', " . $row["id"] . ")\"><i class='bi bi-pencil'></i></a> &nbsp &nbsp;
-                            <a style='color: black;' href='#' onclick='excluirProduto(" . $row["id"] . ",   ); return false;'><i class='bi bi-trash'></i></a>
+                            <a style='color: black; cursor: pointer;' onclick=\"carregar_pagina_editar('editar-produto', " . $row["pruduct_code"] . ")\"><i class='bi bi-pencil'></i></a> &nbsp &nbsp;
+                            <a style='color: black;' href='#' onclick='excluirProduto(" . $row["product_code"] . ",   ); return false;'><i class='bi bi-trash'></i></a>
                         </td>";
                     echo "</tr>";
                 }
