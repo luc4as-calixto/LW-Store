@@ -28,17 +28,17 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
 
     <!-- Barra superior -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
-        <div class="text-center fw-bold py-3">
+        <div id="logo" class="text-center fw-bold py-3">
             <a href="../pages/index.php"><i class="bi bi-speedometer2 me-2"></i> LW Store</a>
         </div>
-        <div class="container-painel container-fluid d-flex justify-content-end" style="margin-top: -6px;">
+        <div id="user-menu" class="container-fluid d-flex justify-content-end" style="margin-top: -6px;">
             <div style="margin-right: 15px;" class="ms-auto dropdown">
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
                     <i class="bi bi-person-circle"></i> <?php echo $_SESSION['name'];  ?>
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
                     <li>
-                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalCadastroUsuario">
+                        <a class="dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#modalConfigUsuario">
                             <i class="bi bi-person me-2"></i> Editar Perfil
                         </a>
                     </li>
@@ -125,7 +125,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                 <i class="bi bi-cash-coin"></i>
                 <p>Financeiro</p>
             </a>
-            <a href="#" class="dashboard-item submenu" data-page="configuracoes">
+            <a href="#" class="dashboard-item" data-bs-toggle="modal" data-bs-target="#modalConfigUsuario">
                 <i class="bi bi-gear"></i>
                 <p>Configurações</p>
             </a>
@@ -141,65 +141,68 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
 
 
     <!-- Modal de dados do  usuário -->
-    <div class="modal fade" id="modalCadastroUsuario" tabindex="-1" aria-labelledby="modalCadastroUsuarioLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content width-modal">
-                <form id="formCadUsuario" enctype="multipart/form-data">
+    <div class="modal fade" id="modalConfigUsuario" tabindex="-1" aria-labelledby="modalConfigUsuarioLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content user-modal-content">
+                <form id="formConfigUsuario" method="POST" enctype="multipart/form-data">
                     <div class="modal-header">
-                        <h5 class="modal-title" id="modalConfiguracoesLabel">Dados do Usuário</h5>
+                        <h5 class="modal-title">Dados do Usuário</h5>
                         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
                     </div>
                     <div class="modal-body">
-                        <!-- Nome e Login na mesma linha -->
-                        <div class="row mb-3">
+                        <div class="row g-3">
                             <div class="col-md-6">
                                 <label for="nm_nome" class="form-label">Nome</label>
-                                <input type="text" class="form-control" id="nm_nome" name="nm_nome" value="<?php echo $_SESSION['name'] ?? ''; ?>">
+                                <input type="text" class="form-control" id="nm_nome" name="name" value="<?php echo $_SESSION['name'] ?? ''; ?>">
                             </div>
                             <div class="col-md-6">
-                                <label for="nm_login" class="form-label">Login</label>
-                                <input type="text" class="form-control" id="nm_login" name="nm_login" value="<?php echo $_SESSION['login'] ?? ''; ?>">
+                                <label for="login" class="form-label">Login</label>
+                                <input type="text" class="form-control" id="login" name="login" value="<?php echo $_SESSION['login'] ?? ''; ?>">
                             </div>
-                        </div>
-                        <!-- Email -->
-                        <div class="mb-3">
-                            <label for="ds_email" class="form-label">Email</label>
-                            <input type="text" class="form-control" id="ds_email" name="ds_email" value="<?php echo $_SESSION['email'] ?? ''; ?>">
-                        </div>
-                        <!-- Senha -->
-                        <div class="mb-3">
-                            <label for="ds_password" class="form-label">Nova Senha</label>
-                            <input type="password" class="form-control" id="ds_password" name="senha" value="<?php echo $_SESSION['password'] ?? ''; ?>">
-                        </div>
-                        <!-- Foto de Perfil (imagem ao lado do input file) -->
-                        <div class="mb-3 d-flex align-items-center gap-3 justify-content-center">
-                            <!-- Input de arquivo (lado esquerdo) -->
-                            <div>
-                                <label for="foto_perfil" class="form-label">Foto de Perfil</label>
-                                <input type="file" class="form-control" id="foto_perfil" name="foto_perfil" accept="image/*">
+                            <div class="col-md-12">
+                                <label for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" value="<?php echo $_SESSION['email'] ?? ''; ?>">
                             </div>
-                            <!-- Imagem de pré-visualização (lado direito) -->
-                            <div id="preview-container">
-                                <?php if (!empty($_SESSION['photo']) && isset($_SESSION['photo'])): ?>
-                                    <img src="../uploads/<?php echo $_SESSION['photo']; ?>" alt="Foto de Perfil"
-                                        width="150" height="150"
-                                        style="object-fit: cover; border-radius: 8px;">
-                                <?php endif; ?>
+                            <div class="col-md-6">
+                                <label for="ds_password" class="form-label">Nova Senha</label>
+                                <input type="password" class="form-control" id="password" name="password">
                             </div>
-                        </div>
-                        <!-- Checkbox Administrador -->
-                        <div class="form-check mb-3 text-center">
-                            <input class="form-check-input" type="checkbox" id="inadim" name="inadmin" <?php echo ($_SESSION['type_user'] == "admin") ? 'checked' : ''; ?>>
-                            <label class="form-check-label" for="inadim">Administrador</label>
+                            <div class="col-md-6">
+                                <label for="ds_password" class="form-label">Confirme Sua Senha</label>
+                                <input type="password" class="form-control" id="confirm_password" name="confirm_password">
+                            </div>
+                            
+                            <!-- Foto de Perfil e Upload -->
+                            <div class="col-md-12 d-flex flex-column flex-md-row align-items-center justify-content-center gap-4">
+                                <div class="w-100">
+                                    <label for="foto_perfil" class="form-label">Foto de Perfil</label>
+                                    <input type="file" class="form-control" id="foto_perfil" name="foto_perfil" accept="image/*">
+                                </div>
+                                <div id="preview-container" class="text-center">
+                                    <?php if (!empty($_SESSION['photo']) && isset($_SESSION['photo'])): ?>
+                                        <img src="../uploads/<?php echo $_SESSION['photo']; ?>" alt="Foto de Perfil"
+                                            class="preview-img">
+                                    <?php endif; ?>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <div class="form-check mt-3">
+                                    <input class="form-check-input" type="checkbox" id="inadmin" name="inadmin" <?php echo ($_SESSION['type_user'] == "admin") ? 'checked' : ''; ?>>
+                                    <label class="form-check-label" for="inadmin">Administrador</label>
+                                </div>
+                            </div>
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-center">
                         <button type="submit" class="btn btn-primary">Editar dados</button>
                     </div>
+                    <div id="message" style="display: none;"></div>
                 </form>
             </div>
         </div>
     </div>
+
     <!--Fim do modal de Cadastro de usuários-->
     <script src="js/enviardados.js"></script>
     <script src="js/script.js"></script>

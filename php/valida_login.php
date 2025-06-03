@@ -42,6 +42,7 @@ try {
     if ($user && password_verify($password, $user['password']) && $user['login'] == $login) {
         $_SESSION['id_user'] = $user['id_user'];
         $_SESSION['login'] = $user['login'];
+        $_SESSION['password'] = $user['password'];
         $_SESSION['name'] = $user['name'];
         $_SESSION['email'] = $user['email'];
         $_SESSION['cpf'] = $user['cpf'];
