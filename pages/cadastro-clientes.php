@@ -1,24 +1,24 @@
-    <div class="container mt-4" id="pagina">
-        <h1>Cadastro de Vendedores</h1>
-        <form id="formVendedor" method="POST" enctype="multipart/form-data">
+<div class="container mt-4" id="pagina">
+        <h1>Cadastro de Cliente</h1>
+        <form id="formCliente" method="POST" enctype="multipart/form-data">
 
             <div class="row mb-3">
                 <!-- Coluna da esquerda -->
                 <div class="col-md-6">
                     <div class="mb-3">
-                        <label for="name" class="form-label">Nome do Vendedor</label>
-                        <input type="text" class="form-control" id="name" name="name" placeholder="Digite o nome do vendedor*" required>
+                        <label for="name" class="form-label">Nome do Cliente</label>
+                        <input type="text" class="form-control" id="name" name="name" placeholder="Digite o nome do clietne*" required>
                     </div>
 
                     <div class="mb-3">
-                        <label for="login_ven" class="form-label">login do Vendedor</label>
-                        <input type="text" class="form-control" id="login_ven" name="login_ven" placeholder="Digite o login do vendedor*" required>
+                        <label for="login_cliente" class="form-label">login do cliente</label>
+                        <input type="text" class="form-control" id="login_cliente" name="login_cliente" placeholder="Digite o login do cliente*" required>
                     </div>
 
                     <div class="mb-3">
                         <label for="gender" class="form-label">Gênero</label>
                         <select name="gender" id="gender" class="form-select" required>
-                            <option value="" disabled selected>Selecione o gênero do vendedor</option>
+                            <option value="" disabled selected>Selecione o gênero do cliente</option>
                             <option value="M">Masculino</option>
                             <option value="F">Feminino</option>
                         </select>
@@ -54,12 +54,12 @@
                             <!-- Pré-visualização da imagem -->
                             <div id="preview-container">
                                 <?php if (!empty($_SESSION['photo']) && isset($_SESSION['photo'])): ?>
-                                    <img src="../uploads/<?php echo $_SESSION['photo']; ?>" alt="Foto do vendedor"
+                                    <img src="../uploads/<?php echo $_SESSION['photo']; ?>" alt="Foto do cliente"
                                         width="100" height="100"
                                         style="object-fit: cover; border-radius: 8px; border: 1px solid #ccc;">
                                 <?php else: ?>
                                     <!-- Imagem padrão caso não tenha upload -->
-                                    <img src="../uploads/produto-sem-imagem.webp" alt="Foto do Produto"
+                                    <img src="../uploads/sem-foto.jpg" alt="Foto do Produto"
                                         width="100" height="100"
                                         style="object-fit: cover; border-radius: 8px; border: 1px solid #ccc;">
                                 <?php endif; ?>
@@ -89,12 +89,12 @@
                     
                 </div>
             </div>
-            <button id="btn" type="submit" class="btn-normal"><i class="bi bi-tags"></i> Cadastrar Vendedor</button>
+            <button id="btn" type="submit" class="btn-normal"><i class="bi bi-tags"></i> Cadastrar Cliente</button>
 
             <div id="message" style="display: none;"></div>
 
         </form>
-        <script src="../js/enviardados.js"></script>
+        <script src="../js/enviardadosCliente.js"></script>
     </div>
     <script>
         document.getElementById('photo').addEventListener('change', function(event) {

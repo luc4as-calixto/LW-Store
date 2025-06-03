@@ -27,6 +27,13 @@ CREATE TABLE sellers (
     CONSTRAINT fk_user FOREIGN KEY (fk_id_user) REFERENCES users(id_user)
 );
 
+CREATE TABLE customers (
+    id_customer INT PRIMARY KEY AUTO_INCREMENT,
+    fk_id_user INT,
+
+    CONSTRAINT fk_user FOREIGN KEY (fk_id_user) REFERENCES users(id_user)
+);
+
 CREATE TABLE cart (
     id_cart INT PRIMARY KEY AUTO_INCREMENT,
     fk_id_user INT,
