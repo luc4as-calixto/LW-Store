@@ -34,24 +34,9 @@
                     echo "<td>" . htmlspecialchars($row['type_packaging']) . "</td>";
                     echo "<td>" . htmlspecialchars($row['description']) . "</td>";
                     echo "<td>
-
-                        <form id='formEditar' method='POST'>
-                    
-                            <a style='color: black; cursor: pointer;' onclick=\"carregar_pagina_editar('editar-produto', " . $row["product_code"] . ")\">
-                                <i class='bi bi-pencil'></i>
-                            </a>
-                            
-                        </form>
-
-                        <form id='formExcluir' method='POST'>
-                    
-                            <a style='color: black;' href='#' onclick='excluirProduto(" . $row["product_code"] . ",   ); return false;'>
-                                <i class='bi bi-trash'></i>
-                            </a>
-
-                        </form>
-
-                    </td>";
+                            <a style='color: black; cursor: pointer;' onclick=\"carregar_pagina_editar('editar-produto', " . $row["id"] . ")\"><i class='bi bi-pencil'></i></a> &nbsp &nbsp;
+                            <a style='color: black;' href='#' onclick='excluirProduto(" . $row["id"] . ",   ); return false;'><i class='bi bi-trash'></i></a>
+                        </td>";
                     echo "</tr>";
                 }
             } else {
@@ -69,4 +54,45 @@
 </div>
 
 <script>
+    function excluirProduto(id, elemento) {
+        if (confirm('Tem certeza que deseja excluir?')) {
+            fetch('excluir_produto.php?id=' + id, {
+                    method: 'GET'
+                })
+                .then(response => response.text())
+                .then(data => {
+                    const linha = elemento.closest('tr');
+                    linha.remove();
+                    alert('Produto excluído com sucesso!');
+
+                    const tabela = document.querySelector('#form table');
+                    const linhasRestantes = tabela.querySelectorAll('tr').length;
+
+                    if (linhasRestantes === 1) { // só o cabeçalho
+                        const novaLinha = document.createElement('tr');
+                        novaLinha.innerHTML = "<td colspan='7'>Nenhum produto encontrado.</td>";
+                        tabela.appendChild(novaLinha);
+                    }
+
+                })
+                .catch(error => {
+                    alert('Erro ao excluir o produto.');
+                    console.error(error);
+                });
+        }
+    }
+
+    function carregar_pagina_editar(pagina, id) {
+        const main = document.getElementById('main');
+
+        fetch(`${pagina}.php?id=${id}`)
+            .then(response => response.text())
+            .then(html => {
+                main.innerHTML = html;
+            })
+            .catch(error => {
+                main.innerHTML = `<div class="alert alert-danger">Erro ao carregar a página.</div>`;
+                console.error('Erro:', error);
+            });
+    }
 </script>
