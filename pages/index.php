@@ -82,9 +82,9 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                 <i class="bi bi-chevron-down"></i>
             </a>
             <div class="collapse" id="relatorios">
-                <a href="#" class="nav-link submenu" data-page="relatoriocliente">Clientes</a>
-                <a href="#" class="nav-link submenu" data-page="relatoriovendedores">Vendedores</a>
-                <a href="#" class="nav-link submenu" data-page="relatorioproduto">Produtos</a>
+                <a href="#" class="nav-link submenu" data-page="relatorio-cliente">Clientes</a>
+                <a href="#" class="nav-link submenu" data-page="relatorio-vendedores">Vendedores</a>
+                <a href="#" class="nav-link submenu" data-page="relatorio-produtos">Produtos</a>
             </div>
             <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#administracao" role="button" aria-expanded="false" aria-controls="administracao">
                 <span><i class="bi bi-person-gear"></i>Administração</span>
