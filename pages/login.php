@@ -28,7 +28,7 @@ $_SESSION['logado'] = false;
 
 </head>
 
-<body style="background: linear-gradient(135deg, #fdfcfb, #d4f5f5, #89c4c4);">
+<body style="background: linear-gradient(135deg, #fdfcfb, #d4f5f5, #89c4c4); align-items:center; height:100vh; justify-content:center;">
     <div class="container-painel painel-login">
         <div class="row">
             <div class="col-12">

@@ -2,6 +2,32 @@
 session_start();
 require_once '../php/conexao.php';
 
+// Cria o usuário admin se não existir
+try {
+    $checkStmt = $conn->prepare("SELECT COUNT(*) FROM users WHERE login = :login");
+    $checkStmt->execute([':login' => 'admin']);
+    if ($checkStmt->fetchColumn() == 0) {
+        $hashedPassword = password_hash('admin', PASSWORD_DEFAULT);
+        $insertStmt = $conn->prepare("INSERT INTO users (login, name, password, email, cpf, telephone, address, gender, birthdate, type_user, photo)
+            VALUES (:login, :name, :password, :email, :cpf, :telephone, :address, :gender, :birthdate, :type_user, :photo)");
+        $insertStmt->execute([
+            ':login' => 'admin',
+            ':name' => 'administrador',
+            ':password' => $hashedPassword,
+            ':email' => 'admin@admin.com',
+            ':cpf' => '12345678901',
+            ':telephone' => '1234567890',
+            ':address' => '123 Main St',
+            ':gender' => 'M',
+            ':birthdate' => '2000-01-01',
+            ':type_user' => 'admin',
+            ':photo' => null
+        ]);
+    }
+} catch (PDOException $e) {
+    // Você pode logar o erro se necessário
+}
+
 header('Content-Type: application/json');
 
 $login = $_POST['login'] ?? '';
@@ -13,8 +39,7 @@ try {
     $stmt->execute();
 
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
-
-    if($user && $user['password'] == $password && $user['login'] == $login){
+    if ($user && password_verify($password, $user['password']) && $user['login'] == $login) {
         $_SESSION['id_user'] = $user['id_user'];
         $_SESSION['login'] = $user['login'];
         $_SESSION['name'] = $user['name'];
