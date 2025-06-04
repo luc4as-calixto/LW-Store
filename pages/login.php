@@ -35,29 +35,29 @@ $_SESSION['logado'] = false;
                 <h1>Acessar conta</h1>
                 <form id="FormLogin" method="post">
                     <div class="label-input">
-                        <label for="login">Login</label>
+                        <label for="login-painel">Login</label>
                         <div class="input">
                             <i class="bi bi-person"></i>
-                            <input type="text" id="login" name="login" autocomplete="username" placeholder="Insira seu login" required>
+                            <input type="text" id="login-painel" name="login" autocomplete="username" placeholder="Insira seu login" required>
                         </div>
                     </div>
 
                     <div class="label-input">
-                        <label for="password">Senha</label>
+                        <label for="password-painel-login">Senha</label>
                         <div class="input">
                             <i class="bi bi-lock"></i>
-                            <input type="password" id="password" name="password" autocomplete="current-password" placeholder="Insira sua senha" required>
+                            <input type="password" id="password-painel-login" name="password" autocomplete="current-password" placeholder="Insira sua senha" required>
 
                             <button type="button" id="togglePassword" tabindex="-1">
                                 <i class="bi bi-eye" id="eyeIcon"></i>
                             </button>
                         </div>
                     </div>
-    
+
                     <button id="btn" type="submit" class="btn-normal"><i class="bi bi-box-arrow-in-right"></i> Entrar</button>
 
                 </form>
-                
+
                 <div id="message" style="display: none;"></div>
             </div>
         </div>
@@ -74,10 +74,9 @@ $_SESSION['logado'] = false;
 </style>
 
 <script>
-
     // Deixa vermelho o campo de login e senha quando estiverem vazios
     // e remove o vermelho quando o usuário digitar algo
-    
+
     const login = document.getElementById('login');
     const password = document.getElementById('password');
 
@@ -109,7 +108,6 @@ $_SESSION['logado'] = false;
         eyeIcon.classList.toggle('bi-eye');
         eyeIcon.classList.toggle('bi-eye-slash');
     });
-
 </script>
 
 <script src="../js/enviarDados.js"></script>

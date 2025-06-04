@@ -15,38 +15,11 @@
         </thead>
 
 
-        <?php
+        <tbody id="corpoTabelaProdutos">
+            <!-- linhas geradas pelo PHP atual (ou pode deixar vazio, vai preencher via AJAX) -->
+            <?php include '../php/tabela_produtos.php'; ?>
+        </tbody>
 
-        require_once '../php/conexao.php';
-
-        try {
-            $sql = "SELECT * FROM product";
-            $stmt = $conn->prepare($sql);
-            $stmt->execute();
-
-            if ($stmt->rowCount() > 0) {
-                while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-                    echo "<tr>";
-                    echo "<td>" . htmlspecialchars($row['product_code']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['name']) . "</td>";
-                    echo "<td>R$ " . number_format($row['price'], 2, ',', '.') . "</td>";
-                    echo "<td>" . htmlspecialchars($row['amount']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['type_packaging']) . "</td>";
-                    echo "<td>" . htmlspecialchars($row['description']) . "</td>";
-                    echo "<td>
-                            <a style='color: black; cursor: pointer;' onclick=\"carregar_pagina_editar('editar-produto', " . $row["product_code"] . ")\"><i class='bi bi-pencil'></i></a> &nbsp &nbsp;
-                            <a style='color: black;' href='#' onclick='excluirProduto(" . $row["product_code"] . ",   ); return false;'><i class='bi bi-trash'></i></a>
-                        </td>";
-                    echo "</tr>";
-                }
-            } else {
-                echo "<tr><td colspan='6'>Nenhum produto cadastrado.</td></tr>";
-            }
-        } catch (PDOException $e) {
-            echo "<tr><td colspan='5'>Erro: " . $e->getMessage() . "</td></tr>";
-        }
-
-        ?>
     </table>
 
 </div>
@@ -61,11 +34,12 @@
             </div>
             <div class="modal-body text-center">
                 <br>
-                <h5>Tem certeza que deseja excluir este produto?</h5>
-                <p><strong id="produtoExcluirNome"></strong></p>
+                <h4>Tem certeza que deseja excluir este produto?</h4>
+                <h5>Nome do produto: <strong id="produtoExcluirNome"></strong></h5>
                 <br>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-danger" id="btnConfirmarExclusao">Excluir</button>
+                <div id="message" style="display: none;"></div>
             </div>
             <!-- <div class="modal-footer justify-content-center">
             </div> -->
@@ -75,40 +49,77 @@
 
 
 <script>
+
+    $(document).ready(function () {
     let produtoIdExcluir = null;
 
-    function excluirProduto(id, nome) {
-        produtoIdExcluir = id;
-        document.getElementById('produtoExcluirNome').textContent = nome;
+    $('#corpoTabelaProdutos').on('click', 'a.excluir-btn', function (e) {
+        e.preventDefault();
+
+        produtoIdExcluir = $(this).data('id');
+        const nomeProduto = $(this).data('nome');
+
+        $("#produtoExcluirNome").text(nomeProduto);
+
         const modal = new bootstrap.Modal(document.getElementById('modalConfirmExclusao'));
         modal.show();
-    }
 
-    // Confirmar exclusão
-    document.getElementById('btnConfirmarExclusao').addEventListener('click', function() {
-        if (produtoIdExcluir) {
-            // Aqui vai seu AJAX para excluir o produto
-            // Exemplo:
-            fetch('../php/excluir_produto.php', {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/x-www-form-urlencoded',
-                    },
-                    body: `id=${encodeURIComponent(produtoIdExcluir)}`
-                })
-                .then(res => res.json())
-                .then(data => {
-                    if (data.success) {
-                        location.reload(); // ou remova a linha diretamente
-                    } else {
-                        alert(data.error || "Erro ao excluir.");
-                    }
-                })
-                .catch(err => {
-                    console.error("Erro:", err);
-                });
+        $("#message").hide().removeClass("success error").text("");
+    });
+
+    // Confirma exclusão
+    $("#btnConfirmarExclusao").on("click", function () {
+        if (!produtoIdExcluir) return;
+
+        $.ajax({
+            url: "../php/excluir_produto.php",
+            type: "POST",
+            data: { id: produtoIdExcluir },
+            dataType: "json",
+            success: function (response) {
+                if (response.success) {
+                    $("#message").removeClass("error").addClass("success")
+                        .text("Produto excluído com sucesso!").fadeIn();
+
+                    setTimeout(function () {
+                        // Fecha o modal
+                        const modalEl = document.getElementById('modalConfirmExclusao');
+                        const modal = bootstrap.Modal.getInstance(modalEl);
+                        modal.hide();
+
+                        // Atualiza só a tabela para refletir a exclusão
+                        atualizarTabelaProdutos();
+
+                    }, 2000);
+                } else {
+                    $("#message").removeClass("success").addClass("error")
+                        .text(response.error || "Erro ao excluir o produto.").fadeIn();
+                }
+            },
+            error: function (xhr, status, error) {
+                console.error("Erro AJAX:", xhr, status, error);
+                $("#message").removeClass("success").addClass("error")
+                    .text("Erro na comunicação com o servidor.").fadeIn();
+            }
+        });
+    });
+});
+
+// Função para atualizar a tabela sem recarregar a página
+function atualizarTabelaProdutos() {
+    $.ajax({
+        url: '../php/tabela_produtos.php', // arquivo PHP que gera só as linhas da tabela (tbody)
+        method: 'GET',
+        success: function (html) {
+            $('#corpoTabelaProdutos').html(html);
+        },
+        error: function () {
+            alert('Erro ao atualizar a tabela de produtos.');
         }
     });
+}
+
+
 
 
     // function excluirProduto(id, elemento) {

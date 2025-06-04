@@ -221,8 +221,8 @@ a {
     font-family: Roboto, Arial, sans-serif;
 }
 
-#password,
-#login {
+#password-painel-login,
+#login-painel {
     min-width: 150px;
     padding-left: 30px;
     /* Espaço para o ícone na esquerda */
