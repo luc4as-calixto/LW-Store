@@ -14,6 +14,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $description = $_POST['description'] ?? '';
         $photo = $_FILES['photo'] ?? null;
 
+        $stmt = "SELECT product_code FROM product WHERE product_code = :product_code";
+        $checkStmt = $conn->prepare($stmt);
+        $checkStmt->bindParam(':product_code', $product_code);
+        $checkStmt->execute();
+        
+        if ($checkStmt->fetch()) {
+            echo json_encode(['error' => 'Já existe um produto cadastrado com este código.']);
+            exit;
+        }        
+
         // Validação dos campos obrigatórios
         if (
             empty($product_code) || empty($name) || empty($price) ||

@@ -1,3 +1,10 @@
+<?php
+
+session_start();
+require_once "../php/conexao.php";
+
+?>
+
 <div class="container mt-4" id="pagina">
     <h1>Relatórios de produtos</h1>
 
@@ -47,79 +54,255 @@
     </div>
 </div>
 
+<!-- modal de edição so falta mostra os dados e atualizar ele -->
+
+<!-- Modal de Editar-->
+<div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content user-modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalEditarLabel">Editar</h5>
+            </div>
+            <div class="modal-body text-center">
+                <h5>Nome do produto: <strong id="produtoEditar"></strong></h5>
+
+                <form id="formProdutoEditar" action="formProdutoEditar" method="POST" enctype="multipart/form-data">
+
+                    <div class="row mb-3">
+                        <!-- Coluna da esquerda -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="name" class="form-label">Nome do Produto</label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Digite o nome do produto*" value="<?php  ?>" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="price" class="form-label">Preço do Produto</label>
+                                <input type="number" step="0.01" class="form-control" id="price" name="price" placeholder="Digite o preço do produto*" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="amount" class="form-label">Quantidade</label>
+                                <input type="number" class="form-control" id="amount" name="amount" placeholder="Digite a quantidade*" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="prouct_code" class="form-label">Código</label>
+                                <input type="text" class="form-control" id="product_code" name="product_code" placeholder="Digite o código do produto*" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="type_packaging" class="form-label">Tipo da embalagem</label>
+                                <select name="type_packaging" id="type_packaging" class="form-select" required>
+                                    <option value="" disabled selected>Selecione o tipo de embalagem</option>
+                                    <option value="Caixa">Caixa</option>
+                                    <option value="Saco">Saco</option>
+                                    <option value="Lata">Lata</option>
+                                    <option value="Pacote">Pacote</option>
+                                    <option value="Garrafa">Garrafa</option>
+                                    <option value="Outro">Outro</option>
+                                </select>
+                            </div>
+
+                            <p style="text-align: left;">( * ) campos obrigatórios</p>
+
+                        </div>
+
+                        <!-- Coluna da direita -->
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="photo" class="form-label">Foto do Produto</label>
+                                <div class="d-flex align-items-center gap-3">
+                                    <!-- Input de arquivo -->
+                                    <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
+
+                                    <!-- Pré-visualização da imagem -->
+                                    <div id="preview-container">
+                                        <?php if (!empty($_SESSION['photo']) && isset($_SESSION['photo'])): ?>
+                                            <img src="../uploads/<?php echo $_SESSION['photo']; ?>" alt="Foto do Produto"
+                                                width="100" height="100"
+                                                style="object-fit: cover; border-radius: 8px; border: 1px solid #ccc;">
+                                        <?php else: ?>
+                                            <!-- Imagem padrão caso não tenha upload -->
+                                            <img src="../uploads/produto-sem-imagem.webp" alt="Foto do Produto"
+                                                width="100" height="100"
+                                                style="object-fit: cover; border-radius: 8px; border: 1px solid #ccc;">
+                                        <?php endif; ?>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Descrição</label>
+                                <textarea name="description" id="description" class="form-control" style="resize: none;" rows="9" placeholder="Descreva o produto aqui..." required></textarea>
+                            </div>
+                        </div>
+                    </div>
+                    <button id="btn-editar" type="submit" class="btn-normal"><i class="bi bi-tags"></i> Cadastrar Produto</button>
+
+                    <div id="message" style="display: none;"></div>
+
+                </form>
+                <script src="../js/enviardados.js"></script>
+            </div>
+            <!-- <div class="modal-footer justify-content-center">
+            </div> -->
+
+            <script>
+                document.getElementById('photo').addEventListener('change', function(event) {
+                    const file = event.target.files[0];
+                    if (!file) return;
+
+                    const preview = document.createElement('img');
+                    preview.width = 100;
+                    preview.height = 100;
+                    preview.style.objectFit = 'cover';
+                    preview.style.borderRadius = '8px';
+                    preview.style.border = '1px solid #ccc';
+
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        preview.src = e.target.result;
+
+                        const container = document.getElementById('preview-container');
+                        container.innerHTML = '';
+                        container.appendChild(preview);
+                    };
+                    reader.readAsDataURL(file);
+                });
+            </script>
+
+        </div>
+    </div>
+</div>
+
 
 <script>
+    $(document).ready(function() {
+        let produtoIdExcluir = null;
 
-    $(document).ready(function () {
-    let produtoIdExcluir = null;
+        $('#corpoTabelaProdutos').on('click', 'a.excluir-btn', function(e) {
+            e.preventDefault();
 
-    $('#corpoTabelaProdutos').on('click', 'a.excluir-btn', function (e) {
-        e.preventDefault();
+            produtoIdExcluir = $(this).data('id');
+            const nomeProduto = $(this).data('nome');
 
-        produtoIdExcluir = $(this).data('id');
-        const nomeProduto = $(this).data('nome');
+            $("#produtoExcluirNome").text(nomeProduto);
 
-        $("#produtoExcluirNome").text(nomeProduto);
+            const modal = new bootstrap.Modal(document.getElementById('modalConfirmExclusao'));
+            modal.show();
 
-        const modal = new bootstrap.Modal(document.getElementById('modalConfirmExclusao'));
-        modal.show();
+            $("#message").hide().removeClass("success error").text("");
+        });
 
-        $("#message").hide().removeClass("success error").text("");
+        // Confirma exclusão
+        $("#btnConfirmarExclusao").on("click", function() {
+            if (!produtoIdExcluir) return;
+
+            $.ajax({
+                url: "../php/excluir_produto.php",
+                type: "POST",
+                data: {
+                    id: produtoIdExcluir
+                },
+                dataType: "json",
+                success: function(response) {
+                    if (response.success) {
+                        $("#message").removeClass("error").addClass("success")
+                            .text("Produto excluído com sucesso!").fadeIn();
+
+                        setTimeout(function() {
+                            // Fecha o modal
+                            const modalEl = document.getElementById('modalConfirmExclusao');
+                            const modal = bootstrap.Modal.getInstance(modalEl);
+                            modal.hide();
+
+                            // Atualiza só a tabela para refletir a exclusão
+                            atualizarTabelaProdutos();
+
+                        }, 2000);
+                    } else {
+                        $("#message").removeClass("success").addClass("error")
+                            .text(response.error || "Erro ao excluir o produto.").fadeIn();
+                    }
+                },
+                error: function(xhr, status, error) {
+                    console.error("Erro AJAX:", xhr, status, error);
+                    $("#message").removeClass("success").addClass("error")
+                        .text("Erro na comunicação com o servidor.").fadeIn();
+                }
+            });
+        });
     });
 
-    // Confirma exclusão
-    $("#btnConfirmarExclusao").on("click", function () {
-        if (!produtoIdExcluir) return;
 
+    //  tem que arrumar aqui para mostrar os dados no modal
+
+
+
+    //modal de edição
+    $('#corpoTabelaProdutos').on('click', 'a.editar-btn', function(e) {
+        e.preventDefault();
+
+        const id = $(this).data('id');
+
+        // Abre o modal
+        const modalEditar = new bootstrap.Modal(document.getElementById('modalEditar'));
+        modalEditar.show();
+
+        $("#message").hide().removeClass("success error").text("");
+
+        // Faz uma requisição para buscar os dados do produto
         $.ajax({
-            url: "../php/excluir_produto.php",
-            type: "POST",
-            data: { id: produtoIdExcluir },
-            dataType: "json",
-            success: function (response) {
+            url: '../php/get_produto.php',
+            type: 'GET',
+            data: {
+                id: id
+            },
+            dataType: 'json',
+            success: function(response) {
                 if (response.success) {
-                    $("#message").removeClass("error").addClass("success")
-                        .text("Produto excluído com sucesso!").fadeIn();
+                    const produto = response.data;
 
-                    setTimeout(function () {
-                        // Fecha o modal
-                        const modalEl = document.getElementById('modalConfirmExclusao');
-                        const modal = bootstrap.Modal.getInstance(modalEl);
-                        modal.hide();
+                    // Preenche os inputs do formulário
+                    $('#product_code').val(produto.product_code);
+                    $('#name').val(produto.name);
+                    $('#price').val(produto.price);
+                    $('#amoun').val(produto.amount);
+                    $('#type_packaging').val(produto.type_packaging);
+                    $('#description').val(produto.description);
+                    $('#photo').val(produto.photo); // se necessário, ajuste para o caminho correto
+                    // Adicione mais campos conforme sua tabela
 
-                        // Atualiza só a tabela para refletir a exclusão
-                        atualizarTabelaProdutos();
-
-                    }, 2000);
+                    $('#produtoEditar').text(produto.nome); // título do modal
                 } else {
-                    $("#message").removeClass("success").addClass("error")
-                        .text(response.error || "Erro ao excluir o produto.").fadeIn();
+                    alert(response.error || 'Erro ao buscar os dados do produto.');
+                    modalEditar.hide();
                 }
             },
-            error: function (xhr, status, error) {
-                console.error("Erro AJAX:", xhr, status, error);
-                $("#message").removeClass("success").addClass("error")
-                    .text("Erro na comunicação com o servidor.").fadeIn();
+            error: function(xhr, status, error) {
+                console.error('Erro AJAX:', xhr, status, error);
+                alert('Erro na comunicação com o servidor.');
+                modalEditar.hide();
             }
         });
     });
-});
-
-// Função para atualizar a tabela sem recarregar a página
-function atualizarTabelaProdutos() {
-    $.ajax({
-        url: '../php/tabela_produtos.php', // arquivo PHP que gera só as linhas da tabela (tbody)
-        method: 'GET',
-        success: function (html) {
-            $('#corpoTabelaProdutos').html(html);
-        },
-        error: function () {
-            alert('Erro ao atualizar a tabela de produtos.');
-        }
-    });
-}
 
 
+    // Função para atualizar a tabela sem recarregar a página
+    function atualizarTabelaProdutos() {
+        $.ajax({
+            url: '../php/tabela_produtos.php', // arquivo PHP que gera só as linhas da tabela (tbody)
+            method: 'GET',
+            success: function(html) {
+                $('#corpoTabelaProdutos').html(html);
+            },
+            error: function() {
+                alert('Erro ao atualizar a tabela de produtos.');
+            }
+        });
+
+    }
 
 
     // function excluirProduto(id, elemento) {

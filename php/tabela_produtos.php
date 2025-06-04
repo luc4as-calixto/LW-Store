@@ -16,7 +16,8 @@ try {
             echo "<td>" . htmlspecialchars($row['type_packaging']) . "</td>";
             echo "<td>" . htmlspecialchars($row['description']) . "</td>";
             echo "<td style='display: flex; justify-content: center; gap: 40px;'>
-                    <a style='color: black; cursor: pointer;' onclick=\"carregar_pagina_editar('editar-produto', " . json_encode($row["product_code"]) . ")\">
+                    <a style='color: black; cursor: pointer;' href='#' 
+                    class='editar-btn' data-id='" . htmlspecialchars($row['product_code']) . "' data-nome='" . htmlspecialchars($row['name']) . "'> 
                         <i class='bi bi-pencil'></i>
                     </a>
                     <a style='color: black; cursor: pointer;' href='#' class='excluir-btn' data-id='" . htmlspecialchars($row['product_code']) . "' data-nome='" . htmlspecialchars($row['name']) . "'>

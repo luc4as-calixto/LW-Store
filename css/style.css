@@ -182,16 +182,22 @@ body {
     color: #36b9cc;
 }
 
-.dashboard-item[data-page="produtos"] i {
+.dashboard-item[data-page="produtos"] i,
+.dashboard-item[data-page="relatorio-produtos"] i {
     color: #1cc88a;
 }
 
-.dashboard-item[data-page="clientes"] i {
+.dashboard-item[data-page="clientes"] i,
+.dashboard-item[data-page="relatorio-clientes"] i  {
     color: #f6c23e;
 }
 
 .dashboard-item[data-page="relatorios"] i {
     color: #e74a3b;
+}
+
+.dashboard-item[data-page="relatorio-vendedores"] i {
+    color: #1f4db1;
 }
 
 a {
