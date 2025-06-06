@@ -268,7 +268,7 @@ require_once "../php/conexao.php";
                     $('#product_code').val(produto.product_code);
                     $('#name').val(produto.name);
                     $('#price').val(produto.price);
-                    $('#amoun').val(produto.amount);
+                    $('#amount').val(produto.amount);
                     $('#type_packaging').val(produto.type_packaging);
                     $('#description').val(produto.description);
                     $('#photo').val(produto.photo); // se necessário, ajuste para o caminho correto

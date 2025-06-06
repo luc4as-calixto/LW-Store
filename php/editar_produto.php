@@ -1,7 +1,7 @@
 <?php
 header('Content-Type: application/json');
 session_start();
-require_once "conexao.php";
+require_once "../php/conexao.php";
 
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try {

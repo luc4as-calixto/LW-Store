@@ -8,7 +8,7 @@ require_once '../php/conexao.php'; // ou seu arquivo de conexão
 $id = isset($_GET['id']) ? intval($_GET['id']) : 0;
 
 if ($id > 0) {
-    $stmt = $conn->prepare("SELECT * FROM product WHERE id = ?");
+    $stmt = $conn->prepare("SELECT * FROM product WHERE product_code = ?");
     $stmt->execute([$id]);
     $produto = $stmt->fetch(PDO::FETCH_ASSOC);
 

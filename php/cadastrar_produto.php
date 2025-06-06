@@ -14,15 +14,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $description = $_POST['description'] ?? '';
         $photo = $_FILES['photo'] ?? null;
 
-        $stmt = "SELECT product_code FROM product WHERE product_code = :product_code";
-        $checkStmt = $conn->prepare($stmt);
+        // Verifica se já existe um produto com o mesmo código
+        $checkSql = "SELECT 1 FROM product WHERE product_code = :product_code";
+        $checkStmt = $conn->prepare($checkSql);
         $checkStmt->bindParam(':product_code', $product_code);
         $checkStmt->execute();
-        
-        if ($checkStmt->fetch()) {
+
+        $isDuplicated = $checkStmt->fetchColumn();
+        if ($isDuplicated) {
             echo json_encode(['error' => 'Já existe um produto cadastrado com este código.']);
             exit;
-        }        
+        }
+
 
         // Validação dos campos obrigatórios
         if (
@@ -39,7 +42,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $pasta = "../uploads/";
             $nome_original = basename($photo["name"]);
             $extensao = pathinfo($nome_original, PATHINFO_EXTENSION);
-            $novo_nome = uniqid() . "." . $extensao;    
+            $novo_nome = uniqid() . "." . $extensao;
             $caminho_salvar = $pasta . $novo_nome;
 
             if (!move_uploaded_file($photo["tmp_name"], $caminho_salvar)) {
@@ -68,7 +71,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             'success' => true,
             'message' => 'Produto cadastrado com sucesso!'
         ]);
-
     } catch (Exception $e) {
         echo json_encode(['error' => 'Erro ao cadastrar produto: ' . $e->getMessage()]);
         exit;
