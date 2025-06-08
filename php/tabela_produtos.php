@@ -3,7 +3,7 @@ require_once '../php/conexao.php';
 
 try {
     $sql = "SELECT * FROM product";
-    $stmt = $conn->prepare($sql);
+    $stmt = $conn->prepare($sql);   
     $stmt->execute();
 
     if ($stmt->rowCount() > 0) {
@@ -17,7 +17,7 @@ try {
             echo "<td>" . htmlspecialchars($row['description']) . "</td>";
             echo "<td style='display: flex; justify-content: center; gap: 40px;'>
                     <a style='color: black; cursor: pointer;' href='#' 
-                    class='editar-btn' data-id='" . htmlspecialchars($row['product_code']) . "' data-nome='" . htmlspecialchars($row['name']) . "'> 
+                    class='editar-btn view_data' id='" . htmlspecialchars($row['product_code']) . "' data-id='" . htmlspecialchars($row['product_code']) . "' data-nome='" . htmlspecialchars($row['name']) . "'> 
                         <i class='bi bi-pencil'></i>
                     </a>
                     <a style='color: black; cursor: pointer;' href='#' class='excluir-btn' data-id='" . htmlspecialchars($row['product_code']) . "' data-nome='" . htmlspecialchars($row['name']) . "'>

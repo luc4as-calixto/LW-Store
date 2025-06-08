@@ -66,33 +66,33 @@ require_once "../php/conexao.php";
             <div class="modal-body text-center">
                 <h5>Nome do produto: <strong id="produtoEditar"></strong></h5>
 
-                <form id="formProdutoEditar" action="formProdutoEditar" method="POST" enctype="multipart/form-data">
+                <form id="formProdutoEditar" method="POST" enctype="multipart/form-data">
 
                     <div class="row mb-3">
                         <!-- Coluna da esquerda -->
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="name" class="form-label">Nome do Produto</label>
+                                <label style="text-align:left" for="name" class="form-label">Nome do Produto</label>
                                 <input type="text" class="form-control" id="name" name="name" placeholder="Digite o nome do produto*" value="<?php  ?>" required>
                             </div>
 
                             <div class="mb-3">
-                                <label for="price" class="form-label">Preço do Produto</label>
+                                <label style="text-align:left" for="price" class="form-label">Preço do Produto</label>
                                 <input type="number" step="0.01" class="form-control" id="price" name="price" placeholder="Digite o preço do produto*" required>
                             </div>
 
                             <div class="mb-3">
-                                <label for="amount" class="form-label">Quantidade</label>
+                                <label style="text-align:left" for="amount" class="form-label">Quantidade</label>
                                 <input type="number" class="form-control" id="amount" name="amount" placeholder="Digite a quantidade*" required>
                             </div>
 
                             <div class="mb-3">
-                                <label for="prouct_code" class="form-label">Código</label>
+                                <label style="text-align:left" for="prouct_code" class="form-label">Código</label>
                                 <input type="text" class="form-control" id="product_code" name="product_code" placeholder="Digite o código do produto*" required>
                             </div>
 
                             <div class="mb-3">
-                                <label for="type_packaging" class="form-label">Tipo da embalagem</label>
+                                <label style="text-align:left" for="type_packaging" class="form-label">Tipo da embalagem</label>
                                 <select name="type_packaging" id="type_packaging" class="form-select" required>
                                     <option value="" disabled selected>Selecione o tipo de embalagem</option>
                                     <option value="Caixa">Caixa</option>
@@ -111,7 +111,7 @@ require_once "../php/conexao.php";
                         <!-- Coluna da direita -->
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label for="photo" class="form-label">Foto do Produto</label>
+                                <label style="text-align:left" for="photo" class="form-label">Foto do Produto</label>
                                 <div class="d-flex align-items-center gap-3">
                                     <!-- Input de arquivo -->
                                     <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
@@ -133,12 +133,12 @@ require_once "../php/conexao.php";
                             </div>
 
                             <div class="mb-3">
-                                <label for="description" class="form-label">Descrição</label>
+                                <label style="text-align:left" for="description" class="form-label">Descrição</label>
                                 <textarea name="description" id="description" class="form-control" style="resize: none;" rows="9" placeholder="Descreva o produto aqui..." required></textarea>
                             </div>
                         </div>
                     </div>
-                    <button id="btn-editar" type="submit" class="btn-normal"><i class="bi bi-tags"></i> Cadastrar Produto</button>
+                    <button id="btn-editar" type="submit" class="btn-normal"><i class="bi bi-tags"></i> Editar Produto</button>
 
                     <div id="message" style="display: none;"></div>
 
@@ -235,58 +235,32 @@ require_once "../php/conexao.php";
         });
     });
 
-
-    //  tem que arrumar aqui para mostrar os dados no modal
-
-
-
     //modal de edição
-    $('#corpoTabelaProdutos').on('click', 'a.editar-btn', function(e) {
-        e.preventDefault();
+    $(document).ready(function() {
+        $(document).on('click', '.view_data', function() {
+            var id = $(this).attr("id");
+            // alert("ID do produto: " + id);
+            // verifica se há valor na variável user_id
+            if (id !== '') {
+                var dados = {
+                    product_code: id
+                }
+                $.post('../php/editar.php', dados, function(retorno) {
+                    var produto = JSON.parse(retorno);
 
-        const id = $(this).data('id');
-
-        // Abre o modal
-        const modalEditar = new bootstrap.Modal(document.getElementById('modalEditar'));
-        modalEditar.show();
-
-        $("#message").hide().removeClass("success error").text("");
-
-        // Faz uma requisição para buscar os dados do produto
-        $.ajax({
-            url: '../php/get_produto.php',
-            type: 'GET',
-            data: {
-                id: id
-            },
-            dataType: 'json',
-            success: function(response) {
-                if (response.success) {
-                    const produto = response.data;
-
-                    // Preenche os inputs do formulário
-                    $('#product_code').val(produto.product_code);
                     $('#name').val(produto.name);
                     $('#price').val(produto.price);
                     $('#amount').val(produto.amount);
                     $('#type_packaging').val(produto.type_packaging);
                     $('#description').val(produto.description);
-                    $('#photo').val(produto.photo); // se necessário, ajuste para o caminho correto
-                    // Adicione mais campos conforme sua tabela
+                    $('#product_code').val(produto.product_code);
 
-                    $('#produtoEditar').text(produto.nome); // título do modal
-                } else {
-                    alert(response.error || 'Erro ao buscar os dados do produto.');
-                    modalEditar.hide();
-                }
-            },
-            error: function(xhr, status, error) {
-                console.error('Erro AJAX:', xhr, status, error);
-                alert('Erro na comunicação com o servidor.');
-                modalEditar.hide();
+                    var modal = new bootstrap.Modal(document.getElementById('modalEditar'));
+                    modal.show();
+                });
             }
-        });
-    });
+        })
+    })
 
 
     // Função para atualizar a tabela sem recarregar a página
