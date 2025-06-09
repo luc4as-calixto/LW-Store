@@ -14,16 +14,14 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $description = $_POST['description'] ?? '';
         $photo = $_FILES['photo'] ?? null;
 
-        // Verifica se já existe um produto com o mesmo código
-        $checkSql = "SELECT COUNT(*) FROM product WHERE product_code = :product_code";
-        $checkStmt = $conn->prepare($checkSql);
-        $checkStmt->bindParam(':product_code', $product_code, PDO::PARAM_STR);
-        $checkStmt->execute();
-
-        $productExists = $checkStmt->fetchColumn();
-
-        if ($productExists > 0) {
-            echo json_encode(['error' => 'Já existe um produto com esse código.']);
+       
+        $stmt1 = $conn->prepare("SELECT product_code FROM product WHERE product_code =:product_code");
+        $stmt1->bindParam(':product_code', $product_code);
+        $stmt1->execute();        
+        $rowCount = $stmt1->rowCount();
+        if ($rowCount > 0) {           
+            echo json_encode(['error' => $rowCount . ' já existe.']);
+            //echo json_encode(['error' => 'Já existe um produto cadastrado com este código.']);
             exit;
         }
 
@@ -72,6 +70,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             'success' => true,
             'message' => 'Produto cadastrado com sucesso!'
         ]);
+
     } catch (Exception $e) {
         echo json_encode(['error' => 'Erro ao cadastrar produto: ' . $e->getMessage()]);
         exit;
