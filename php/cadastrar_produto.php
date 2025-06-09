@@ -6,7 +6,7 @@ require_once "conexao.php";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try {
         // Recebendo dados do formulário
-        $product_code = $_POST['product_code'] ?? '';
+        $product_code = trim($_POST['product_code'] ?? '');
         $name = $_POST['name'] ?? '';
         $price = $_POST['price'] ?? '';
         $amount = $_POST['amount'] ?? '';
@@ -15,14 +15,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $photo = $_FILES['photo'] ?? null;
 
         // Verifica se já existe um produto com o mesmo código
-        $checkSql = "SELECT 1 FROM product WHERE product_code = :product_code";
+        $checkSql = "SELECT COUNT(*) FROM product WHERE product_code = :product_code";
         $checkStmt = $conn->prepare($checkSql);
-        $checkStmt->bindParam(':product_code', $product_code);
+        $checkStmt->bindParam(':product_code', $product_code, PDO::PARAM_STR);
         $checkStmt->execute();
 
-        $isDuplicated = $checkStmt->fetchColumn();
-        if ($isDuplicated) {
-            echo json_encode(['error' => 'Já existe um produto cadastrado com este código.']);
+        $productExists = $checkStmt->fetchColumn();
+
+        if ($productExists > 0) {
+            echo json_encode(['error' => 'Já existe um produto com esse código.']);
             exit;
         }
 

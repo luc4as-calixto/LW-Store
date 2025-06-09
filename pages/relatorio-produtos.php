@@ -118,16 +118,9 @@ require_once "../php/conexao.php";
 
                                     <!-- Pré-visualização da imagem -->
                                     <div id="preview-container">
-                                        <?php if (!empty($_SESSION['photo']) && isset($_SESSION['photo'])): ?>
-                                            <img src="../uploads/<?php echo $_SESSION['photo']; ?>" alt="Foto do Produto"
-                                                width="100" height="100"
-                                                style="object-fit: cover; border-radius: 8px; border: 1px solid #ccc;">
-                                        <?php else: ?>
-                                            <!-- Imagem padrão caso não tenha upload -->
-                                            <img src="../uploads/produto-sem-imagem.webp" alt="Foto do Produto"
-                                                width="100" height="100"
-                                                style="object-fit: cover; border-radius: 8px; border: 1px solid #ccc;">
-                                        <?php endif; ?>
+                                        <img id="imagemAtual" src="../uploads/produto-sem-imagem.webp" alt="Foto do Produto"
+                                            width="100" height="100"
+                                            style="object-fit: cover; border-radius: 8px; border: 1px solid #ccc;">
                                     </div>
                                 </div>
                             </div>
@@ -245,7 +238,7 @@ require_once "../php/conexao.php";
                 var dados = {
                     product_code: id
                 }
-                $.post('../php/editar.php', dados, function(retorno) {
+                $.post('../php/painel_editar.php', dados, function(retorno) {
                     var produto = JSON.parse(retorno);
 
                     $('#name').val(produto.name);
@@ -254,6 +247,12 @@ require_once "../php/conexao.php";
                     $('#type_packaging').val(produto.type_packaging);
                     $('#description').val(produto.description);
                     $('#product_code').val(produto.product_code);
+
+                    if (produto.photo && produto.photo !== '') {
+                        $('#imagemAtual').attr('src', '../uploads/' + produto.photo);
+                    } else {
+                        $('#imagemAtual').attr('src', '../uploads/produto-sem-imagem.webp');
+                    }
 
                     var modal = new bootstrap.Modal(document.getElementById('modalEditar'));
                     modal.show();
