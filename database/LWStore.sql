@@ -31,7 +31,7 @@ CREATE TABLE customers (
     id_customer INT PRIMARY KEY AUTO_INCREMENT,
     fk_id_user INT,
 
-    CONSTRAINT fk_user FOREIGN KEY (fk_id_user) REFERENCES users(id_user)
+    CONSTRAINT fk_user_customer FOREIGN KEY (fk_id_user) REFERENCES users(id_user)
 );
 
 CREATE TABLE cart (
@@ -49,7 +49,8 @@ CREATE TABLE itens_cart (
 );
 
 CREATE TABLE product (
-    product_code VARCHAR(20) PRIMARY KEY,
+    product_id INT PRIMARY KEY AUTO_INCREMENT,
+    product_code VARCHAR(50) NOT NULL UNIQUE,
     name VARCHAR(100) NOT NULL, 
     price DECIMAL(10, 2) NOT NULL,
     amount INT NOT NULL,
