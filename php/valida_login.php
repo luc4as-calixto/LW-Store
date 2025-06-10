@@ -8,21 +8,29 @@ try {
     $checkStmt->execute([':login' => 'admin']);
     if ($checkStmt->fetchColumn() == 0) {
         $hashedPassword = password_hash('admin', PASSWORD_DEFAULT);
-        $insertStmt = $conn->prepare("INSERT INTO users (login, name, password, email, cpf, telephone, address, gender, birthdate, type_user, photo)
-            VALUES (:login, :name, :password, :email, :cpf, :telephone, :address, :gender, :birthdate, :type_user, :photo)");
+        $insertStmt = $conn->prepare("INSERT INTO users (login, password, type_user)
+            VALUES (:login, :password, :type_user)");
         $insertStmt->execute([
             ':login' => 'admin',
-            ':name' => 'administrador',
             ':password' => $hashedPassword,
-            ':email' => 'admin@admin.com',
+            ':type_user' => 'admin',
+        ]);
+
+        $insertStmtSeller = $conn->prepare("
+        INSERT INTO sellers (name, email, cpf, telephone, address, gender, birthdate, photo, fk_id_user)
+        VALUES (:name, :email, :cpf, :telephone, :address, :gender, :birthdate, :photo, (SELECT id_user FROM users WHERE login = 'admin'))");
+
+        $insertStmtSeller->execute([
+            ':name' => 'Administrador',
+            ':email' => 'admin@gmail.com',
             ':cpf' => '12345678901',
-            ':telephone' => '1234567890',
-            ':address' => '123 Main St',
+            ':telephone' => '11999999999',
+            ':address' => 'Rua admin, 123',
             ':gender' => 'M',
             ':birthdate' => '2000-01-01',
-            ':type_user' => 'admin',
-            ':photo' => null
-        ]);
+            ':photo' => 'sem-foto.jpg'
+        ]);        
+
     }
 } catch (PDOException $e) {
     // Você pode logar o erro se necessário
@@ -37,22 +45,29 @@ try {
     $stmt = $conn->prepare("SELECT * FROM users WHERE login = :login");
     $stmt->bindParam(':login', $login);
     $stmt->execute();
-
     $user = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    $stmt = $conn->prepare("SELECT * FROM sellers WHERE fk_id_user = :id_user");
+    $stmt->bindParam(':id_user', $user['id_user']);
+    $stmt->execute();
+    $sellers = $stmt->fetch(PDO::FETCH_ASSOC);
+
     if ($user && password_verify($password, $user['password']) && $user['login'] == $login) {
         $_SESSION['id_user'] = $user['id_user'];
         $_SESSION['login'] = $user['login'];
         $_SESSION['password'] = $user['password'];
-        $_SESSION['name'] = $user['name'];
-        $_SESSION['email'] = $user['email'];
-        $_SESSION['cpf'] = $user['cpf'];
-        $_SESSION['telephone'] = $user['telephone'];
-        $_SESSION['address'] = $user['address'];
-        $_SESSION['gender'] = $user['gender'];
-        $_SESSION['birthdate'] = $user['birthdate'];
         $_SESSION['type_user'] = $user['type_user'];
+
+        $_SESSION['name'] = $sellers['name'];
+        $_SESSION['email'] = $sellers['email'];
+        $_SESSION['cpf'] = $sellers['cpf'];
+        $_SESSION['telephone'] = $sellers['telephone'];
+        $_SESSION['address'] = $sellers['address'];
+        $_SESSION['gender'] = $sellers['gender'];
+        $_SESSION['birthdate'] = $sellers['birthdate'];
+        $_SESSION['photo'] = !empty($sellers['photo']) ? $sellers['photo'] : 'sem-foto.jpg';
+
         $_SESSION['logado'] = true;
-        $_SESSION['photo'] = !empty($user['photo']) ? $user['photo'] : 'sem-foto.jpg';
 
         echo json_encode([
             'success' => true,
@@ -76,4 +91,3 @@ try {
         'message' => 'Erro inesperado: ' . $e->getMessage()
     ]);
 }
-?>

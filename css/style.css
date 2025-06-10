@@ -554,3 +554,31 @@ table tbody tr:hover {
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
+
+#btnPesquisar {
+    margin-top: 4px;
+    height: 40px;
+    background-color: #4e73df;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#btnLimparPesquisa {
+    margin-top: 4px;
+    height: 40px;
+    background-color: #e74a3b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+a {
+    color: black;
+}

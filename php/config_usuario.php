@@ -52,12 +52,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             exit;
         }
 
-        $sql = "UPDATE users SET name = :name, login = :login, email = :email, password = :password, photo = :photo WHERE id_user = :id_user";
+        $sql = "UPDATE users SET login = :login, password = :password WHERE id_user = :id_user";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':login', $login);
+        $stmt->bindParam(':password', $new_password);
+        $stmt->bindParam(':id_user', $id_user, PDO::PARAM_INT);
+        $stmt->execute();
+
+        $sql = "UPDATE sellers SET name = :name, email = :email, photo = :photo WHERE fk_id_user = :id_user";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':login', $login);
         $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':password', $new_password);
         $stmt->bindParam(':photo', $caminho_salvar);
         $stmt->bindParam(':id_user', $id_user, PDO::PARAM_INT);
         $stmt->execute();
