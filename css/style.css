@@ -579,3 +579,31 @@ table tbody tr:hover {
   transition: transform 0.7s ease-in-out, opacity 0.7s ease-in-out;
   pointer-events: none;
 }
+
+#btnPesquisar {
+    margin-top: 4px;
+    height: 40px;
+    background-color: #4e73df;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#btnLimparPesquisa {
+    margin-top: 4px;
+    height: 40px;
+    background-color: #e74a3b;
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+a {
+    color: black;
+}

@@ -99,7 +99,8 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
             <div class="collapse" id="administracao">
                 <a href="#" class="nav-link submenu" data-page="usuarios">Usuários</a>
                 <a href="#" class="nav-link submenu" data-page="permissoes">Permissões</a>
-                <a href="#" class="nav-link submenu" data-page="configuracoes">Configurações</a>
+                <a href="#" class="nav-link submenu" data-bs-toggle="modal" data-bs-target="#modalConfigUsuario">Configurações</a>
+            </a>
             </div>
         </nav>
     </div>
@@ -198,12 +199,6 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                                 </div>
                             </div>
 
-                            <div class="col-12">
-                                <div class="form-check mt-3">
-                                    <input class="form-check-input" type="checkbox" id="inadmin" name="inadmin" <?php echo ($_SESSION['type_user'] == "admin") ? 'checked' : ''; ?>>
-                                    <label class="form-check-label" for="inadmin">Administrador</label>
-                                </div>
-                            </div>
                         </div>
                     </div>
                     <div class="modal-footer d-flex justify-content-center">

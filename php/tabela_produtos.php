@@ -1,9 +1,16 @@
 <?php
 require_once '../php/conexao.php';
 
+// Receber parâmetros de paginação
+$limite = isset($_GET['limite']) ? (int)$_GET['limite'] : 10;
+$pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+$offset = ($pagina - 1) * $limite;
+
 try {
-    $sql = "SELECT * FROM product";
-    $stmt = $conn->prepare($sql);   
+    $sql = "SELECT * FROM product WHERE amount > 0 ORDER BY product_code DESC LIMIT :limite OFFSET :offset";
+    $stmt = $conn->prepare($sql);
+    $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
     $stmt->execute();
 
     if ($stmt->rowCount() > 0) {

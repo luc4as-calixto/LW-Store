@@ -3,10 +3,45 @@
 session_start();
 require_once "../php/conexao.php";
 
+// Quantidade de produtos por página
+$limite = 5;
+
+// Página atual (padrão: 1)
+$pagina = isset($_GET['pagina']) && is_numeric($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+
+// Cálculo do OFFSET
+$offset = ($pagina - 1) * $limite;
+
+// Total de produtos (para calcular o número de páginas)
+$totalProdutos = $conn->query("SELECT COUNT(*) FROM product")->fetchColumn();
+$totalPaginas = ceil($totalProdutos / $limite);
+
+// Buscar produtos da página atual
+$stmt = $conn->prepare("SELECT * FROM product WHERE amount > 0 ORDER BY product_code DESC LIMIT :limite OFFSET :offset");
+
+$stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
+$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+$stmt->execute();
+$produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <div class="container mt-4" id="pagina">
     <h1>Relatórios de produtos</h1>
+
+    <!-- Campo de pesquisa -->
+    <div class="row mb-3">
+        <div class="col-md-6">
+            <div class="input-group">
+                <input type="text" id="pesquisaProduto" class="form-control" placeholder="Pesquisar produtos...">
+                <button class="btn btn-primary" type="button" id="btnPesquisar">
+                    <i class="bi bi-search"></i> Pesquisar
+                </button>
+                <button class="btn btn-secondary" type="button" id="btnLimparPesquisa" style="display:none;">
+                    <i class="bi bi-x-circle"></i> Limpar
+                </button>
+            </div>
+        </div>
+    </div>
 
     <table>
         <thead>
@@ -23,11 +58,18 @@ require_once "../php/conexao.php";
 
 
         <tbody id="corpoTabelaProdutos">
-            <!-- linhas geradas pelo PHP atual (ou pode deixar vazio, vai preencher via AJAX) -->
             <?php include '../php/tabela_produtos.php'; ?>
         </tbody>
 
     </table>
+
+    <!-- Div da paginação -->
+    <nav aria-label="Navegação de página" class="mt-4">
+        <div id="paginacaoProdutos">
+            <!-- Paginação será carregada aqui -->
+        </div>
+    </nav>
+
 
 </div>
 
@@ -87,7 +129,7 @@ require_once "../php/conexao.php";
                             </div>
 
                             <div class="mb-3">
-                                <label style="text-align:left" for="prouct_code" class="form-label">Código</label>
+                                <label style="text-align:left" for="product_code" class="form-label">Código</label>
                                 <input type="text" class="form-control" id="product_code" name="product_code" placeholder="Digite o código do produto*" required>
                             </div>
 
@@ -103,8 +145,6 @@ require_once "../php/conexao.php";
                                     <option value="Outro">Outro</option>
                                 </select>
                             </div>
-
-                            <p style="text-align: left;">( * ) campos obrigatórios</p>
 
                         </div>
 
@@ -261,12 +301,18 @@ require_once "../php/conexao.php";
         })
     })
 
+    // Função para atualizar a tabela de produtos e a paginação
+    function atualizarTabelaProdutos(pagina = 1) {
+        const limite = <?php echo $limite; ?>;
 
-    // Função para atualizar a tabela sem recarregar a página
-    function atualizarTabelaProdutos() {
+        // Atualiza tabela
         $.ajax({
-            url: '../php/tabela_produtos.php', // arquivo PHP que gera só as linhas da tabela (tbody)
+            url: '../php/tabela_produtos.php',
             method: 'GET',
+            data: {
+                pagina,
+                limite
+            },
             success: function(html) {
                 $('#corpoTabelaProdutos').html(html);
             },
@@ -275,6 +321,87 @@ require_once "../php/conexao.php";
             }
         });
 
+        // Atualiza paginação
+        $.ajax({
+            url: '../php/paginacao_produtos.php',
+            method: 'GET',
+            data: {
+                pagina,
+                limite
+            },
+            success: function(html) {
+                $('#paginacaoProdutos').html(html);
+            },
+            error: function() {
+                alert('Erro ao atualizar a paginação.');
+            }
+        });
     }
 
+    // Função para pesquisar produtos
+    function pesquisarProdutos(termo, pagina = 1) {
+        const limite = <?php echo $limite; ?>;
+
+        $.ajax({
+            url: '../php/pesquisa_produtos.php',
+            method: 'GET',
+            data: {
+                termo: termo,
+                pagina: pagina,
+                limite: limite
+            },
+            success: function(html) {
+                $('#corpoTabelaProdutos').html(html);
+
+                // Atualiza a paginação para a pesquisa
+                $.ajax({
+                    url: '../php/paginacao_produtos.php',
+                    method: 'GET',
+                    data: {
+                        termo: termo,
+                        pagina: pagina,
+                        limite: limite
+                    },
+                    success: function(html) {
+                        $('#paginacaoProdutos').html(html);
+                    }
+                });
+            },
+            error: function() {
+                alert('Erro ao pesquisar produtos.');
+            }
+        });
+    }
+
+    // Evento de clique no botão pesquisar
+    $(document).on('click', '#btnPesquisar', function() {
+        const termo = $('#pesquisaProduto').val().trim();
+        if (termo) {
+            pesquisarProdutos(termo);
+            $('#btnLimparPesquisa').show();
+        }
+    });
+
+    // Evento de pressionar Enter no campo de pesquisa
+    $(document).on('keypress', '#pesquisaProduto', function(e) {
+        if (e.which === 13) { // Tecla Enter
+            const termo = $('#pesquisaProduto').val().trim();
+            if (termo) {
+                pesquisarProdutos(termo);
+                $('#btnLimparPesquisa').show();
+            }
+        }
+    });
+
+    // Evento para limpar a pesquisa
+    $(document).on('click', '#btnLimparPesquisa', function() {
+        $('#pesquisaProduto').val('');
+        $(this).hide();
+        atualizarTabelaProdutos(1); // Volta para a primeira página
+    });
+
+    // Chama a paginação ao carregar a página
+    $(document).ready(function() {
+        atualizarTabelaProdutos(<?php echo $pagina; ?>);
+    });
 </script>
