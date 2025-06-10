@@ -33,6 +33,12 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
         </div>
         <div id="user-menu" class="container-fluid d-flex justify-content-end" style="margin-top: -6px;">
             <div style="margin-right: 15px;" class="ms-auto dropdown">
+                <button id="btnCarrinho" class="btn btn-dark position-fixed" style="top: 20px; right: 200px; display: none;" onclick="abrirCarrinho()">
+                    <i class="bi bi-cart-fill"></i>
+                    <span id="carrinhoQtdBadge" class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">
+                        0
+                    </span>
+                </button>
                 <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown">
                     <i class="bi bi-person-circle"></i> <?php echo $_SESSION['name'];  ?>
                 </a>
@@ -134,6 +140,12 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                 <p>Suporte</p>
             </a>
         </div>
+
+        <button onclick="adicionarAoCarrinho({ nome: 'Mouse Gamer', preco: 199.90 })">
+            Adicionar ao carrinho
+        </button>
+
+
     </div>
 
 
@@ -171,7 +183,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                                 <label for="ds_password" class="form-label">Confirme Sua Senha</label>
                                 <input type="password" class="form-control" id="confirm_password" name="confirm_password">
                             </div>
-                            
+
                             <!-- Foto de Perfil e Upload -->
                             <div class="col-md-12 d-flex flex-column flex-md-row align-items-center justify-content-center gap-4">
                                 <div class="w-100">
@@ -202,19 +214,40 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
             </div>
         </div>
     </div>
-
     <!--Fim do modal de Cadastro de usuários-->
+
+    <!-- Carrinho Modal -->
+    <div class="modal fade" id="modalCarrinho" tabindex="-1" aria-labelledby="modalCarrinhoLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content user-modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modalCarrinhoLabel">Seu Carrinho</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div id="carrinhoItens"></div>
+                    <div class="mt-4 text-end">
+                        <strong>Total: R$ <span id="carrinhoTotal">0,00</span></strong>
+                    </div>
+                </div>
+                <div class="modal-footer justify-content-between">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button class="btn btn-success">Finalizar Compra</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Fim do modal de Carrinho-->
+
     <script src="js/enviardados.js"></script>
     <script src="js/script.js"></script>
+    <script src="../js/carrinho.js"></script>
 
 </body>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-<script>
-
-</script>
 
 <script src="../js/script.js"></script>
 <script src="../js/enviardados.js"></script>

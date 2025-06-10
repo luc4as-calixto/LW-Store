@@ -44,32 +44,24 @@
 
                 <!-- Coluna da direita -->
                 <div class="col-md-6">
+
+                    <div style="margin-bottom: 20px;">  
+                        <label for="description" class="form-label">Descrição</label>
+                        <textarea name="description" id="description" class="form-control" style="resize: none;" rows="8" placeholder="Descreva o produto aqui..." required ></textarea>
+                    </div>
+
                     <div class="mb-3">
                         <label for="photo" class="form-label">Foto do Produto</label>
                         <div class="d-flex align-items-center gap-3">
                             <!-- Input de arquivo -->
                             <input type="file" class="form-control" id="photo" name="photo" accept="image/*" >
 
-                            <!-- Pré-visualização da imagem -->
-                            <div id="preview-container">
-                                <?php if (!empty($_SESSION['photo']) && isset($_SESSION['photo'])): ?>
-                                    <img src="../uploads/<?php echo $_SESSION['photo']; ?>" alt="Foto do Produto"
-                                        width="100" height="100"
-                                        style="object-fit: cover; border-radius: 8px; border: 1px solid #ccc;">
-                                <?php else: ?>
-                                    <!-- Imagem padrão caso não tenha upload -->
-                                    <img src="../uploads/produto-sem-imagem.webp" alt="Foto do Produto"
-                                        width="100" height="100"
-                                        style="object-fit: cover; border-radius: 8px; border: 1px solid #ccc;">
-                                <?php endif; ?>
-                            </div>
                         </div>
                     </div>
+                    
+                    <!-- Pré-visualização da imagem -->
+                    <div id="preview-container"></div>
 
-                    <div class="mb-3">
-                        <label for="description" class="form-label">Descrição</label>
-                        <textarea name="description" id="description" class="form-control" style="resize: none;" rows="9" placeholder="Descreva o produto aqui..." required></textarea>
-                    </div>
                 </div>
             </div>
             <button id="btn" type="submit" class="btn-normal"><i class="bi bi-tags"></i> Cadastrar Produto</button>

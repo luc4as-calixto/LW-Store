@@ -554,3 +554,28 @@ table tbody tr:hover {
     border-radius: 8px;
     box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
+
+#preview-container {
+    text-align: center;
+}
+
+@keyframes shake-carrinho {
+  0% { transform: translateX(0); }
+  25% { transform: translateX(-4px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-4px); }
+  100% { transform: translateX(0); }
+}
+
+.btn-animate-shake {
+  animation: shake-carrinho 0.4s ease;
+}
+
+/* Ícone flutuante */
+.floating-icon {
+  position: absolute;
+  z-index: 9999;
+  font-size: 1.5rem;
+  transition: transform 0.7s ease-in-out, opacity 0.7s ease-in-out;
+  pointer-events: none;
+}

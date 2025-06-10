@@ -18,8 +18,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt1->bindParam(':product_code', $product_code);
         $stmt1->execute();        
         $rowCount = $stmt1->rowCount();
-        if ($rowCount > 0) {           
-            //echo json_encode(['error' => $rowCount . ' já existe.']);
+        if ($rowCount > 0) {
             echo json_encode(['error' => 'Já existe um produto cadastrado com este código.']);
             exit;
         }

@@ -25,6 +25,7 @@ try {
                     </a>
                 </td>";
             echo "</tr>";
+            
         }
     } else {
         echo "<tr><td colspan='7'>Nenhum produto cadastrado.</td></tr>";

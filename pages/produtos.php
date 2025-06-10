@@ -3,7 +3,7 @@ require_once '../php/conexao.php';
 
 
 // Quantidade de produtos por página
-$limite = 16;
+$limite = 15;
 
 // Página atual (padrão: 1)
 $pagina = isset($_GET['pagina']) && is_numeric($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
@@ -41,7 +41,13 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <h5 class="card-title"><?php echo $nome; ?></h5>
                         <p class="card-text"><?php echo $descricao; ?></p>
                         <p class="card-text"><strong>R$ <?php echo $preco; ?></strong></p>
-                        <a href="produto.php?id=<?php echo $id; ?>" class="btn btn-primary">Ver Produto</a>
+                        <div class="d-flex justify-content-between">
+                            <a href="produto.php?id=<?php echo $id; ?>" class="btn btn-primary">Ver Produto</a>
+                            <a class="btn btn-success"
+                                onclick='adicionarAoCarrinho({ nome: "<?php echo addslashes($nome); ?>", preco: <?php echo floatval($produto["price"]); ?> });'>
+                                <i class="bi bi-cart-plus"></i>
+                            </a>
+                        </div>
                     </div>
                 </div>
             </div>

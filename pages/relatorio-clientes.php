@@ -24,7 +24,7 @@ require_once "../php/conexao.php";
 
         <tbody id="corpoTabelaProdutos">
             <!-- linhas geradas pelo PHP atual (ou pode deixar vazio, vai preencher via AJAX) -->
-            <?php include '../php/tabela_produtos.php'; ?>
+            <?php include '../php/tabela_clientes.php'; ?>
         </tbody>
 
     </table>
