@@ -3,26 +3,26 @@
 session_start();
 require_once "../php/conexao.php";
 
-// Quantidade de produtos por página
-$limite = 5;
+// // Quantidade de produtos por página
+// $limite = 5;
 
-// Página atual (padrão: 1)
-$pagina = isset($_GET['pagina']) && is_numeric($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
+// // Página atual (padrão: 1)
+// $pagina = isset($_GET['pagina']) && is_numeric($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
 
-// Cálculo do OFFSET
-$offset = ($pagina - 1) * $limite;
+// // Cálculo do OFFSET
+// $offset = ($pagina - 1) * $limite;
 
-// Total de produtos (para calcular o número de páginas)
-$totalProdutos = $conn->query("SELECT COUNT(*) FROM product")->fetchColumn();
-$totalPaginas = ceil($totalProdutos / $limite);
+// // Total de produtos (para calcular o número de páginas)
+// $totalProdutos = $conn->query("SELECT COUNT(*) FROM product")->fetchColumn();
+// $totalPaginas = ceil($totalProdutos / $limite);
 
-// Buscar produtos da página atual
-$stmt = $conn->prepare("SELECT * FROM product WHERE amount > 0 ORDER BY product_code DESC LIMIT :limite OFFSET :offset");
+// // Buscar produtos da página atual
+// $stmt = $conn->prepare("SELECT * FROM product WHERE amount > 0 ORDER BY product_code DESC LIMIT :limite OFFSET :offset");
 
-$stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
-$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-$stmt->execute();
-$produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+// $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
+// $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+// $stmt->execute();
+// $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <div class="container mt-4" id="pagina">
@@ -30,17 +30,8 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
     <!-- Campo de pesquisa -->
     <div class="row mb-3">
-        <div class="col-md-6">
-            <div class="input-group">
-                <input type="text" id="pesquisaProduto" class="form-control" placeholder="Pesquisar produtos...">
-                <button class="btn btn-primary" type="button" id="btnPesquisar">
-                    <i class="bi bi-search"></i> Pesquisar
-                </button>
-                <button class="btn btn-secondary" type="button" id="btnLimparPesquisa" style="display:none;">
-                    <i class="bi bi-x-circle"></i> Limpar
-                </button>
-            </div>
-        </div>
+        <input type="text" id="filtro" class="form-control mb-3" placeholder="Buscar na tabela...">
+
     </div>
 
     <table>
@@ -58,20 +49,22 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
         <tbody id="corpoTabelaProdutos">
-            <?php include '../php/tabela_produtos.php'; ?>
+            <?php
+            // Incluir o arquivo que contém a lógica de exibição da tabela
+            require_once "../php/tabela_produtos.php";
+            ?>
         </tbody>
 
     </table>
 
     <!-- Div da paginação -->
-    <nav aria-label="Navegação de página" class="mt-4">
-        <div id="paginacaoProdutos">
-            <!-- Paginação será carregada aqui -->
-        </div>
+    <nav>
+        <ul id="paginacao" class="pagination justify-content-center mt-4"></ul>
     </nav>
 
-
 </div>
+
+<script src="../js/script-ordenacao.js"></script>
 
 <!-- Modal de confirmação de exclusão -->
 <div class="modal fade" id="modalConfirmExclusao" tabindex="-1" aria-labelledby="modalConfirmExclusaoLabel" aria-hidden="true">
@@ -209,199 +202,110 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
+ <script>
 
-<script>
-    $(document).ready(function() {
-        let produtoIdExcluir = null;
 
-        $('#corpoTabelaProdutos').on('click', 'a.excluir-btn', function(e) {
-            e.preventDefault();
+//     // Função para atualizar a tabela de produtos e a paginação
+//     function atualizarTabelaProdutos(pagina = 1) {
+//         const limite = <?php // echo $limite; ?>;
 
-            produtoIdExcluir = $(this).data('id');
-            const nomeProduto = $(this).data('nome');
+//         // Atualiza tabela
+//         $.ajax({
+//             url: '../php/tabela_produtos.php',
+//             method: 'GET',
+//             data: {
+//                 pagina,
+//                 limite
+//             },
+//             success: function(html) {
+//                 $('#corpoTabelaProdutos').html(html);
+//             },
+//             error: function() {
+//                 alert('Erro ao atualizar a tabela de produtos.');
+//             }
+//         });
 
-            $("#produtoExcluirNome").text(nomeProduto);
+//         // Atualiza paginação
+//         $.ajax({
+//             url: '../php/paginacao_produtos.php',
+//             method: 'GET',
+//             data: {
+//                 pagina,
+//                 limite
+//             },
+//             success: function(html) {
+//                 $('#paginacaoProdutos').html(html);
+//             },
+//             error: function() {
+//                 alert('Erro ao atualizar a paginação.');
+//             }
+//         });
+//     }
 
-            const modal = new bootstrap.Modal(document.getElementById('modalConfirmExclusao'));
-            modal.show();
+//     // Função para pesquisar produtos
+//     function pesquisarProdutos(termo, pagina = 1) {
+//         const limite = <?php // echo $limite; ?>;
 
-            $("#message").hide().removeClass("success error").text("");
-        });
+//         $.ajax({
+//             url: '../php/pesquisa_produtos.php',
+//             method: 'GET',
+//             data: {
+//                 termo: termo,
+//                 pagina: pagina,
+//                 limite: limite
+//             },
+//             success: function(html) {
+//                 $('#corpoTabelaProdutos').html(html);
 
-        // Confirma exclusão
-        $("#btnConfirmarExclusao").on("click", function() {
-            if (!produtoIdExcluir) return;
+//                 // Atualiza a paginação para a pesquisa
+//                 $.ajax({
+//                     url: '../php/paginacao_produtos.php',
+//                     method: 'GET',
+//                     data: {
+//                         termo: termo,
+//                         pagina: pagina,
+//                         limite: limite
+//                     },
+//                     success: function(html) {
+//                         $('#paginacaoProdutos').html(html);
+//                     }
+//                 });
+//             },
+//             error: function() {
+//                 alert('Erro ao pesquisar produtos.');
+//             }
+//         });
+//     }
 
-            $.ajax({
-                url: "../php/excluir_produto.php",
-                type: "POST",
-                data: {
-                    id: produtoIdExcluir
-                },
-                dataType: "json",
-                success: function(response) {
-                    if (response.success) {
-                        $("#message").removeClass("error").addClass("success")
-                            .text("Produto excluído com sucesso!").fadeIn();
+//     // Evento de clique no botão pesquisar
+//     $(document).on('click', '#btnPesquisar', function() {
+//         const termo = $('#pesquisaProduto').val().trim();
+//         if (termo) {
+//             pesquisarProdutos(termo);
+//             $('#btnLimparPesquisa').show();
+//         }
+//     });
 
-                        setTimeout(function() {
-                            // Fecha o modal
-                            const modalEl = document.getElementById('modalConfirmExclusao');
-                            const modal = bootstrap.Modal.getInstance(modalEl);
-                            modal.hide();
+//     // Evento de pressionar Enter no campo de pesquisa
+//     $(document).on('keypress', '#pesquisaProduto', function(e) {
+//         if (e.which === 13) { // Tecla Enter
+//             const termo = $('#pesquisaProduto').val().trim();
+//             if (termo) {
+//                 pesquisarProdutos(termo);
+//                 $('#btnLimparPesquisa').show();
+//             }
+//         }
+//     });
 
-                            // Atualiza só a tabela para refletir a exclusão
-                            atualizarTabelaProdutos();
+//     // Evento para limpar a pesquisa
+//     $(document).on('click', '#btnLimparPesquisa', function() {
+//         $('#pesquisaProduto').val('');
+//         $(this).hide();
+//         atualizarTabelaProdutos(1); // Volta para a primeira página
+//     });
 
-                        }, 2000);
-                    } else {
-                        $("#message").removeClass("success").addClass("error")
-                            .text(response.error || "Erro ao excluir o produto.").fadeIn();
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error("Erro AJAX:", xhr, status, error);
-                    $("#message").removeClass("success").addClass("error")
-                        .text("Erro na comunicação com o servidor.").fadeIn();
-                }
-            });
-        });
-    });
-
-    //modal de edição
-    $(document).ready(function() {
-        $(document).on('click', '.view_data', function() {
-            var id = $(this).attr("id");
-            // alert("ID do produto: " + id);
-            // verifica se há valor na variável user_id
-            if (id !== '') {
-                var dados = {
-                    product_code: id
-                }
-                $.post('../php/painel_editar.php', dados, function(retorno) {
-                    var produto = JSON.parse(retorno);
-
-                    $('#name').val(produto.name);
-                    $('#price').val(produto.price);
-                    $('#amount').val(produto.amount);
-                    $('#type_packaging').val(produto.type_packaging);
-                    $('#description').val(produto.description);
-                    $('#product_code').val(produto.product_code);
-
-                    if (produto.photo && produto.photo !== '') {
-                        $('#imagemAtual').attr('src', '../uploads/' + produto.photo);
-                    } else {
-                        $('#imagemAtual').attr('src', '../uploads/produto-sem-imagem.webp');
-                    }
-
-                    var modal = new bootstrap.Modal(document.getElementById('modalEditar'));
-                    modal.show();
-                });
-            }
-        })
-    })
-
-    // Função para atualizar a tabela de produtos e a paginação
-    function atualizarTabelaProdutos(pagina = 1) {
-        const limite = <?php echo $limite; ?>;
-
-        // Atualiza tabela
-        $.ajax({
-            url: '../php/tabela_produtos.php',
-            method: 'GET',
-            data: {
-                pagina,
-                limite
-            },
-            success: function(html) {
-                $('#corpoTabelaProdutos').html(html);
-            },
-            error: function() {
-                alert('Erro ao atualizar a tabela de produtos.');
-            }
-        });
-
-        // Atualiza paginação
-        $.ajax({
-            url: '../php/paginacao_produtos.php',
-            method: 'GET',
-            data: {
-                pagina,
-                limite
-            },
-            success: function(html) {
-                $('#paginacaoProdutos').html(html);
-            },
-            error: function() {
-                alert('Erro ao atualizar a paginação.');
-            }
-        });
-    }
-
-    // Função para pesquisar produtos
-    function pesquisarProdutos(termo, pagina = 1) {
-        const limite = <?php echo $limite; ?>;
-
-        $.ajax({
-            url: '../php/pesquisa_produtos.php',
-            method: 'GET',
-            data: {
-                termo: termo,
-                pagina: pagina,
-                limite: limite
-            },
-            success: function(html) {
-                $('#corpoTabelaProdutos').html(html);
-
-                // Atualiza a paginação para a pesquisa
-                $.ajax({
-                    url: '../php/paginacao_produtos.php',
-                    method: 'GET',
-                    data: {
-                        termo: termo,
-                        pagina: pagina,
-                        limite: limite
-                    },
-                    success: function(html) {
-                        $('#paginacaoProdutos').html(html);
-                    }
-                });
-            },
-            error: function() {
-                alert('Erro ao pesquisar produtos.');
-            }
-        });
-    }
-
-    // Evento de clique no botão pesquisar
-    $(document).on('click', '#btnPesquisar', function() {
-        const termo = $('#pesquisaProduto').val().trim();
-        if (termo) {
-            pesquisarProdutos(termo);
-            $('#btnLimparPesquisa').show();
-        }
-    });
-
-    // Evento de pressionar Enter no campo de pesquisa
-    $(document).on('keypress', '#pesquisaProduto', function(e) {
-        if (e.which === 13) { // Tecla Enter
-            const termo = $('#pesquisaProduto').val().trim();
-            if (termo) {
-                pesquisarProdutos(termo);
-                $('#btnLimparPesquisa').show();
-            }
-        }
-    });
-
-    // Evento para limpar a pesquisa
-    $(document).on('click', '#btnLimparPesquisa', function() {
-        $('#pesquisaProduto').val('');
-        $(this).hide();
-        atualizarTabelaProdutos(1); // Volta para a primeira página
-    });
-
-    // Chama a paginação ao carregar a página
-    $(document).ready(function() {
-        atualizarTabelaProdutos(<?php echo $pagina; ?>);
-    });
-</script>
+//     // Chama a paginação ao carregar a página
+//     $(document).ready(function() {
+//         atualizarTabelaProdutos(<?php //echo $pagina; ?>);
+//     });
+// </script> 

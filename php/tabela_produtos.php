@@ -1,16 +1,10 @@
 <?php
 require_once '../php/conexao.php';
 
-// Receber parâmetros de paginação
-$limite = isset($_GET['limite']) ? (int)$_GET['limite'] : 10;
-$pagina = isset($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-$offset = ($pagina - 1) * $limite;
-
 try {
-    $sql = "SELECT * FROM product WHERE amount > 0 ORDER BY product_code DESC LIMIT :limite OFFSET :offset";
+    // Buscar todos os produtos com amount > 0, ordenados pelo código crescente
+    $sql = "SELECT * FROM product WHERE amount > 0 ORDER BY CAST(product_code AS UNSIGNED) ASC";
     $stmt = $conn->prepare($sql);
-    $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
-    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
     $stmt->execute();
 
     if ($stmt->rowCount() > 0) {
@@ -32,12 +26,11 @@ try {
                     </a>
                 </td>";
             echo "</tr>";
-            
         }
     } else {
         echo "<tr><td colspan='7'>Nenhum produto cadastrado.</td></tr>";
     }
 } catch (PDOException $e) {
-    echo "<tr><td colspan='7'>Erro: " . $e->getMessage() . "</td></tr>";
+    echo "<tr><td colspan='7'>Erro: " . htmlspecialchars($e->getMessage()) . "</td></tr>";
 }
 ?>
