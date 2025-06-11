@@ -100,7 +100,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                 <a href="#" class="nav-link submenu" data-page="usuarios">Usuários</a>
                 <a href="#" class="nav-link submenu" data-page="permissoes">Permissões</a>
                 <a href="#" class="nav-link submenu" data-bs-toggle="modal" data-bs-target="#modalConfigUsuario">Configurações</a>
-            </a>
+                </a>
             </div>
         </nav>
     </div>
@@ -142,13 +142,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
             </a>
         </div>
 
-        <button onclick="adicionarAoCarrinho({ nome: 'Mouse Gamer', preco: 199.90 })">
-            Adicionar ao carrinho
-        </button>
-
-
     </div>
-
 
 
 
@@ -225,19 +219,19 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                         <strong>Total: R$ <span id="carrinhoTotal">0,00</span></strong>
                     </div>
                 </div>
-                <div class="modal-footer justify-content-between">
+                <div class="modal-footer justify-content-between flex-wrap gap-2">
                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
-                    <button class="btn btn-success">Finalizar Compra</button>
+                    <button type="button" class="btn btn-outline-danger me-auto" onclick="limparCarrinho()">
+                        <i class="bi bi-trash"></i> Limpar Carrinho
+                    </button>
+                    <a id="finalizarCompra" class="btn btn-success submenu" href="#" data-page="checkout" data-bs-dismiss="modal">Finalizar Compra</a>
                 </div>
+
             </div>
         </div>
     </div>
     <!--Fim do modal de Carrinho-->
-
-    <script src="js/enviardados.js"></script>
-    <script src="js/script.js"></script>
-    <script src="../js/carrinho.js"></script>
-
+    
 </body>
 
 <!-- Bootstrap JS -->
@@ -246,6 +240,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
 
 <script src="../js/script.js"></script>
 <script src="../js/enviardados.js"></script>
+<script src="../js/carrinho.js"></script>
 
 </html>
 

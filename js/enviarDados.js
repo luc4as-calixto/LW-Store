@@ -30,14 +30,14 @@ $(document).ready(function () {
             })
         })
     };
-    
+
     var $formProduto = $("#formProduto");
     if ($formProduto) {
         $("#formProduto").on("submit", function (e) {
             e.preventDefault();
-            
+
             var formData = new FormData(this);
-            
+
             $.ajax({
                 url: "../php/cadastrar_produto.php",
                 type: "POST",
@@ -48,23 +48,23 @@ $(document).ready(function () {
                 success: function (response) {
                     if (response.success) {
                         $("#message").removeClass("error").addClass("success")
-                        .text(response.message).fadeIn();
-                        
+                            .text(response.message).fadeIn();
+
                         setTimeout(() => {
                             $("#message").fadeOut();
                             $("#formProduto")[0].reset();
                             $('#preview-container').html('<img src="../uploads/produto-sem-imagem.webp" width="100" height="100">');
                         }, 2000);
-                        
+
                     } else {
                         $("#message").removeClass("success").addClass("error")
-                        .text(response.error || response.message).fadeIn().delay(3000).fadeOut();
+                            .text(response.error || response.message).fadeIn().delay(3000).fadeOut();
                     }
                 },
                 error: function (xhr, status, error) {
                     console.error("Erro AJAX", xhr, status, error);
                     $("#message").removeClass("success").addClass("error")
-                    .text("Erro ao cadastrar produto: " + error).fadeIn().delay(3000).fadeOut();
+                        .text("Erro ao cadastrar produto: " + error).fadeIn().delay(3000).fadeOut();
                 }
             });
         });
@@ -110,9 +110,9 @@ $(document).ready(function () {
     if ($formConfigUsuario) {
         $("#formConfigUsuario").on("submit", function (e) {
             e.preventDefault();
-        
+
             const form = this; // <-- salva o 'this' corretamente
-        
+
             $.ajax({
                 url: "../php/config_usuario.php",
                 type: "POST",
@@ -124,7 +124,7 @@ $(document).ready(function () {
                     if (response.success) {
                         $("#message").removeClass("error").addClass("success")
                             .text(response.message).fadeIn();
-        
+
                         setTimeout(() => {
                             $("#message").fadeOut();
                         }, 2000);
@@ -139,6 +139,8 @@ $(document).ready(function () {
                         .text("Erro ao configurar usuário: " + error).fadeIn().delay(3000).fadeOut();
                 }
             });
-        });        
+        });
     }
+
+
 })
