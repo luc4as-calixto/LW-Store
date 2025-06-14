@@ -29,9 +29,16 @@ require_once "../php/conexao.php";
     <h1>Relatórios de produtos</h1>
 
     <!-- Campo de pesquisa -->
-    <div class="row mb-3">
-        <input type="text" id="filtro" class="form-control mb-3" placeholder="Buscar na tabela...">
-
+    <div class="row align-items-center mb-4">
+        <div class="col-md-6 col-sm-12 mb-2 mb-md-0">
+            <div class="input-group">
+                <input type="text" id="filtro" class="form-control mb-3" placeholder="Buscar na tabela...">
+                <span style="width: 10px;"></span>
+                <button class="btn btn-outline-secondary" id="btnLimparPesquisa" type="button" style="display: none;">
+                    <i class="bi bi-x-circle"></i> Limpar
+                </button>
+            </div>
+        </div>
     </div>
 
     <table>
@@ -53,6 +60,9 @@ require_once "../php/conexao.php";
             // Incluir o arquivo que contém a lógica de exibição da tabela
             require_once "../php/tabela_produtos.php";
             ?>
+            <tr id="mensagem-vazio" style="display: none;">
+                <td colspan="7" class="text-center">Nenhum produto encontrado.</td>
+            </tr>
         </tbody>
 
     </table>
@@ -64,7 +74,7 @@ require_once "../php/conexao.php";
 
 </div>
 
-<script src="../js/script-ordenacao.js"></script>
+<script src="../js/script-relatorio-produto.js"></script>
 
 <!-- Modal de confirmação de exclusão -->
 <div class="modal fade" id="modalConfirmExclusao" tabindex="-1" aria-labelledby="modalConfirmExclusaoLabel" aria-hidden="true">
@@ -202,110 +212,112 @@ require_once "../php/conexao.php";
     </div>
 </div>
 
- <script>
+<script>
+    //     // Função para atualizar a tabela de produtos e a paginação
+    //     function atualizarTabelaProdutos(pagina = 1) {
+    //         const limite = <?php // echo $limite; 
+                                ?>;
 
+    //         // Atualiza tabela
+    //         $.ajax({
+    //             url: '../php/tabela_produtos.php',
+    //             method: 'GET',
+    //             data: {
+    //                 pagina,
+    //                 limite
+    //             },
+    //             success: function(html) {
+    //                 $('#corpoTabelaProdutos').html(html);
+    //             },
+    //             error: function() {
+    //                 alert('Erro ao atualizar a tabela de produtos.');
+    //             }
+    //         });
 
-//     // Função para atualizar a tabela de produtos e a paginação
-//     function atualizarTabelaProdutos(pagina = 1) {
-//         const limite = <?php // echo $limite; ?>;
+    //         // Atualiza paginação
+    //         $.ajax({
+    //             url: '../php/paginacao_produtos.php',
+    //             method: 'GET',
+    //             data: {
+    //                 pagina,
+    //                 limite
+    //             },
+    //             success: function(html) {
+    //                 $('#paginacaoProdutos').html(html);
+    //             },
+    //             error: function() {
+    //                 alert('Erro ao atualizar a paginação.');
+    //             }
+    //         });
+    //     }
 
-//         // Atualiza tabela
-//         $.ajax({
-//             url: '../php/tabela_produtos.php',
-//             method: 'GET',
-//             data: {
-//                 pagina,
-//                 limite
-//             },
-//             success: function(html) {
-//                 $('#corpoTabelaProdutos').html(html);
-//             },
-//             error: function() {
-//                 alert('Erro ao atualizar a tabela de produtos.');
-//             }
-//         });
+    //     // Função para pesquisar produtos
+    //     function pesquisarProdutos(termo, pagina = 1) {
+    //         const limite = <?php // echo $limite; 
+                                ?>;
 
-//         // Atualiza paginação
-//         $.ajax({
-//             url: '../php/paginacao_produtos.php',
-//             method: 'GET',
-//             data: {
-//                 pagina,
-//                 limite
-//             },
-//             success: function(html) {
-//                 $('#paginacaoProdutos').html(html);
-//             },
-//             error: function() {
-//                 alert('Erro ao atualizar a paginação.');
-//             }
-//         });
-//     }
+    //         $.ajax({
+    //             url: '../php/pesquisa_produtos.php',
+    //             method: 'GET',
+    //             data: {
+    //                 termo: termo,
+    //                 pagina: pagina,
+    //                 limite: limite
+    //             },
+    //             success: function(html) {
+    //                 $('#corpoTabelaProdutos').html(html);
 
-//     // Função para pesquisar produtos
-//     function pesquisarProdutos(termo, pagina = 1) {
-//         const limite = <?php // echo $limite; ?>;
+    //                 // Atualiza a paginação para a pesquisa
+    //                 $.ajax({
+    //                     url: '../php/paginacao_produtos.php',
+    //                     method: 'GET',
+    //                     data: {
+    //                         termo: termo,
+    //                         pagina: pagina,
+    //                         limite: limite
+    //                     },
+    //                     success: function(html) {
+    //                         $('#paginacaoProdutos').html(html);
+    //                     }
+    //                 });
+    //             },
+    //             error: function() {
+    //                 alert('Erro ao pesquisar produtos.');
+    //             }
+    //         });
+    //     }
 
-//         $.ajax({
-//             url: '../php/pesquisa_produtos.php',
-//             method: 'GET',
-//             data: {
-//                 termo: termo,
-//                 pagina: pagina,
-//                 limite: limite
-//             },
-//             success: function(html) {
-//                 $('#corpoTabelaProdutos').html(html);
+    //     // Evento de clique no botão pesquisar
+    //     $(document).on('click', '#btnPesquisar', function() {
+    //         const termo = $('#pesquisaProduto').val().trim();
+    //         if (termo) {
+    //             pesquisarProdutos(termo);
+    //             $('#btnLimparPesquisa').show();
+    //         }
+    //     });
 
-//                 // Atualiza a paginação para a pesquisa
-//                 $.ajax({
-//                     url: '../php/paginacao_produtos.php',
-//                     method: 'GET',
-//                     data: {
-//                         termo: termo,
-//                         pagina: pagina,
-//                         limite: limite
-//                     },
-//                     success: function(html) {
-//                         $('#paginacaoProdutos').html(html);
-//                     }
-//                 });
-//             },
-//             error: function() {
-//                 alert('Erro ao pesquisar produtos.');
-//             }
-//         });
-//     }
+    //     // Evento de pressionar Enter no campo de pesquisa
+    //     $(document).on('keypress', '#pesquisaProduto', function(e) {
+    //         if (e.which === 13) { // Tecla Enter
+    //             const termo = $('#pesquisaProduto').val().trim();
+    //             if (termo) {
+    //                 pesquisarProdutos(termo);
+    //                 $('#btnLimparPesquisa').show();
+    //             }
+    //         }
+    //     });
 
-//     // Evento de clique no botão pesquisar
-//     $(document).on('click', '#btnPesquisar', function() {
-//         const termo = $('#pesquisaProduto').val().trim();
-//         if (termo) {
-//             pesquisarProdutos(termo);
-//             $('#btnLimparPesquisa').show();
-//         }
-//     });
+    //     // Evento para limpar a pesquisa
+    //     $(document).on('click', '#btnLimparPesquisa', function() {
+    //         $('#pesquisaProduto').val('');
+    //         $(this).hide();
+    //         atualizarTabelaProdutos(1); // Volta para a primeira página
+    //     });
 
-//     // Evento de pressionar Enter no campo de pesquisa
-//     $(document).on('keypress', '#pesquisaProduto', function(e) {
-//         if (e.which === 13) { // Tecla Enter
-//             const termo = $('#pesquisaProduto').val().trim();
-//             if (termo) {
-//                 pesquisarProdutos(termo);
-//                 $('#btnLimparPesquisa').show();
-//             }
-//         }
-//     });
-
-//     // Evento para limpar a pesquisa
-//     $(document).on('click', '#btnLimparPesquisa', function() {
-//         $('#pesquisaProduto').val('');
-//         $(this).hide();
-//         atualizarTabelaProdutos(1); // Volta para a primeira página
-//     });
-
-//     // Chama a paginação ao carregar a página
-//     $(document).ready(function() {
-//         atualizarTabelaProdutos(<?php //echo $pagina; ?>);
-//     });
-// </script> 
+    //     // Chama a paginação ao carregar a página
+    //     $(document).ready(function() {
+    //         atualizarTabelaProdutos(<?php //echo $pagina; 
+                                        ?>);
+    //     });
+    // 
+</script>

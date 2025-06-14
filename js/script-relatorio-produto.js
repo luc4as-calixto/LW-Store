@@ -1,7 +1,7 @@
-$(document).ready(function() {
+$(document).ready(function () {
     let produtoIdExcluir = null;
 
-    $('#corpoTabelaProdutos').on('click', 'a.excluir-btn', function(e) {
+    $('#corpoTabelaProdutos').on('click', 'a.excluir-btn', function (e) {
         e.preventDefault();
 
         produtoIdExcluir = $(this).data('id');
@@ -16,7 +16,7 @@ $(document).ready(function() {
     });
 
     // Confirma exclusão
-    $("#btnConfirmarExclusao").on("click", function() {
+    $("#btnConfirmarExclusao").on("click", function () {
         if (!produtoIdExcluir) return;
 
         $.ajax({
@@ -26,12 +26,12 @@ $(document).ready(function() {
                 id: produtoIdExcluir
             },
             dataType: "json",
-            success: function(response) {
+            success: function (response) {
                 if (response.success) {
                     $("#message").removeClass("error").addClass("success")
                         .text("Produto excluído com sucesso!").fadeIn();
 
-                    setTimeout(function() {
+                    setTimeout(function () {
                         // Fecha o modal
                         const modalEl = document.getElementById('modalConfirmExclusao');
                         const modal = bootstrap.Modal.getInstance(modalEl);
@@ -46,7 +46,7 @@ $(document).ready(function() {
                         .text(response.error || "Erro ao excluir o produto.").fadeIn();
                 }
             },
-            error: function(xhr, status, error) {
+            error: function (xhr, status, error) {
                 console.error("Erro AJAX:", xhr, status, error);
                 $("#message").removeClass("success").addClass("error")
                     .text("Erro na comunicação com o servidor.").fadeIn();
@@ -56,8 +56,8 @@ $(document).ready(function() {
 });
 
 //modal de edição
-$(document).ready(function() {
-    $(document).on('click', '.view_data', function() {
+$(document).ready(function () {
+    $(document).on('click', '.view_data', function () {
         var id = $(this).attr("id");
         // alert("ID do produto: " + id);
         // verifica se há valor na variável user_id
@@ -65,7 +65,7 @@ $(document).ready(function() {
             var dados = {
                 product_code: id
             }
-            $.post('../php/painel_editar.php', dados, function(retorno) {
+            $.post('../php/painel_editar.php', dados, function (retorno) {
                 var produto = JSON.parse(retorno);
 
                 $('#name').val(produto.name);
@@ -84,8 +84,49 @@ $(document).ready(function() {
                 var modal = new bootstrap.Modal(document.getElementById('modalEditar'));
                 modal.show();
 
-                
+
             });
         }
-    })
+    });
+
+    $(document).ready(function () {
+        $("#filtro").on("keyup", function () {
+            var value = $(this).val().toLowerCase();
+            var encontrou = false;
+
+            // Mostra o botão "Limpar" se houver texto
+            $("#btnLimparPesquisa").toggle(value.length > 0);
+
+            $("#corpoTabelaProdutos tr").each(function () {
+                if ($(this).attr("id") === "mensagem-vazio") return;
+
+                var codigo = $(this).find("td:eq(0)").text().toLowerCase();
+                var nome = $(this).find("td:eq(1)").text().toLowerCase();
+                var corresponde = codigo.indexOf(value) > -1 || nome.indexOf(value) > -1;
+
+                $(this).toggle(corresponde);
+                if (corresponde) encontrou = true;
+            });
+
+            $("#mensagem-vazio").toggle(!encontrou);
+        });
+
+        // Funcionalidade do botão "Limpar"
+        $("#btnLimparPesquisa").on("click", function () {
+            $("#filtro").val(""); // limpa o input
+            $("#btnLimparPesquisa").hide(); // esconde o botão
+
+            // Mostra todas as linhas (menos a de "nenhum produto")
+            $("#corpoTabelaProdutos tr").each(function () {
+                if ($(this).attr("id") === "mensagem-vazio") {
+                    $(this).hide();
+                } else {
+                    $(this).show();
+                }
+            });
+        });
+    });
+
+
+
 })
