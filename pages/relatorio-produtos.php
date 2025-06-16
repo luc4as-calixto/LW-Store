@@ -3,26 +3,6 @@
 session_start();
 require_once "../php/conexao.php";
 
-// // Quantidade de produtos por página
-// $limite = 5;
-
-// // Página atual (padrão: 1)
-// $pagina = isset($_GET['pagina']) && is_numeric($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-
-// // Cálculo do OFFSET
-// $offset = ($pagina - 1) * $limite;
-
-// // Total de produtos (para calcular o número de páginas)
-// $totalProdutos = $conn->query("SELECT COUNT(*) FROM product")->fetchColumn();
-// $totalPaginas = ceil($totalProdutos / $limite);
-
-// // Buscar produtos da página atual
-// $stmt = $conn->prepare("SELECT * FROM product WHERE amount > 0 ORDER BY product_code DESC LIMIT :limite OFFSET :offset");
-
-// $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
-// $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-// $stmt->execute();
-// $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
 <div class="container mt-4" id="pagina">
@@ -93,8 +73,6 @@ require_once "../php/conexao.php";
     </div>
 </div>
 
-<!-- modal de edição so falta mostra os dados e atualizar ele -->
-
 <!-- Modal de Editar-->
 <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered modal-lg">
@@ -130,16 +108,20 @@ require_once "../php/conexao.php";
                                 <input type="text" class="form-control" id="product_code" name="product_code" placeholder="Digite o código do produto*" required>
                             </div>
 
+                            <!-- Adicione este campo oculto ao seu formulário -->
+                            <input type="hidden" id="id" name="id" value="">
+
+
                             <div class="mb-3">
                                 <label style="text-align:left" for="type_packaging" class="form-label">Tipo da embalagem</label>
                                 <select name="type_packaging" id="type_packaging" class="form-select" required>
                                     <option value="" disabled selected>Selecione o tipo de embalagem</option>
-                                    <option value="Caixa">Caixa</option>
-                                    <option value="Saco">Saco</option>
-                                    <option value="Lata">Lata</option>
-                                    <option value="Pacote">Pacote</option>
-                                    <option value="Garrafa">Garrafa</option>
-                                    <option value="Outro">Outro</option>
+                                    <option value="caixa">Caixa</option>
+                                    <option value="saco">Saco</option>
+                                    <option value="lata">Lata</option>
+                                    <option value="pacote">Pacote</option>
+                                    <option value="garrafa">Garrafa</option>
+                                    <option value="outro">Outro</option>
                                 </select>
                             </div>
 
@@ -170,7 +152,7 @@ require_once "../php/conexao.php";
                     </div>
                     <button id="btn-editar" type="submit" class="btn-normal"><i class="bi bi-tags"></i> Editar Produto</button>
 
-                    <div id="message" style="display: none;"></div>
+                    <div id="message-modal-editar" style="display: none;"></div>
 
                 </form>
                 <script src="../js/enviardados.js"></script>
@@ -205,113 +187,3 @@ require_once "../php/conexao.php";
         </div>
     </div>
 </div>
-
-<script>
-    //     // Função para atualizar a tabela de produtos e a paginação
-    //     function atualizarTabelaProdutos(pagina = 1) {
-    //         const limite = <?php // echo $limite; 
-                                ?>;
-
-    //         // Atualiza tabela
-    //         $.ajax({
-    //             url: '../php/tabela_produtos.php',
-    //             method: 'GET',
-    //             data: {
-    //                 pagina,
-    //                 limite
-    //             },
-    //             success: function(html) {
-    //                 $('#corpoTabelaProdutos').html(html);
-    //             },
-    //             error: function() {
-    //                 alert('Erro ao atualizar a tabela de produtos.');
-    //             }
-    //         });
-
-    //         // Atualiza paginação
-    //         $.ajax({
-    //             url: '../php/paginacao_produtos.php',
-    //             method: 'GET',
-    //             data: {
-    //                 pagina,
-    //                 limite
-    //             },
-    //             success: function(html) {
-    //                 $('#paginacaoProdutos').html(html);
-    //             },
-    //             error: function() {
-    //                 alert('Erro ao atualizar a paginação.');
-    //             }
-    //         });
-    //     }
-
-    //     // Função para pesquisar produtos
-    //     function pesquisarProdutos(termo, pagina = 1) {
-    //         const limite = <?php // echo $limite; 
-                                ?>;
-
-    //         $.ajax({
-    //             url: '../php/pesquisa_produtos.php',
-    //             method: 'GET',
-    //             data: {
-    //                 termo: termo,
-    //                 pagina: pagina,
-    //                 limite: limite
-    //             },
-    //             success: function(html) {
-    //                 $('#corpoTabelaProdutos').html(html);
-
-    //                 // Atualiza a paginação para a pesquisa
-    //                 $.ajax({
-    //                     url: '../php/paginacao_produtos.php',
-    //                     method: 'GET',
-    //                     data: {
-    //                         termo: termo,
-    //                         pagina: pagina,
-    //                         limite: limite
-    //                     },
-    //                     success: function(html) {
-    //                         $('#paginacaoProdutos').html(html);
-    //                     }
-    //                 });
-    //             },
-    //             error: function() {
-    //                 alert('Erro ao pesquisar produtos.');
-    //             }
-    //         });
-    //     }
-
-    //     // Evento de clique no botão pesquisar
-    //     $(document).on('click', '#btnPesquisar', function() {
-    //         const termo = $('#pesquisaProduto').val().trim();
-    //         if (termo) {
-    //             pesquisarProdutos(termo);
-    //             $('#btnLimparPesquisa').show();
-    //         }
-    //     });
-
-    //     // Evento de pressionar Enter no campo de pesquisa
-    //     $(document).on('keypress', '#pesquisaProduto', function(e) {
-    //         if (e.which === 13) { // Tecla Enter
-    //             const termo = $('#pesquisaProduto').val().trim();
-    //             if (termo) {
-    //                 pesquisarProdutos(termo);
-    //                 $('#btnLimparPesquisa').show();
-    //             }
-    //         }
-    //     });
-
-    //     // Evento para limpar a pesquisa
-    //     $(document).on('click', '#btnLimparPesquisa', function() {
-    //         $('#pesquisaProduto').val('');
-    //         $(this).hide();
-    //         atualizarTabelaProdutos(1); // Volta para a primeira página
-    //     });
-
-    //     // Chama a paginação ao carregar a página
-    //     $(document).ready(function() {
-    //         atualizarTabelaProdutos(<?php //echo $pagina; 
-                                        ?>);
-    //     });
-    // 
-</script>
