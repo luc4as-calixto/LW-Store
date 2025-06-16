@@ -6,32 +6,19 @@ require_once "conexao.php";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
     try {
         $name = $_POST['name'] ?? '';
-        $login = $_POST['login_cliente'] ?? '';
-        $gender = $_POST['gender'] ?? '';
-        $telephone = $_POST['telephone'] ?? '';
-        $create_password = $_POST['create-password'] ?? '';
-        $password_confirmation = $_POST['password-confirmation'] ?? '';
-        $cpf = $_POST['CPF'] ?? '';
-        $birthdate = $_POST['birthdate'] ?? '';
         $email = $_POST['email'] ?? '';
+        $cpf = $_POST['CPF'] ?? '';
+        $telephone = $_POST['telephone'] ?? '';
         $address = $_POST['address'] ?? '';
-        $type_user = "cliente";
+        $gender = $_POST['gender'] ?? '';
+        $birthdate = $_POST['birthdate'] ?? '';
         $photo = $_FILES['photo'] ?? null;
 
         // Validação dos campos obrigatórios
-        if (empty($name) || empty($gender) || empty($telephone) || empty($login) || empty($create_password) || empty($password_confirmation) || empty($cpf) || empty($birthdate) || empty($email) || empty($address)) {
+        if (empty($name) || empty($gender) || empty($telephone) || empty($cpf) || empty($birthdate) || empty($email) || empty($address)) {
             echo json_encode(['error' => 'Todos os campos obrigatórios devem ser preenchidos.']);
             exit;
         }
-
-        // Verifica se as senhas coincidem
-        if ($create_password !== $password_confirmation) {
-            echo json_encode(['error' => 'As senhas não coincidem.']);
-            exit;
-        }
-
-        // Hash da senha
-        $hashed_password = password_hash($create_password, PASSWORD_DEFAULT);
 
         // Processamento da foto
         $caminho_salvar = "../uploads/sem-foto.webp"; // padrão
@@ -56,21 +43,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         // Inserção no banco
-        $sql = "INSERT INTO users
-        (name, login, gender, telephone, password, cpf, birthdate, email, address, type_user, photo)
+        $sql = "INSERT INTO customers
+        (name, gender, telephone, cpf, birthdate, email, address, photo)
         VALUES
-        (:name, :login, :gender, :telephone, :password, :cpf, :birthdate, :email, :address, :type_user, :photo)";
+        (:name, :gender, :telephone, :cpf, :birthdate, :email, :address, :photo)";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':login', $login);
         $stmt->bindParam(':gender', $gender);
         $stmt->bindParam(':telephone', $telephone);
-        $stmt->bindParam(':password', $hashed_password);
         $stmt->bindParam(':cpf', $cpf);
         $stmt->bindParam(':birthdate', $birthdate);
         $stmt->bindParam(':email', $email);
         $stmt->bindParam(':address', $address);
-        $stmt->bindParam(':type_user', $type_user);
         $stmt->bindParam(':photo', $caminho_salvar);
         $stmt->execute();
 
