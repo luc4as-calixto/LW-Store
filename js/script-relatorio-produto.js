@@ -54,6 +54,74 @@ $(document).ready(function () {
         });
     });
 
+    $(document).on('click', '.view_data', function () {
+        var id = $(this).attr("id");
+        if (id !== '') {
+            var dados = {
+                product_code: id
+            }
+            $.post('../php/painel_editar.php', dados, function (retorno) {
+                var produto = JSON.parse(retorno);
+
+                $('#name').val(produto.name);
+                $('#price').val(produto.price);
+                $('#amount').val(produto.amount);
+                $('#type_packaging').val(produto.type_packaging);
+                $('#description').val(produto.description);
+                $('#product_code').val(produto.product_code);
+                $('#id').val(produto.product_id); // Campo oculto com o ID
+
+                if (produto.photo && produto.photo !== '') {
+                    $('#imagemAtual').attr('src', '../uploads/' + produto.photo);
+                } else {
+                    $('#imagemAtual').attr('src', '../uploads/produto-sem-imagem.webp');
+                }
+
+                var modal = new bootstrap.Modal(document.getElementById('modalEditar'));
+                modal.show();
+
+                var $formProdutoEditar = $("#formProdutoEditar");
+                if ($formProdutoEditar) {
+                    $formProdutoEditar.off("submit").on("submit", function (e) {
+                        e.preventDefault();
+
+                        // Cria FormData para enviar arquivos
+                        var formData = new FormData(this);
+
+                        $.ajax({
+                            url: "../php/editar_produto.php",
+                            type: "POST",
+                            data: formData,
+                            processData: false, // Necessário para FormData
+                            contentType: false, // Necessário para FormData
+                            dataType: "json",
+                            success: function (response) {
+                                if (response.success) {
+                                    $("#message-modal-editar").removeClass("error").addClass("success")
+                                        .text(response.message).fadeIn();
+
+                                    setTimeout(() => {
+                                        $("#message-modal-editar").fadeOut();
+                                        modal.hide();
+                                        atualizarTabelaProdutos();
+                                    }, 2000);
+                                } else {
+                                    $("#message-modal-editar").removeClass("success").addClass("error")
+                                        .text(response.error || response.message).fadeIn().delay(3000).fadeOut();
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                console.error("Erro AJAX", xhr, status, error);
+                                $("#message-modal-editar").removeClass("success").addClass("error")
+                                    .text("Erro ao editar produto: " + error).fadeIn().delay(3000).fadeOut();
+                            }
+                        });
+                    });
+                }
+            });
+        }
+    });
+
     // Função para pesquisar produtos
     function pesquisarProdutos(termo, pagina = 1) {
         $.ajax({

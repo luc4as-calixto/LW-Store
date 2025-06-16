@@ -1,4 +1,4 @@
-<?php 
+<?php
 header("Content-Type: application/json; charset=UTF-8");
 session_start();
 require_once "conexao.php";
@@ -57,33 +57,40 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // Inserção no banco
         $sql = "INSERT INTO users
-                (name, login, gender, telephone, password, cpf, birthdate, email, address, type_user, photo) 
+                (login, password, type_user) 
                 VALUES 
-                (:name, :login, :gender, :telephone, :password, :cpf, :birthdate, :email, :address, :type_user, :photo)";
-        
+                (:login, :password, :type_user)";
+
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':login', $login);
+        $stmt->bindParam(':password', $hashed_password);
+        $stmt->bindParam(':type_user', $type_user);
+        $stmt->execute();
+
+        $user_id = $conn->lastInsertId();
+        $sql = "INSERT INTO sellers 
+        (name, email, cpf, gender, telephone, address, birthdate, photo, fk_id_user)
+        VALUES 
+        (:name, :email, :cpf, :gender , :telephone, :address, :birthdate, :photo, :fk_id_user)";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':name', $name);
-        $stmt->bindParam(':login', $login);
+        $stmt->bindParam(':email', $email);
         $stmt->bindParam(':gender', $gender);
         $stmt->bindParam(':telephone', $telephone);
-        $stmt->bindParam(':password', $hashed_password);
         $stmt->bindParam(':cpf', $cpf);
         $stmt->bindParam(':birthdate', $birthdate);
-        $stmt->bindParam(':email', $email);
         $stmt->bindParam(':address', $address);
-        $stmt->bindParam(':type_user', $type_user);
         $stmt->bindParam(':photo', $caminho_salvar);
+        $stmt->bindParam(':fk_id_user', $user_id); // <-- corrigido aqui
         $stmt->execute();
 
         echo json_encode([
             'success' => true,
-            'message' => 'Vendedor cadastrado com sucesso! ' 
+            'message' => 'Vendedor cadastrado com sucesso! '
         ]);
-
     } catch (PDOException $e) {
         echo json_encode([
             'error' => 'Erro ao cadastrar vendedor: ' . $e->getMessage()
         ]);
     }
 }
-?>
