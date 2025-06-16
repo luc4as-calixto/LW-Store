@@ -53,24 +53,18 @@ require_once "../php/conexao.php";
                 <th>Ações</th>
             </tr>
         </thead>
-
-
         <tbody id="corpoTabelaProdutos">
-            <?php
-            // Incluir o arquivo que contém a lógica de exibição da tabela
-            require_once "../php/tabela_produtos.php";
-            ?>
+            <?php require_once "../php/tabela_produtos.php"; ?>
             <tr id="mensagem-vazio" style="display: none;">
                 <td colspan="7" class="text-center">Nenhum produto encontrado.</td>
             </tr>
         </tbody>
-
     </table>
 
-    <!-- Div da paginação -->
-    <nav>
-        <ul id="paginacao" class="pagination justify-content-center mt-4"></ul>
-    </nav>
+    <!-- Paginação -->
+    <div class="d-flex justify-content-center mt-3">
+        <?php require_once "../php/paginacao_produtos.php"; ?>
+    </div>
 
 </div>
 
