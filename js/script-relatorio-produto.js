@@ -53,10 +53,9 @@ $(document).ready(function () {
             }
         });
     });
-});
 
-//modal de edição
-$(document).ready(function () {
+
+
     $(document).on('click', '.view_data', function () {
         var id = $(this).attr("id");
         // alert("ID do produto: " + id);
@@ -89,44 +88,64 @@ $(document).ready(function () {
         }
     });
 
-    $(document).ready(function () {
-        $("#filtro").on("keyup", function () {
-            var value = $(this).val().toLowerCase();
-            var encontrou = false;
+    $("#filtro").on("keyup", function () {
+        var value = $(this).val().toLowerCase();
+        var encontrou = false;
 
-            // Mostra o botão "Limpar" se houver texto
-            $("#btnLimparPesquisa").toggle(value.length > 0);
+        // Mostra o botão "Limpar" se houver texto
+        $("#btnLimparPesquisa").toggle(value.length > 0);
 
-            $("#corpoTabelaProdutos tr").each(function () {
-                if ($(this).attr("id") === "mensagem-vazio") return;
+        $("#corpoTabelaProdutos tr").each(function () {
+            if ($(this).attr("id") === "mensagem-vazio") return;
 
-                var codigo = $(this).find("td:eq(0)").text().toLowerCase();
-                var nome = $(this).find("td:eq(1)").text().toLowerCase();
-                var corresponde = codigo.indexOf(value) > -1 || nome.indexOf(value) > -1;
+            var codigo = $(this).find("td:eq(0)").text().toLowerCase();
+            var nome = $(this).find("td:eq(1)").text().toLowerCase();
+            var corresponde = codigo.indexOf(value) > -1 || nome.indexOf(value) > -1;
 
-                $(this).toggle(corresponde);
-                if (corresponde) encontrou = true;
-            });
-
-            $("#mensagem-vazio").toggle(!encontrou);
+            $(this).toggle(corresponde);
+            if (corresponde) encontrou = true;
         });
 
-        // Funcionalidade do botão "Limpar"
-        $("#btnLimparPesquisa").on("click", function () {
-            $("#filtro").val(""); // limpa o input
-            $("#btnLimparPesquisa").hide(); // esconde o botão
+        $("#mensagem-vazio").toggle(!encontrou);
+    });
 
-            // Mostra todas as linhas (menos a de "nenhum produto")
-            $("#corpoTabelaProdutos tr").each(function () {
-                if ($(this).attr("id") === "mensagem-vazio") {
-                    $(this).hide();
-                } else {
-                    $(this).show();
-                }
-            });
+    // Funcionalidade do botão "Limpar"
+    $("#btnLimparPesquisa").on("click", function () {
+        $("#filtro").val(""); // limpa o input
+        $("#btnLimparPesquisa").hide(); // esconde o botão
+
+        // Mostra todas as linhas (menos a de "nenhum produto")
+        $("#corpoTabelaProdutos tr").each(function () {
+            if ($(this).attr("id") === "mensagem-vazio") {
+                $(this).hide();
+            } else {
+                $(this).show();
+            }
         });
     });
 
 
+    // Função para atualizar a tabela de produtos e a paginação
+    function atualizarTabelaProdutos() {
+        $.ajax({
+            url: '../php/tabela_produtos.php',
+            success: function (html) {
+                $('#corpoTabelaProdutos').html(html);
 
-})
+                // Verifica se há alguma linha visível (sem contar a linha de mensagem)
+                let encontrouProduto = $('#corpoTabelaProdutos tr').length > 0;
+
+                if (!encontrouProduto) {
+                    $('#corpoTabelaProdutos').html(`
+                    <tr id="mensagem-vazio">
+                        <td colspan="7" class="text-center">Nenhum produto encontrado.</td>
+                    </tr>
+                `);
+                }
+            },
+            error: function () {
+                alert('Erro ao atualizar a tabela de produtos.');
+            }
+        });
+    }
+});
