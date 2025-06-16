@@ -4,27 +4,36 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 // Adiciona produto ao carrinho
-function adicionarAoCarrinho(produto, qtd = 1) {
+function adicionarAoCarrinho(codigo, produto, qtd = 1) {
   let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
 
-  // Verifica se o produto já está no carrinho (pelo nome)
-  const index = carrinho.findIndex(p => p.nome === produto.nome);
+  // monta o item corretamente
+  const item = {
+    ...produto,
+    codigo,
+    preco: parseFloat(produto.preco),
+    qtd: parseInt(qtd)
+  };
+
+  // busca pelo código
+  const index = carrinho.findIndex(p => p.codigo === item.codigo);
 
   if (index !== -1) {
-    carrinho[index].qtd += qtd;
+    carrinho[index].qtd += item.qtd;
   } else {
-    carrinho.push({ ...produto, qtd });
+    carrinho.push(item); // ✅ agora sim, com preco numérico e código garantido
   }
 
   localStorage.setItem("carrinho", JSON.stringify(carrinho));
   atualizarVisibilidadeBotaoCarrinho();
 
-  // Animação (pulsar)
+  // animação
   const btn = document.getElementById("btnCarrinho");
   btn.classList.remove("btn-animate-pulse");
   void btn.offsetWidth;
   btn.classList.add("btn-animate-pulse");
 }
+
 
 
 // Exibe o carrinho no modal
@@ -77,7 +86,7 @@ function atualizarCarrinhoUI() {
     container.innerHTML += `
         <div class="d-flex justify-content-between align-items-center border-bottom py-2">
           <div class="me-3 flex-grow-1">
-            <strong>${item.nome}</strong><br>
+            <strong>${item.codigo} - ${item.nome}</strong><br>
             <small>R$ ${item.preco.toFixed(2).replace('.', ',')} cada</small>
           </div>
 

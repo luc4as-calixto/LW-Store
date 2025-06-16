@@ -58,7 +58,7 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             container.innerHTML += `
                 <div class="d-flex justify-content-between align-items-center border-bottom py-2">
                   <div class="flex-grow-1 me-2">
-                    <strong>${item.nome}</strong><br>
+                    <strong>${item.codigo} - ${item.nome}</strong><br>
                     <small>R$ ${item.preco.toFixed(2).replace('.', ',')} cada</small>
                   </div>
 

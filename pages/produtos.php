@@ -44,6 +44,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                         <div class="d-flex justify-content-between">
                             <button class="btn btn-primary btn-sm"
                                 onclick='verProduto({
+                                                      codigo: "<?php echo $id; ?>",
                                                       nome: "<?php echo addslashes($nome); ?>",
                                                       preco: <?php echo floatval($produto["price"]); ?>,
                                                       imagem: "<?php echo $imagem; ?>",
@@ -51,7 +52,8 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                                     })'>Ver Produto</button>
 
                             <a class="btn btn-success"
-                                onclick='adicionarAoCarrinho({ nome: "<?php echo addslashes($nome); ?>", preco: <?php echo floatval($produto["price"]); ?> });'>
+                                onclick='adicionarAoCarrinho("<?php echo $id; ?>", 
+                                { nome: "<?php echo addslashes($nome); ?>", preco: <?php echo floatval($produto["price"]); ?> })'>
                                 <i class="bi bi-cart-plus"></i>
                             </a>
                         </div>
@@ -127,7 +129,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         // Armazena o produto para adicionar depois
         document.getElementById("btnAddModalCarrinho").onclick = function() {
             const qtd = parseInt(document.getElementById("modalQtd").value) || 1;
-            adicionarAoCarrinho(produto, qtd);
+            adicionarAoCarrinho(produto.codigo, produto, qtd);
 
         };
 

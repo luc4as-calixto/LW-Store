@@ -13,18 +13,22 @@ require_once "../php/conexao.php";
             <tr>
                 <th>Código</th>
                 <th>Nome</th>
-                <th>Preço</th>
-                <th>Quantidade</th>
-                <th>Tipo de embalagem</th>
-                <th>Descrição</th>
+                <th>CPF</th>
+                <th>Email</th>
+                <th>Telefone</th>
+                <th>Endereço</th>
+                <th>Gênero</th>
+                <th>Aniverssário</th>
                 <th>Ações</th>
             </tr>
         </thead>
 
 
-        <tbody id="corpoTabelaProdutos">
-            <!-- linhas geradas pelo PHP atual (ou pode deixar vazio, vai preencher via AJAX) -->
+        <tbody id="corpoTabelaClientes">
             <?php include '../php/tabela_clientes.php'; ?>
+            <tr id="mensagem-vazio" style="display: none;">
+                <td colspan="9" class="text-center">Nenhum cliente encontrado.</td>
+            </tr>
         </tbody>
 
     </table>
@@ -41,8 +45,8 @@ require_once "../php/conexao.php";
             </div>
             <div class="modal-body text-center">
                 <br>
-                <h4>Tem certeza que deseja excluir este produto?</h4>
-                <h5>Nome do produto: <strong id="produtoExcluirNome"></strong></h5>
+                <h4>Tem certeza que deseja excluir este cliente?</h4>
+                <h5>Nome do cliente: <strong id="clienteExcluirNome"></strong></h5>
                 <br>
                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
                 <button type="button" class="btn btn-danger" id="btnConfirmarExclusao">Excluir</button>
@@ -64,45 +68,56 @@ require_once "../php/conexao.php";
                 <h5 class="modal-title" id="modalEditarLabel">Editar</h5>
             </div>
             <div class="modal-body text-center">
-                <h5>Nome do produto: <strong id="produtoEditar"></strong></h5>
+                <h5>Nome do cliente: <strong id="clienteEditar"></strong></h5>
 
-                <form id="formProdutoEditar" method="POST" enctype="multipart/form-data">
+                <form id="formClienteEditar" method="POST" enctype="multipart/form-data">
 
                     <div class="row mb-3">
                         <!-- Coluna da esquerda -->
                         <div class="col-md-6">
                             <div class="mb-3">
-                                <label style="text-align:left" for="name" class="form-label">Nome do Produto</label>
-                                <input type="text" class="form-control" id="name" name="name" placeholder="Digite o nome do produto*" value="<?php  ?>" required>
+                                <label style="text-align:left" for="name" class="form-label">Nome do Cliente</label>
+                                <input type="text" class="form-control" id="name" name="name" placeholder="Digite o nome do cliente*" value="<?php  ?>" required>
                             </div>
 
                             <div class="mb-3">
-                                <label style="text-align:left" for="price" class="form-label">Preço do Produto</label>
-                                <input type="number" step="0.01" class="form-control" id="price" name="price" placeholder="Digite o preço do produto*" required>
+                                <label style="text-align:left" for="cpf" class="form-label">CPF</label>
+                                <input type="text" class="form-control" id="cpf" name="cpf" placeholder="Digite o CPF do cliente*" value="<?php  ?>" required>
                             </div>
 
                             <div class="mb-3">
-                                <label style="text-align:left" for="amount" class="form-label">Quantidade</label>
-                                <input type="number" class="form-control" id="amount" name="amount" placeholder="Digite a quantidade*" required>
+                                <label style="text-align:left" for="email" class="form-label">Email</label>
+                                <input type="email" class="form-control" id="email" name="email" placeholder="Digite o email do cliente*" value="<?php  ?>" required>
                             </div>
 
                             <div class="mb-3">
-                                <label style="text-align:left" for="prouct_code" class="form-label">Código</label>
-                                <input type="text" class="form-control" id="product_code" name="product_code" placeholder="Digite o código do produto*" required>
+                                <label style="text-align:left" for="telephone" class="form-label">Telefone</label>
+                                <input type="text" class="form-control" id="telephone" name="telephone" placeholder="Digite o telefone do cliente*" value="<?php  ?>" required>
                             </div>
 
                             <div class="mb-3">
-                                <label style="text-align:left" for="type_packaging" class="form-label">Tipo da embalagem</label>
-                                <select name="type_packaging" id="type_packaging" class="form-select" required>
-                                    <option value="" disabled selected>Selecione o tipo de embalagem</option>
-                                    <option value="Caixa">Caixa</option>
-                                    <option value="Saco">Saco</option>
-                                    <option value="Lata">Lata</option>
-                                    <option value="Pacote">Pacote</option>
-                                    <option value="Garrafa">Garrafa</option>
+                                <label style="text-align:left" for="address" class="form-label">Endereço</label>
+                                <input type="text" class="form-control" id="address" name="address" placeholder="Digite o endereço do cliente*" value="<?php  ?>" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label style="text-align:left" for="gender" class="form-label">Gênero</label>
+                                <select name="gender" id="gender" class="form-select" required>
+                                    <option value="" disabled selected>Selecione o gênero do cliente*</option>
+                                    <option value="Masculino">Masculino</option>
+                                    <option value="Feminino">Feminino</option>
                                     <option value="Outro">Outro</option>
+                                    <option value="Prefiro não dizer">Prefiro não dizer</option>
                                 </select>
                             </div>
+
+                            <div class="mb-3">
+                                <label style="text-align:left" for="birthdate" class="form-label">Aniversário</label>
+                                <input type="date" class="form-control" id="birthdate" name="birthdate" value="<?php  ?>" required>
+                            </div>
+
+
+
 
                             <p style="text-align: left;">( * ) campos obrigatórios</p>
 
@@ -168,113 +183,3 @@ require_once "../php/conexao.php";
         </div>
     </div>
 </div>
-
-
-<script>
-    $(document).ready(function() {
-        let produtoIdExcluir = null;
-
-        $('#corpoTabelaProdutos').on('click', 'a.excluir-btn', function(e) {
-            e.preventDefault();
-
-            produtoIdExcluir = $(this).data('id');
-            const nomeProduto = $(this).data('nome');
-
-            $("#produtoExcluirNome").text(nomeProduto);
-
-            const modal = new bootstrap.Modal(document.getElementById('modalConfirmExclusao'));
-            modal.show();
-
-            $("#message").hide().removeClass("success error").text("");
-        });
-
-        // Confirma exclusão
-        $("#btnConfirmarExclusao").on("click", function() {
-            if (!produtoIdExcluir) return;
-
-            $.ajax({
-                url: "../php/excluir_produto.php",
-                type: "POST",
-                data: {
-                    id: produtoIdExcluir
-                },
-                dataType: "json",
-                success: function(response) {
-                    if (response.success) {
-                        $("#message").removeClass("error").addClass("success")
-                            .text("Produto excluído com sucesso!").fadeIn();
-
-                        setTimeout(function() {
-                            // Fecha o modal
-                            const modalEl = document.getElementById('modalConfirmExclusao');
-                            const modal = bootstrap.Modal.getInstance(modalEl);
-                            modal.hide();
-
-                            // Atualiza só a tabela para refletir a exclusão
-                            atualizarTabelaProdutos();
-
-                        }, 2000);
-                    } else {
-                        $("#message").removeClass("success").addClass("error")
-                            .text(response.error || "Erro ao excluir o produto.").fadeIn();
-                    }
-                },
-                error: function(xhr, status, error) {
-                    console.error("Erro AJAX:", xhr, status, error);
-                    $("#message").removeClass("success").addClass("error")
-                        .text("Erro na comunicação com o servidor.").fadeIn();
-                }
-            });
-        });
-    });
-
-    //modal de edição
-    $(document).ready(function() {
-        $(document).on('click', '.view_data', function() {
-            var id = $(this).attr("id");
-            // alert("ID do produto: " + id);
-            // verifica se há valor na variável user_id
-            if (id !== '') {
-                var dados = {
-                    product_code: id
-                }
-                $.post('../php/painel_editar.php', dados, function(retorno) {
-                    var produto = JSON.parse(retorno);
-
-                    $('#name').val(produto.name);
-                    $('#price').val(produto.price);
-                    $('#amount').val(produto.amount);
-                    $('#type_packaging').val(produto.type_packaging);
-                    $('#description').val(produto.description);
-                    $('#product_code').val(produto.product_code);
-
-                    if (produto.photo && produto.photo !== '') {
-                        $('#imagemAtual').attr('src', '../uploads/' + produto.photo);
-                    } else {
-                        $('#imagemAtual').attr('src', '../uploads/produto-sem-imagem.webp');
-                    }
-
-                    var modal = new bootstrap.Modal(document.getElementById('modalEditar'));
-                    modal.show();
-                });
-            }
-        })
-    })
-
-
-    // Função para atualizar a tabela sem recarregar a página
-    function atualizarTabelaProdutos() {
-        $.ajax({
-            url: '../php/tabela_produtos.php', // arquivo PHP que gera só as linhas da tabela (tbody)
-            method: 'GET',
-            success: function(html) {
-                $('#corpoTabelaProdutos').html(html);
-            },
-            error: function() {
-                alert('Erro ao atualizar a tabela de produtos.');
-            }
-        });
-
-    }
-
-</script>
