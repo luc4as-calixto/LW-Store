@@ -71,8 +71,20 @@ CREATE TABLE
 CREATE TABLE
     sales (
         id_sale INT PRIMARY KEY AUTO_INCREMENT,
-        fk_id_user INT,
-        fk_id_product INT,
-        sale_date DATE NOT NULL,
-        total_price DECIMAL(10, 2) NOT NULL
-    )
+        id_customer INT NOT NULL,
+        id_user INT NOT NULL,
+        date_sale DATETIME NOT NULL,
+        FOREIGN KEY (id_customer) REFERENCES customers (id_customer),
+        FOREIGN KEY (id_user) REFERENCES users (id_user)
+    );
+
+CREATE TABLE
+    sale_items (
+        id_item INT PRIMARY KEY AUTO_INCREMENT,
+        id_sale INT NOT NULL,
+        product_id INT NOT NULL,
+        quantity INT NOT NULL,
+        price_unit DECIMAL(10, 2) NOT NULL,
+        FOREIGN KEY (id_sale) REFERENCES sales (id_sale),
+        FOREIGN KEY (product_id) REFERENCES product (product_id)
+    );

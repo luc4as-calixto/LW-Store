@@ -108,7 +108,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
     <!-- Conteúdo principal -->
     <div id="main">
         <div class="dashboard-grid">
-            <a href="#" class="dashboard-item submenu" data-page="vendas">
+            <a href="#" class="dashboard-item submenu" data-page="checkout">
                 <i class="bi bi-cart-plus"></i>
                 <p>Vendas</p>
             </a>

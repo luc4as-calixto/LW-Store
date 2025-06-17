@@ -1,91 +1,38 @@
 <?php
 require_once '../php/conexao.php';
 
-
-// Quantidade de produtos por página
-$limite = 15;
-
-// Página atual (padrão: 1)
-$pagina = isset($_GET['pagina']) && is_numeric($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
-
-// Cálculo do OFFSET
-$offset = ($pagina - 1) * $limite;
-
-// Total de produtos (para calcular o número de páginas)
-$totalProdutos = $conn->query("SELECT COUNT(*) FROM product")->fetchColumn();
-$totalPaginas = ceil($totalProdutos / $limite);
-
-// Buscar produtos da página atual
-$stmt = $conn->prepare("SELECT * FROM product WHERE amount > 0 ORDER BY product_code DESC LIMIT :limite OFFSET :offset");
-
-$stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
-$stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
-$stmt->execute();
-$produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 ?>
 
-<div class="container">
-    <div class="row g-4">
-        <?php foreach ($produtos as $produto): ?>
-            <?php
-            $id = $produto['product_code'];
-            $nome = htmlspecialchars($produto['name']);
-            $preco = number_format($produto['price'], 2, ',', '.');
-            $descricao = htmlspecialchars($produto['description']);
-            $imagem = htmlspecialchars($produto['photo']);
-            ?>
-            <div class="col-sm-6 col-md-3 produto"><!-- col-md-3 = 4 colunas por linha -->
-                <div class="card h-100 shadow-sm produto-card">
-                    <img src="<?php echo $imagem; ?>" class="card-img-top" alt="<?php echo $nome; ?>">
-                    <div class="card-body">
-                        <h5 class="card-title"><?php echo $nome; ?></h5>
-                        <p class="card-text"><?php echo $descricao; ?></p>
-                        <p class="card-text"><strong>R$ <?php echo $preco; ?></strong></p>
-                        <div class="d-flex justify-content-between">
-                            <button class="btn btn-primary btn-sm"
-                                onclick='verProduto({
-                                                      codigo: "<?php echo $id; ?>",
-                                                      nome: "<?php echo addslashes($nome); ?>",
-                                                      preco: <?php echo floatval($produto["price"]); ?>,
-                                                      imagem: "<?php echo $imagem; ?>",
-                                                      descricao: "<?php echo addslashes($descricao); ?>"
-                                                    })'>Ver Produto</button>
 
-                            <a class="btn btn-success"
-                                onclick='adicionarAoCarrinho("<?php echo $id; ?>", 
-                                { nome: "<?php echo addslashes($nome); ?>", preco: <?php echo floatval($produto["price"]); ?> })'>
-                                <i class="bi bi-cart-plus"></i>
-                            </a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        <?php endforeach; ?>
+<div class="container">
+    <h2 class="my-4">Produtos</h2>
+
+    <!-- Filtro de busca -->
+    <div class="mb-4 d-flex gap-2">
+        <input type="text" id="filtro" class="form-control" placeholder="Buscar produto...">
+        <button class="btn btn-outline-secondary" id="btnLimparPesquisa" style="display: none;">Limpar</button>
+    </div>
+
+    <div class="d-flex justify-content-center mt-4">
+        <ul class="pagination">
+
+        </ul>
+    </div>
+
+    <!-- Produtos em Grid -->
+    <div class="row g-4" id="areaProdutos">
+
     </div>
 
     <!-- Paginação -->
-    <nav aria-label="Navegação de página" class="mt-4">
-        <ul class="pagination justify-content-center">
-            <?php if ($pagina > 1): ?>
-                <li class="page-item">
-                    <a class="page-link" href="?pagina=<?php echo $pagina - 1; ?>">Anterior</a>
-                </li>
-            <?php endif; ?>
+    <div class="d-flex justify-content-center mt-4">
+        <ul class="pagination">
 
-            <?php for ($i = 1; $i <= $totalPaginas; $i++): ?>
-                <li class="page-item <?php if ($i == $pagina) echo 'active'; ?>">
-                    <a class="page-link" href="?pagina=<?php echo $i; ?>"><?php echo $i; ?></a>
-                </li>
-            <?php endfor; ?>
-
-            <?php if ($pagina < $totalPaginas): ?>
-                <li class="page-item">
-                    <a class="page-link" href="?pagina=<?php echo $pagina + 1; ?>">Próxima</a>
-                </li>
-            <?php endif; ?>
         </ul>
-    </nav>
+    </div>
 </div>
+
+<script src="../js/script-paginacao-produtos.js"></script>
 
 <!-- Modal de Produto -->
 <div class="modal fade" id="modalVerProduto" tabindex="-1" aria-labelledby="modalVerProdutoLabel" aria-hidden="true">
@@ -104,9 +51,10 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
             </div>
             <div class="modal-footer justify-content-end">
                 <div class="d-flex align-items-center gap-3 w-100 justify-content-between">
-                    <div class="d-flex align-items-center gap-2">
-                        <label for="modalQtd" class="mb-0">Qtd:</label>
-                        <input type="number" id="modalQtd" value="1" min="1" class="form-control form-control-sm" style="width: 70px;">
+                    <div class="d-flex align-items-center gap-1">
+                        <button class="btn btn-sm btn-outline-secondary" id="btnQtdMenos" type="button">−</button>
+                        <span class="px-2" id="modalQtdValor">1</span>
+                        <button class="btn btn-sm btn-outline-secondary" id="btnQtdMais" type="button">+</button>
                     </div>
                     <button type="button" class="btn btn-outline-success" id="btnAddModalCarrinho">
                         <i class="bi bi-cart-plus"></i> Adicionar ao Carrinho
@@ -118,6 +66,8 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
+<script src="../js/script-paginacao-produtos.js"></script>
+
 
 <script>
     function verProduto(produto) {
@@ -126,13 +76,60 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
         document.getElementById("modalProdutoDescricao").textContent = produto.descricao;
         document.getElementById("modalProdutoPreco").textContent = parseFloat(produto.preco).toFixed(2).replace('.', ',');
 
-        // Armazena o produto para adicionar depois
-        document.getElementById("btnAddModalCarrinho").onclick = function() {
-            const qtd = parseInt(document.getElementById("modalQtd").value) || 1;
-            adicionarAoCarrinho(produto.codigo, produto, qtd);
+        // Inicializa quantidade
+        let qtd = 1;
+        const maxEstoque = produto.estoque;
 
-        };
+        const spanQtd = document.getElementById("modalQtdValor");
+        const btnMenos = document.getElementById("btnQtdMenos");
+        const btnMais = document.getElementById("btnQtdMais");
+        const btnAdd = document.getElementById("btnAddModalCarrinho");
 
+        spanQtd.textContent = qtd;
+
+        if (maxEstoque <= 0) {
+            btnMais.disabled = true;
+            btnMenos.disabled = true;
+            btnAdd.disabled = true;
+            btnAdd.innerHTML = `<i class="bi bi-x-circle"></i> Esgotado`;
+            spanQtd.textContent = 0;
+        } else {
+            btnMais.disabled = false;
+            btnMenos.disabled = false;
+            btnAdd.disabled = false;
+            btnAdd.innerHTML = `<i class="bi bi-cart-plus"></i> Adicionar ao Carrinho`;
+
+            // Função para atualizar estado dos botões
+            function atualizarEstadoBotoes() {
+                btnMenos.disabled = qtd <= 1;
+                btnMais.disabled = qtd >= maxEstoque;
+            }
+
+            atualizarEstadoBotoes();
+
+            // Botão diminuir
+            btnMenos.onclick = function() {
+                if (qtd > 1) {
+                    qtd--;
+                    spanQtd.textContent = qtd;
+                    atualizarEstadoBotoes();
+                }
+            };
+
+            // Botão aumentar (com controle de estoque)
+            btnMais.onclick = function() {
+                if (qtd < maxEstoque) {
+                    qtd++;
+                    spanQtd.textContent = qtd;
+                    atualizarEstadoBotoes();
+                }
+            };
+
+            // Adicionar ao carrinho
+            btnAdd.onclick = function() {
+                adicionarAoCarrinho(produto.codigo, produto, qtd);
+            };
+        }
 
         const modal = bootstrap.Modal.getOrCreateInstance(document.getElementById("modalVerProduto"));
         modal.show();

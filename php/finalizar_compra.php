@@ -1,49 +1,93 @@
 <?php
 header('Content-Type: application/json');
 session_start();
-require_once 'conexao.php';
+require_once "conexao.php";
 
 try {
-    // Recebe o JSON do carrinho
-    $json = file_get_contents("php://input");
-    $data = json_decode($json, true);
+    // Lê os dados enviados em JSON
+    $data = json_decode(file_get_contents("php://input"), true);
 
-    if (!isset($data['itens']) || count($data['itens']) === 0) {
-        throw new Exception("Carrinho vazio.");
+    if (!$data) {
+        throw new Exception("Dados inválidos.");
     }
 
-    if (!isset($data['id_cliente']) || empty($data['id_cliente'])) {
-        throw new Exception("Cliente não selecionado.");
+    $id_cliente = intval($data['id_cliente']);
+    $id_vendedor = intval($data['id_vendedor']);
+    $itens = $data['itens'];
+
+    if (empty($id_cliente) || empty($id_vendedor) || empty($itens)) {
+        throw new Exception("Dados incompletos.");
     }
 
-    $id_cliente = $data['id_cliente'];
-    $data_pedido = date("Y-m-d H:i:s");
+    // Inicia transação
+    $conn->beginTransaction();
 
-    // 1. Cria o pedido
-    $sql = "INSERT INTO pedidos (id_cliente, data_pedido) VALUES (:id_cliente, :data_pedido)";
-    $stmt = $conn->prepare($sql);
-    $stmt->bindParam(':id_cliente', $id_cliente, PDO::PARAM_INT);
-    $stmt->bindParam(':data_pedido', $data_pedido);
+    // Inserir na tabela de pedidos (vendas)
+    $stmt = $conn->prepare("INSERT INTO sales (id_customer, id_user, date_sale) VALUES (:id_customer, :id_user, NOW())");
+    $stmt->bindParam(':id_customer', $id_cliente);
+    $stmt->bindParam(':id_user', $id_vendedor);
     $stmt->execute();
 
     $id_pedido = $conn->lastInsertId();
 
-    // 2. Insere os itens do pedido
-    $sql_item = "INSERT INTO pedido_itens (id_pedido, nome_produto, preco, quantidade) 
-                 VALUES (:id_pedido, :nome, :preco, :qtd)";
-    $stmt_item = $conn->prepare($sql_item);
+    // Inserir os itens do pedido
+    foreach ($itens as $item) {
+        $codigo_produto = intval($item['codigo']);
+        $quantidade = intval($item['qtd']);
+        $preco_unitario = floatval($item['preco']);
 
-    foreach ($data['itens'] as $item) {
-        $stmt_item->execute([
-            ':id_pedido' => $id_pedido,
-            ':nome'      => $item['nome'],
-            ':preco'     => $item['preco'],
-            ':qtd'       => $item['qtd']
+        // 🔥 Verifica o estoque atual
+        $stmtEstoque = $conn->prepare("SELECT amount FROM product WHERE product_code = :codigo");
+        $stmtEstoque->bindParam(':codigo', $codigo_produto);
+        $stmtEstoque->execute();
+        $estoque = $stmtEstoque->fetchColumn();
+
+        if ($estoque === false) {
+            throw new Exception("Produto código {$codigo_produto} não encontrado.");
+        }
+
+        if ($estoque < $quantidade) {
+            throw new Exception("Estoque insuficiente para o produto código {$codigo_produto}. Disponível: {$estoque}");
+        }
+
+        // 🔥 Inserir item na tabela de itens do pedido
+        $stmtItem = $conn->prepare("
+            INSERT INTO sale_items (id_sale, product_code, quantity, price_unit)
+            VALUES (:id_sale, :product_code, :quantity, :price_unit)
+        ");
+        $stmtItem->execute([
+            ':id_sale' => $id_pedido,
+            ':product_code' => $codigo_produto,
+            ':quantity' => $quantidade,
+            ':price_unit' => $preco_unitario
+        ]);
+
+        // 🔥 Abater estoque
+        $stmtUpdate = $conn->prepare("UPDATE product SET amount = amount - :qtd WHERE product_code = :codigo");
+        $stmtUpdate->execute([
+            ':qtd' => $quantidade,
+            ':codigo' => $codigo_produto
         ]);
     }
 
-    echo json_encode(['success' => true, 'message' => 'Pedido finalizado com sucesso!']);
+    // Commit da transação
+    $conn->commit();
+
+    echo json_encode([
+        'success' => true,
+        'message' => 'Pedido finalizado com sucesso!',
+        'id_pedido' => $id_pedido
+    ]);
 
 } catch (Exception $e) {
-    echo json_encode(['success' => false, 'error' => $e->getMessage()]);
+    // Rollback em caso de erro
+    if ($conn->inTransaction()) {
+        $conn->rollBack();
+    }
+    echo json_encode([
+        'success' => false,
+        'error' => $e->getMessage()
+    ]);
+    exit;
 }
+?>
