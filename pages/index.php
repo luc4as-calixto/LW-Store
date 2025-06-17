@@ -88,7 +88,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                 <i class="bi bi-chevron-down"></i>
             </a>
             <div class="collapse" id="relatorios">
-                <a href="#" class="nav-link submenu" data-page="relatorio-cliente">Clientes</a>
+                <a href="#" class="nav-link submenu" data-page="relatorio-clientes">Clientes</a>
                 <a href="#" class="nav-link submenu" data-page="relatorio-vendedores">Vendedores</a>
                 <a href="#" class="nav-link submenu" data-page="relatorio-produtos">Produtos</a>
             </div>

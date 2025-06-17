@@ -9,7 +9,7 @@ try {
     // Buscar produtos da página atual em ordem crescente de product_code
     $stmt = $conn->prepare("SELECT * FROM product WHERE amount > 0 ORDER BY product_code ASC LIMIT :limite OFFSET :offset");
     $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
-    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT)        ;
     $stmt->execute();
 
     if ($stmt->rowCount() > 0) {

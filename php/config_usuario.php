@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 exit;
             }
         } else {
-            $caminho_salvar = $_SESSION['photo'] ?? "../uploads/sem-foto.jpg";
+            $caminho_salvar = $_SESSION['photo'] ?? "../uploads/sem-foto.webp";
         }
 
         $sql = "SELECT id_user FROM users WHERE login = :login";
