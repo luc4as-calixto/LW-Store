@@ -20,6 +20,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             exit;
         }
 
+        // Verifica se já existe CPF cadastrado
+        $verifica = $conn->prepare("SELECT COUNT(*) FROM customers WHERE cpf = :cpf");
+        $verifica->bindParam(':cpf', $cpf);
+        $verifica->execute();
+        if ($verifica->fetchColumn() > 0) {
+            echo json_encode(['error' => 'CPF já cadastrado.']);
+            exit;
+        }
+
         // Processamento da foto
         $caminho_salvar = "../uploads/sem-foto.webp"; // padrão
         if ($photo && $photo['error'] === UPLOAD_ERR_OK) {
@@ -58,14 +67,12 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(':photo', $caminho_salvar);
         $stmt->execute();
 
-        echo json_encode ([
+        echo json_encode([
             'success' => true,
             'message' => 'Cliente cadastrado com sucesso.'
         ]);
-
     } catch (Exception $e) {
         echo json_encode(['error' => 'Erro ao processar os dados: ' . $e->getMessage()]);
         exit;
     }
 }
-?>

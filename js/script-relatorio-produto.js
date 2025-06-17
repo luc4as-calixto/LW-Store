@@ -85,7 +85,6 @@ $(document).ready(function () {
                     $formProdutoEditar.off("submit").on("submit", function (e) {
                         e.preventDefault();
 
-                        // Cria FormData para enviar arquivos
                         var formData = new FormData(this);
 
                         $.ajax({

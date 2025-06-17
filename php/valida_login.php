@@ -28,7 +28,7 @@ try {
             ':address' => 'Rua admin, 123',
             ':gender' => 'M',
             ':birthdate' => '2000-01-01',
-            ':photo' => 'sem-foto.jpg'
+            ':photo' => '../uploads/sem-foto.webp'
         ]);        
 
     }
@@ -65,7 +65,7 @@ try {
         $_SESSION['address'] = $sellers['address'];
         $_SESSION['gender'] = $sellers['gender'];
         $_SESSION['birthdate'] = $sellers['birthdate'];
-        $_SESSION['photo'] = !empty($sellers['photo']) ? $sellers['photo'] : 'sem-foto.jpg';
+        $_SESSION['photo'] = !empty($sellers['photo']) ? $sellers['photo'] : 'sem-foto.webp';
 
         $_SESSION['logado'] = true;
 

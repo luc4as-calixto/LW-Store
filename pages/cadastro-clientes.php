@@ -69,8 +69,8 @@
         <div id="message" style="display: none;"></div>
 
     </form>
-    <script src="../js/enviardadosCliente.js"></script>
 </div>
+<script src="../js/enviardadosCliente.js"></script>
 <script>
     document.getElementById('photo').addEventListener('change', function(event) {
         const file = event.target.files[0];
