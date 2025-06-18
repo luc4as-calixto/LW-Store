@@ -58,7 +58,7 @@
 
                 <div class="mb-3">
                     <label for="email" class="form-label">E-mail</label>
-                    <input type="text" class="form-control" id="email" name="email" placeholder="Digite o email*" required>
+                    <input type="email" class="form-control" id="email" name="email" placeholder="Digite o email*" required>
                 </div>
 
                 <div class="mb-3">

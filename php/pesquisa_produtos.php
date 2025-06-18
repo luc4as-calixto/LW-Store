@@ -14,7 +14,6 @@ try {
     }
     
     $sql .= " ORDER BY product_code ASC LIMIT :limite OFFSET :offset";
-
     $stmt = $conn->prepare($sql);
     
     if (!empty($termo)) {

@@ -72,7 +72,7 @@ $(document).ready(function () {
                 $('#id').val(produto.product_id); // Campo oculto com o ID
 
                 if (produto.photo && produto.photo !== '') {
-                    $('#imagemAtual').attr('src', '../uploads/' + produto.photo);
+                    $('#imagemAtual').attr('src', produto.photo);
                 } else {
                     $('#imagemAtual').attr('src', '../uploads/produto-sem-imagem.webp');
                 }
@@ -199,8 +199,8 @@ $(document).ready(function () {
             atualizarTabelaProdutos(pagina);
         }
     });
-
-    // Modifique a função atualizarTabelaProdutos para aceitar página
+    
+    // Função para atualizar a tabela de produtos
     function atualizarTabelaProdutos(pagina = 1) {
         $.ajax({
             url: '../php/tabela_produtos.php',

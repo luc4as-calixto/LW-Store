@@ -155,7 +155,6 @@ require_once "../php/conexao.php";
                     <div id="message-modal-editar" style="display: none;"></div>
 
                 </form>
-                <script src="../js/enviardados.js"></script>
             </div>
             <!-- <div class="modal-footer justify-content-center">
             </div> -->

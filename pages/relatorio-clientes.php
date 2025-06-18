@@ -6,7 +6,7 @@ require_once "../php/conexao.php";
 ?>
 
 <div class="container mt-4" id="pagina">
-    <h1>Relatórios de produtos</h1>
+    <h1>Relatórios de Clientes</h1>
 
     <table>
         <thead>
@@ -34,6 +34,8 @@ require_once "../php/conexao.php";
     </table>
 
 </div>
+
+<script src="../js/script-relatorio-cliente.js"></script>
 
 <!-- Modal de confirmação de exclusão -->
 <div class="modal fade" id="modalConfirmExclusao" tabindex="-1" aria-labelledby="modalConfirmExclusaoLabel" aria-hidden="true">
@@ -95,20 +97,22 @@ require_once "../php/conexao.php";
                                 <input type="text" class="form-control" id="telephone" name="telephone" placeholder="Digite o telefone do cliente*" value="<?php  ?>" required>
                             </div>
 
-                            <div class="mb-3">
-                                <label style="text-align:left" for="address" class="form-label">Endereço</label>
-                                <input type="text" class="form-control" id="address" name="address" placeholder="Digite o endereço do cliente*" value="<?php  ?>" required>
-                            </div>
+                        </div>
 
+                        <!-- Coluna da direita -->
+                        <div class="col-md-6">
                             <div class="mb-3">
                                 <label style="text-align:left" for="gender" class="form-label">Gênero</label>
                                 <select name="gender" id="gender" class="form-select" required>
                                     <option value="" disabled selected>Selecione o gênero do cliente*</option>
-                                    <option value="Masculino">Masculino</option>
-                                    <option value="Feminino">Feminino</option>
-                                    <option value="Outro">Outro</option>
-                                    <option value="Prefiro não dizer">Prefiro não dizer</option>
+                                    <option value="Masculino">M</option>
+                                    <option value="Feminino">F</option>
                                 </select>
+                            </div>
+
+                            <div class="mb-3">
+                                <label style="text-align:left" for="address" class="form-label">Endereço</label>
+                                <input type="text" class="form-control" id="address" name="address" placeholder="Digite o endereço do cliente*" value="<?php  ?>" required>
                             </div>
 
                             <div class="mb-3">
@@ -116,42 +120,27 @@ require_once "../php/conexao.php";
                                 <input type="date" class="form-control" id="birthdate" name="birthdate" value="<?php  ?>" required>
                             </div>
 
-
-
-
-                            <p style="text-align: left;">( * ) campos obrigatórios</p>
-
-                        </div>
-
-                        <!-- Coluna da direita -->
-                        <div class="col-md-6">
                             <div class="mb-3">
-                                <label style="text-align:left" for="photo" class="form-label">Foto do Produto</label>
+                                <label style="text-align:left" for="photo" class="form-label">Foto do cliente</label>
                                 <div class="d-flex align-items-center gap-3">
                                     <!-- Input de arquivo -->
                                     <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
-
-                                    <!-- Pré-visualização da imagem -->
-                                    <div id="preview-container">
-                                        <img id="imagemAtual" src="../uploads/produto-sem-imagem.webp" alt="Foto do Produto"
-                                            width="100" height="100"
-                                            style="object-fit: cover; border-radius: 8px; border: 1px solid #ccc;">
-                                    </div>
+                                </div>
+                                <!-- Pré-visualização da imagem -->
+                                <div id="preview-container">
+                                    <img id="imagemAtual" src="../uploads/sem-foto.webp" alt="Foto do cliente"
+                                        width="100" height="100"
+                                        style="object-fit: cover; border-radius: 8px; border: 1px solid #ccc;">
                                 </div>
                             </div>
-
-                            <div class="mb-3">
-                                <label style="text-align:left" for="description" class="form-label">Descrição</label>
-                                <textarea name="description" id="description" class="form-control" style="resize: none;" rows="9" placeholder="Descreva o produto aqui..." required></textarea>
-                            </div>
+                            <input type="hidden" name="id_customer" id="id_customer" value="">
                         </div>
                     </div>
-                    <button id="btn-editar" type="submit" class="btn-normal"><i class="bi bi-tags"></i> Editar Produto</button>
+                    <button id="btn-editar" type="submit" class="btn-normal"><i class="bi bi-tags"></i> Editar cliente</button>
 
                     <div id="message" style="display: none;"></div>
 
                 </form>
-                <script src="../js/enviardados.js"></script>
             </div>
             <!-- <div class="modal-footer justify-content-center">
             </div> -->
