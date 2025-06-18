@@ -8,6 +8,19 @@
     <div class="container mt-4" id="pagina">
         <h1>Relatórios de vendedores</h1>
 
+        <!-- Campo de pesquisa -->
+        <div class="row align-items-center mb-4">
+            <div class="col-md-6 col-sm-12 mb-2 mb-md-0">
+                <div class="input-group">
+                    <input type="text" id="filtro" class="form-control mb-3" placeholder="Buscar na tabela...">
+                    <span style="width: 10px;"></span>
+                    <button class="btn btn-outline-secondary" id="btnLimparPesquisa" type="button" style="display: none;">
+                        <i class="bi bi-x-circle"></i> Limpar
+                    </button>
+                </div>
+            </div>
+        </div>
+
         <table>
             <thead>
                 <tr>
@@ -33,6 +46,11 @@
             </tbody>
 
         </table>
+
+        <!-- Paginação -->
+        <div class="d-flex justify-content-center mt-3">
+            <?php require_once "../php/paginacao_vendedor.php"; ?>
+        </div>
 
     </div>
 
@@ -97,8 +115,6 @@
                                     <label style="text-align:left" for="telephone" class="form-label">Telefone</label>
                                     <input type="text" class="form-control" id="telephone" name="telephone" placeholder="Digite o telefone do vendedor*" value="<?php  ?>" required>
                                 </div>
-
-                                <p style="text-align: left;">( * ) campos obrigatórios</p>
 
                             </div>
 
