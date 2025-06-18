@@ -48,6 +48,26 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     </div>
 </div>
 
+<!-- Modal de Sucesso -->
+<div class="modal fade" id="successModal" tabindex="-1" aria-labelledby="successModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center p-4">
+            <div class="mx-auto mb-3" style="width:80px;height:80px;">
+                <svg width="80" height="80" viewBox="0 0 80 80">
+                    <circle cx="40" cy="40" r="38" fill="#e6ffe6" stroke="#28a745" stroke-width="4" />
+                    <polyline points="25,43 37,55 56,30" fill="none" stroke="#28a745" stroke-width="5" stroke-linecap="round" stroke-linejoin="round">
+                        <animate attributeName="points" dur="0.5s" fill="freeze"
+                            from="25,43 25,43 25,43" to="25,43 37,55 56,30" />
+                    </polyline>
+                </svg>
+            </div>
+            <h5 class="mb-2" id="successModalLabel">Compra realizada com sucesso!</h5>
+            <p class="mb-0">O pedido foi finalizado e registrado no sistema.</p>
+        </div>
+    </div>
+</div>
+
+
 <!-- <script src="../js/carrinho.js"></script> -->
 
 <script>
@@ -149,12 +169,12 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             .then(res => res.json())
             .then(data => {
                 console.log("Retorno do backend:", data);
-                alert(JSON.stringify(data));
                 if (data.success) {
-                    document.getElementById("message").innerHTML = `<div class="alert alert-success">${data.message}</div>`;
-                    document.getElementById("message").style.display = "block";
-                    window.open(`comprovante.php?id=${data.id_pedido}`, '_blank');
-
+                    showSuccessModal();
+                    setTimeout(() => {
+                        window.open(`comprovante.php?id=${data.id_pedido}`, '_blank');
+                    }, 2000);
+                    clearCustomer();
                     limparCarrinho();
                     renderCheckoutCarrinho();
                 } else {
@@ -167,6 +187,17 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 document.getElementById("message").innerHTML = `<div class="alert alert-danger">Erro ao enviar pedido. Tente novamente mais tarde.</div>`;
                 document.getElementById("message").style.display = "block";
             });
+    }
+
+    function showSuccessModal() {
+        const modal = new bootstrap.Modal(document.getElementById('successModal'));
+        modal.show();
+        setTimeout(() => modal.hide(), 2000);
+    }
+
+    function clearCustomer() {
+        option = document.getElementById("clienteSelect");
+        option.selectedIndex = 0;
     }
 
     renderCheckoutCarrinho();

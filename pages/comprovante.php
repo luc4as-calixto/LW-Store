@@ -1,5 +1,6 @@
 <?php
 require_once '../php/conexao.php';
+session_start();
 
 if (!isset($_GET['id'])) {
     die('ID do pedido não informado.');
@@ -9,10 +10,10 @@ $id_pedido = intval($_GET['id']);
 
 // 🔥 Buscar dados do pedido
 $stmt = $conn->prepare("
-    SELECT s.*, c.name AS cliente, c.cpf, c.address, u.name AS vendedor
+    SELECT s.*, c.name AS cliente, c.cpf, c.address, se.name AS vendedor
     FROM sales s
     JOIN customers c ON s.id_customer = c.id_customer
-    JOIN users u ON s.id_user = u.id_user
+    JOIN sellers se ON se.fk_id_user = s.id_user
     WHERE s.id_sale = :id
 ");
 $stmt->execute([':id' => $id_pedido]);

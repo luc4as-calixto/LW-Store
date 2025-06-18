@@ -40,7 +40,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                     <div class="d-flex justify-content-between">
                         <button class="btn btn-primary btn-sm"
                             onclick='verProduto({
-                                codigo: "<?= $produto['product_code']; ?>",
+                                codigo: "<?= $produto['product_id']; ?>",
                                 nome: "<?= addslashes($produto['name']); ?>",
                                 preco: <?= floatval($produto['price']); ?>,
                                 imagem: "<?= htmlspecialchars($produto['photo']); ?>",
@@ -53,7 +53,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
                         <?php if ($produto['amount'] > 0): ?>
                             <a class="btn btn-success"
-                                onclick='adicionarAoCarrinho("<?= $produto['product_code'] ?>", { 
+                                onclick='adicionarAoCarrinho("<?= $produto['product_id'] ?>", { 
                                 nome: "<?= addslashes($produto['name']); ?>", 
                                 preco: <?= floatval($produto['price']); ?>,
                                 estoque: <?= intval($produto['amount']); ?>

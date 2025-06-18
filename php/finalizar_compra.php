@@ -4,7 +4,6 @@ session_start();
 require_once "conexao.php";
 
 try {
-    // Lê os dados enviados em JSON
     $data = json_decode(file_get_contents("php://input"), true);
 
     if (!$data) {
@@ -19,25 +18,29 @@ try {
         throw new Exception("Dados incompletos.");
     }
 
-    // Inicia transação
     $conn->beginTransaction();
 
-    // Inserir na tabela de pedidos (vendas)
+    // 👉 Inserir na tabela sales
     $stmt = $conn->prepare("INSERT INTO sales (id_customer, id_user, date_sale) VALUES (:id_customer, :id_user, NOW())");
-    $stmt->bindParam(':id_customer', $id_cliente);
-    $stmt->bindParam(':id_user', $id_vendedor);
-    $stmt->execute();
+    $stmt->execute([
+        ':id_customer' => $id_cliente,
+        ':id_user' => $id_vendedor
+    ]);
 
     $id_pedido = $conn->lastInsertId();
 
-    // Inserir os itens do pedido
+    if (!$id_pedido) {
+        throw new Exception("Erro ao obter ID do pedido.");
+    }
+
+    // 👉 Inserir itens do pedido
     foreach ($itens as $item) {
-        $codigo_produto = intval($item['codigo']);
+        $codigo_produto = $item['codigo'];
         $quantidade = intval($item['qtd']);
         $preco_unitario = floatval($item['preco']);
 
         // 🔥 Verifica o estoque atual
-        $stmtEstoque = $conn->prepare("SELECT amount FROM product WHERE product_code = :codigo");
+        $stmtEstoque = $conn->prepare("SELECT amount FROM product WHERE product_id = :codigo");
         $stmtEstoque->bindParam(':codigo', $codigo_produto);
         $stmtEstoque->execute();
         $estoque = $stmtEstoque->fetchColumn();
@@ -50,27 +53,24 @@ try {
             throw new Exception("Estoque insuficiente para o produto código {$codigo_produto}. Disponível: {$estoque}");
         }
 
-        // 🔥 Inserir item na tabela de itens do pedido
-        $stmtItem = $conn->prepare("
-            INSERT INTO sale_items (id_sale, product_code, quantity, price_unit)
-            VALUES (:id_sale, :product_code, :quantity, :price_unit)
-        ");
-        $stmtItem->execute([
+        // 👉 Inserir na tabela sale_items
+        $stmt = $conn->prepare("INSERT INTO sale_items (id_sale, product_id, quantity, price_unit)
+                                VALUES (:id_sale, :product_id, :quantity, :price_unit)");
+        $stmt->execute([
             ':id_sale' => $id_pedido,
-            ':product_code' => $codigo_produto,
+            ':product_id' => $codigo_produto,
             ':quantity' => $quantidade,
             ':price_unit' => $preco_unitario
         ]);
 
-        // 🔥 Abater estoque
-        $stmtUpdate = $conn->prepare("UPDATE product SET amount = amount - :qtd WHERE product_code = :codigo");
-        $stmtUpdate->execute([
+        // 👉 Atualizar estoque
+        $stmt = $conn->prepare("UPDATE product SET amount = amount - :qtd WHERE product_id = :codigo");
+        $stmt->execute([
             ':qtd' => $quantidade,
             ':codigo' => $codigo_produto
         ]);
     }
 
-    // Commit da transação
     $conn->commit();
 
     echo json_encode([
@@ -78,12 +78,8 @@ try {
         'message' => 'Pedido finalizado com sucesso!',
         'id_pedido' => $id_pedido
     ]);
-
 } catch (Exception $e) {
-    // Rollback em caso de erro
-    if ($conn->inTransaction()) {
-        $conn->rollBack();
-    }
+    $conn->rollBack();
     echo json_encode([
         'success' => false,
         'error' => $e->getMessage()
