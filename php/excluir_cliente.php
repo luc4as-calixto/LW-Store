@@ -17,9 +17,9 @@
         $stmt->bindParam(':id_customer', $id_customer, PDO::PARAM_STR);
         try {
             if ($stmt->execute()) {
-                echo json_encode(['success' => 'Produto excluído com sucesso.']);
+                echo json_encode(['success' => 'Cliente excluído com sucesso.']);
             } else {
-                echo json_encode(['error' => 'Erro ao excluir o produto.']);
+                echo json_encode(['error' => 'Erro ao excluir o cliente.']);
             }
         } catch (PDOException $e) {
             echo json_encode(['error' => 'Erro: ' . $e->getMessage()]);

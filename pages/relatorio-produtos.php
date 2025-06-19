@@ -116,12 +116,12 @@ require_once "../php/conexao.php";
                                 <label style="text-align:left" for="type_packaging" class="form-label">Tipo da embalagem</label>
                                 <select name="type_packaging" id="type_packaging" class="form-select" required>
                                     <option value="" disabled selected>Selecione o tipo de embalagem</option>
-                                    <option value="caixa">Caixa</option>
-                                    <option value="saco">Saco</option>
-                                    <option value="lata">Lata</option>
-                                    <option value="pacote">Pacote</option>
-                                    <option value="garrafa">Garrafa</option>
-                                    <option value="outro">Outro</option>
+                                    <option value="Caixa">Caixa</option>
+                                    <option value="Saco">Saco</option>
+                                    <option value="Lata">Lata</option>
+                                    <option value="Pacote">Pacote</option>
+                                    <option value="Garrafa">Garrafa</option>
+                                    <option value="Outro">Outro</option>
                                 </select>
                             </div>
 
@@ -156,8 +156,6 @@ require_once "../php/conexao.php";
 
                 </form>
             </div>
-            <!-- <div class="modal-footer justify-content-center">
-            </div> -->
 
             <script>
                 document.getElementById('photo').addEventListener('change', function(event) {

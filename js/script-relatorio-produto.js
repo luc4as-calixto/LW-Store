@@ -91,8 +91,8 @@ $(document).ready(function () {
                             url: "../php/editar_produto.php",
                             type: "POST",
                             data: formData,
-                            processData: false, // Necessário para FormData
-                            contentType: false, // Necessário para FormData
+                            processData: false,
+                            contentType: false,
                             dataType: "json",
                             success: function (response) {
                                 if (response.success) {

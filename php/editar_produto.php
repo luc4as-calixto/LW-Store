@@ -20,6 +20,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             exit;
         }
 
+        // Verifica se mudou algo 
+        $stmt = $conn->prepare("SELECT * FROM product WHERE product_id = :product_id");
+        $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
+        $stmt->execute();
+        $produto = $stmt->fetch(PDO::FETCH_ASSOC);
+
+        if ($produto['product_code'] == $product_code || $produto['name'] == $name || $produto['price'] == $price || $produto['amount'] == $amount || $produto['type_packaging'] == $type_packaging || $produto['description'] == $description) {
+            echo json_encode(['error' => 'Nenhum dado foi alterado.']);
+            exit;
+        }
+
         // Verifica se o produto existe
         $check = $conn->prepare("SELECT COUNT(*) FROM product WHERE product_id = :product_id");
         $check->bindParam(':product_id', $product_id, PDO::PARAM_INT);
@@ -84,10 +95,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             'success' => true,
             'message' => 'Produto atualizado com sucesso!'
         ]);
-
     } catch (PDOException $e) {
         echo json_encode(['error' => 'Erro ao atualizar o produto: ' . $e->getMessage()]);
         exit;
     }
 }
-?>

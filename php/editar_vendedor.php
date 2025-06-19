@@ -16,6 +16,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $birthdate = $_POST['birthdate'] ?? '';
         $photo = $_FILES['photo'] ?? null;
 
+        // Verifica se mudou algo
+        $stmt = $conn->prepare("SELECT * FROM sellers WHERE id_seller = :id_seller");
+        $stmt->bindParam(':id_seller', $id_seller, PDO::PARAM_INT);
+        $stmt->execute();
+        $vendedor = $stmt->fetch(PDO::FETCH_ASSOC);
+        if ($vendedor['name'] == $name && $vendedor['email'] == $email && $vendedor['cpf'] == $cpf && $vendedor['telephone'] == $telephone && $vendedor['address'] == $address && $vendedor['gender'] == $gender && $vendedor['birthdate'] == $birthdate) {
+            echo json_encode(['error' => 'Nenhum dado foi alterado.']);
+            exit;
+        }
+
         // Verifica se todos os campos obrigatórios estão preenchidos
         if (empty($name) || empty($email) || empty($cpf) || empty($telephone) || empty($address) || empty($gender) || empty($birthdate)) {
             echo json_encode(['error' => 'Todos os campos são obrigatórios.']);

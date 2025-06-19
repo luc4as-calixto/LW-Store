@@ -105,8 +105,8 @@ require_once "../php/conexao.php";
                                 <label style="text-align:left" for="gender" class="form-label">Gênero</label>
                                 <select name="gender" id="gender" class="form-select" required>
                                     <option value="" disabled selected>Selecione o gênero do cliente*</option>
-                                    <option value="Masculino">M</option>
-                                    <option value="Feminino">F</option>
+                                    <option value="M">Masculino</option>
+                                    <option value="F">Feminino</option>
                                 </select>
                             </div>
 
