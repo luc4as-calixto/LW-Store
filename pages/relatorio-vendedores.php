@@ -73,13 +73,9 @@
                     <button type="button" class="btn btn-danger" id="btnConfirmarExclusao">Excluir</button>
                     <div id="message" style="display: none;"></div>
                 </div>
-                <!-- <div class="modal-footer justify-content-center">
-                </div> -->
             </div>
         </div>
     </div>
-
-    <!-- modal de edição so falta mostra os dados e atualizar ele -->
 
     <!-- Modal de Editar-->
     <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">

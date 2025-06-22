@@ -506,34 +506,95 @@ p {
     box-shadow: 0 10px 10px rgba(0, 0, 0, 0.1);
 }
 
-/* estilo da table */
 table {
     width: 100%;
     border-collapse: collapse;
     margin-top: 20px;
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
 }
 
-table th, table td {
-    padding: 12px 15px;
-    border: 1px solid #ddd;
-    text-align: left;
-}
-
-table thead th {
+thead {
     background-color: #2c3e50;
     color: white;
-    text-align: center;
 }
 
-table tbody tr:nth-child(even) {
-    background-color: #f2f2f2;
+thead th {
+    padding: 12px 10px;
+    text-align: center;
+    font-weight: 600;
+    border-right: #ddd 1px solid;
+}
+
+tbody td {
+    padding: 10px;
+    border-bottom: 1px solid #ddd;
+    vertical-align: middle;
+    border-right: #ddd 1px solid;
 }
 
 table tbody tr:hover {
     background-color: #e0e0e0;
-    transition: background-color 0.3s;
+    transition: background-color 0.3s ease;
 }
+
+tbody td:last-child {
+    text-align: center; /* Centraliza a coluna Ações */
+}
+
+th, td {
+    font-size: 14px;
+}
+
+@media (max-width: 768px) {
+    table, thead, tbody, th, td, tr {
+        display: block;
+    }
+
+    thead {
+        display: none;
+    }
+
+    tbody tr {
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 8px;
+        padding: 10px;
+        box-shadow: 0 1px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    tbody td {
+        text-align: right;
+        position: relative;
+        padding-left: 50%;
+    }
+
+    tbody td::before {
+        content: attr(data-label);
+        position: absolute;
+        left: 10px;
+        top: 10px;
+        font-weight: bold;
+        text-align: left;
+    }
+}
+
+td.descricao {
+    max-width: 200px; 
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+td.descricao:hover {
+    white-space: normal;
+    background-color: #f9f9f9;
+    position: relative;
+    z-index: 1;
+}
+
 #logo, #logo a {
     width: 250px;
     color: black;

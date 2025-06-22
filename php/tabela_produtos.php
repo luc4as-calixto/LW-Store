@@ -9,7 +9,7 @@ try {
     // Buscar produtos da página atual em ordem crescente de product_code
     $stmt = $conn->prepare("SELECT * FROM product WHERE amount > 0 ORDER BY product_code ASC LIMIT :limite OFFSET :offset");
     $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
-    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT)        ;
+    $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
     $stmt->execute();
 
     if ($stmt->rowCount() > 0) {
@@ -20,13 +20,14 @@ try {
             echo "<td>R$ " . number_format($row['price'], 2, ',', '.') . "</td>";
             echo "<td>" . htmlspecialchars($row['amount']) . "</td>";
             echo "<td>" . htmlspecialchars($row['type_packaging']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['description']) . "</td>";
-            echo "<td style='display: flex; justify-content: center; gap: 40px;'>
-                <a style='color: black; cursor: pointer;' href='#' 
+            echo "<td class='descricao'>" . htmlspecialchars($row['description']) . "</td>";
+            echo "<td class='text-center'>
+                <a class='acoes' style='color: black; cursor: pointer;' href='#' 
                 class='editar-btn view_data' id='" . htmlspecialchars($row['product_code']) . "' data-id='" . htmlspecialchars($row['product_code']) . "' data-nome='" . htmlspecialchars($row['name']) . "'> 
                 <i class='bi bi-pencil'></i>
                 </a>
-                <a style='color: black; cursor: pointer;' href='#' class='excluir-btn' data-id='" . htmlspecialchars($row['product_code']) . "' data-nome='" . htmlspecialchars($row['name']) . "'>
+                &nbsp &nbsp;
+                <a class='acoes' style='color: black; cursor: pointer;' href='#' class='excluir-btn' data-id='" . htmlspecialchars($row['product_code']) . "' data-nome='" . htmlspecialchars($row['name']) . "'>
                 <i class='bi bi-trash'></i>
                 </a>
             </td>";
@@ -38,4 +39,3 @@ try {
 } catch (PDOException $e) {
     echo "<tr><td colspan='7'>Erro: " . htmlspecialchars($e->getMessage()) . "</td></tr>";
 }
-?>

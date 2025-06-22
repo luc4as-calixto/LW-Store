@@ -38,18 +38,19 @@ try {
             echo "<tr>";
             echo "<td>" . htmlspecialchars($row['id_seller']) . "</td>";
             echo "<td>" . htmlspecialchars($row['name']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['login']) . "</td>"; // login do user via JOIN
+            echo "<td>" . htmlspecialchars($row['login']) . "</td>";
             echo "<td>" . htmlspecialchars($row['cpf']) . "</td>";
             echo "<td>" . htmlspecialchars($row['email']) . "</td>";
             echo "<td>" . htmlspecialchars($row['telephone']) . "</td>";
             echo "<td>" . htmlspecialchars($row['address']) . "</td>";
             echo "<td>" . htmlspecialchars($row['gender']) . "</td>";
             echo "<td>" . htmlspecialchars($row['birthdate']) . "</td>";
-            echo "<td style='display: flex; justify-content: center; gap: 40px;'>
+            echo "<td class='text-center'>
                 <a style='color: black; cursor: pointer;' href='#' 
                 class='editar-btn view_data' id='" . htmlspecialchars($row['id_seller']) . "' data-id='" . htmlspecialchars($row['id_seller']) . "' data-nome='" . htmlspecialchars($row['name']) . "'> 
                 <i class='bi bi-pencil'></i>
                 </a>
+                &nbsp &nbsp;
                 <a style='color: black; cursor: pointer;' href='#' class='excluir-btn' data-id='" . htmlspecialchars($row['id_seller']) . "' data-nome='" . htmlspecialchars($row['name']) . "'>
                 <i class='bi bi-trash'></i>
                 </a>

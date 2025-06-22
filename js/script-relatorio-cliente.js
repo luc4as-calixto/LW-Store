@@ -59,8 +59,8 @@ $(document).ready(function () {
         if (id !== '') {
             $.post('../php/painel_editar_cliente.php', { id_customer: id }, function (data) {
                 var response = JSON.parse(data);
-
                 // Preenche os campos do modal com os dados do cliente
+                $("#id_customer").val(response.id_customer);
                 $("#name").val(response.name);
                 $("#email").val(response.email);
                 $("#cpf").val(response.cpf);
@@ -84,39 +84,101 @@ $(document).ready(function () {
                         e.preventDefault();
 
                         var formData = new FormData(this);
-                        formData.append('id_customer', response.id_customer); // Adiciona o ID do cliente
 
                         $.ajax({
-                            url: '../php/editar_cliente.php',
-                            type: 'POST',
+                            url: "../php/editar_cliente.php",
+                            type: "POST",
                             data: formData,
-                            contentType: false,
                             processData: false,
-                            dataType: 'json',
+                            contentType: false,
+                            dataType: "json",
                             success: function (response) {
                                 if (response.success) {
-                                    $("#message").removeClass("error").addClass("success")
+                                    $("#message-modal-editar").removeClass("error").addClass("success")
                                         .text(response.message).fadeIn();
 
                                     setTimeout(() => {
-                                        $("#message").fadeOut();
+                                        $("#message-modal-editar").fadeOut();
                                         modal.hide();
                                         atualizarTabelaClientes();
                                     }, 2000);
                                 } else {
-                                    $("#message").removeClass("success").addClass("error")
+                                    $("#message-modal-editar").removeClass("success").addClass("error")
                                         .text(response.error || response.message).fadeIn().delay(3000).fadeOut();
                                 }
                             },
                             error: function (xhr, status, error) {
                                 console.error("Erro AJAX", xhr, status, error);
-                                $("#message").removeClass("success").addClass("error")
+                                $("#message-modal-editar").removeClass("success").addClass("error")
                                     .text("Erro ao editar Cliente: " + error).fadeIn().delay(3000).fadeOut();
                             }
                         });
                     });
                 }
             });
+        }
+    });
+
+    // Função para pesquisar Clientes
+    function pesquisarClientes(termo, pagina = 1) {
+        $.ajax({
+            url: '../php/pesquisa_clientes.php',
+            method: 'GET',
+            data: {
+                termo: termo,
+                pagina: pagina
+            },
+            success: function (html) {
+                $('#corpoTabelaClientes').html(html);
+
+                // Atualiza a paginação para a pesquisa
+                $.ajax({
+                    url: '../php/paginacao_clientes.php',
+                    method: 'GET',
+                    data: {
+                        termo: termo,
+                        pagina: pagina
+                    },
+                    success: function (html) {
+                        $('.pagination').html(html);
+                    }
+                });
+            },
+            error: function () {
+                alert('Erro ao pesquisar clientes.');
+            }
+        });
+    }
+
+    // Evento de digitação no campo de pesquisa
+    $('#filtro').on("keyup", function () {
+        var termo = $(this).val().trim();
+        $('#btnLimparPesquisa').toggle(termo.length > 0);
+        
+        if (termo.length > 0) {
+            pesquisarClientes(termo);
+        } else {
+            atualizarTabelaClientes();
+        }
+    })
+
+    // Evento para limpar a pesquisa
+    $("#btnLimparPesquisa").on("click", function () {
+        $("#filtro").val("");
+        $(this).hide();
+        atualizarTabelaClientes();
+    });
+
+    // Evento de clique nos links de paginação
+    $(document).on('click', '.pagination-link', function (e) {
+        e.preventDefault();
+        const pagina = $(this).data('pagina');
+        const termo = $(this).data('termo') || '';
+
+        if (termo) {
+            pesquisarClientes(termo, pagina);
+        } else {
+            atualizarTabelaClientes(pagina);
         }
     });
 
@@ -129,7 +191,15 @@ $(document).ready(function () {
             success: function (html) {
                 $('#corpoTabelaClientes').html(html);
 
-
+                // Atualiza a paginação
+                $.ajax({
+                    url: '../php/paginacao_clientes.php',
+                    method: 'GET',
+                    data: { pagina: pagina },
+                    success: function (html) {
+                        $('.pagination').html(html);
+                    }
+                });
             },
             error: function () {
                 alert('Erro ao atualizar a tabela de clientes.');

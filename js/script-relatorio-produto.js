@@ -173,10 +173,9 @@ $(document).ready(function () {
 
     // Funcionalidade do botão "Limpar"
     $("#btnLimparPesquisa").on("click", function () {
-        $("#filtro").val(""); // limpa o input
-        $("#btnLimparPesquisa").hide(); // esconde o botão
+        $("#filtro").val(""); 
+        $("#btnLimparPesquisa").hide(); 
 
-        // Mostra todas as linhas (menos a de "nenhum produto")
         $("#corpoTabelaProdutos tr").each(function () {
             if ($(this).attr("id") === "mensagem-vazio") {
                 $(this).hide();

@@ -32,11 +32,12 @@ try {
             echo "<td>" . htmlspecialchars($row['address']) . "</td>";
             echo "<td>" . htmlspecialchars($row['gender']) . "</td>";
             echo "<td>" . htmlspecialchars($row['birthdate']) . "</td>";
-            echo "<td style='display: flex; justify-content: center; gap: 40px;'>
+            echo "<td class='text-center'>
                 <a style='color: black; cursor: pointer;' href='#' 
                 class='editar-btn view_data' id='" . htmlspecialchars($row['id_seller']) . "' data-id='" . htmlspecialchars($row['id_seller']) . "' data-nome='" . htmlspecialchars($row['name']) . "'> 
                 <i class='bi bi-pencil'></i>
                 </a>
+                &nbsp &nbsp;
                 <a style='color: black; cursor: pointer;' href='#' class='excluir-btn' data-id='" . htmlspecialchars($row['id_seller']) . "' data-nome='" . htmlspecialchars($row['name']) . "'>
                 <i class='bi bi-trash'></i>
                 </a>

@@ -8,6 +8,19 @@ require_once "../php/conexao.php";
 <div class="container mt-4" id="pagina">
     <h1>Relatórios de Clientes</h1>
 
+    <!-- Campo de pesquisa -->
+    <div class="row align-items-center mb-4">
+        <div class="col-md-6 col-sm-12 mb-2 mb-md-0">
+            <div class="input-group">
+                <input type="text" id="filtro" class="form-control mb-3" placeholder="Buscar na tabela...">
+                <span style="width: 10px;"></span>
+                <button class="btn btn-outline-secondary" id="btnLimparPesquisa" type="button" style="display: none;">
+                    <i class="bi bi-x-circle"></i> Limpar
+                </button>
+            </div>
+        </div>
+    </div>
+
     <table>
         <thead>
             <tr>
@@ -22,16 +35,19 @@ require_once "../php/conexao.php";
                 <th>Ações</th>
             </tr>
         </thead>
-
-
         <tbody id="corpoTabelaClientes">
             <?php include '../php/tabela_clientes.php'; ?>
             <tr id="mensagem-vazio" style="display: none;">
                 <td colspan="9" class="text-center">Nenhum cliente encontrado.</td>
             </tr>
         </tbody>
-
     </table>
+
+    <!-- Paginação -->
+    <div class="d-flex justify-content-center mt-3">
+        <?php require_once "../php/paginacao_clientes.php"; ?>
+    </div>
+
 
 </div>
 
@@ -54,13 +70,9 @@ require_once "../php/conexao.php";
                 <button type="button" class="btn btn-danger" id="btnConfirmarExclusao">Excluir</button>
                 <div id="message" style="display: none;"></div>
             </div>
-            <!-- <div class="modal-footer justify-content-center">
-            </div> -->
         </div>
     </div>
 </div>
-
-<!-- modal de edição so falta mostra os dados e atualizar ele -->
 
 <!-- Modal de Editar-->
 <div class="modal fade" id="modalEditar" tabindex="-1" aria-labelledby="modalEditarLabel" aria-hidden="true">
@@ -138,12 +150,10 @@ require_once "../php/conexao.php";
                     </div>
                     <button id="btn-editar" type="submit" class="btn-normal"><i class="bi bi-tags"></i> Editar cliente</button>
 
-                    <div id="message" style="display: none;"></div>
+                    <div id="message-modal-editar" style="display: none;"></div>
 
                 </form>
             </div>
-            <!-- <div class="modal-footer justify-content-center">
-            </div> -->
 
             <script>
                 document.getElementById('photo').addEventListener('change', function(event) {

@@ -6,7 +6,7 @@ require_once "../php/conexao.php";
 ?>
 
 <div class="container mt-4" id="pagina">
-    <h1>Relatórios de produtos</h1>
+    <h1>Relatórios de Produtos</h1>
 
     <!-- Campo de pesquisa -->
     <div class="row align-items-center mb-4">
@@ -67,8 +67,6 @@ require_once "../php/conexao.php";
                 <button type="button" class="btn btn-danger" id="btnConfirmarExclusao">Excluir</button>
                 <div id="message" style="display: none;"></div>
             </div>
-            <!-- <div class="modal-footer justify-content-center">
-            </div> -->
         </div>
     </div>
 </div>

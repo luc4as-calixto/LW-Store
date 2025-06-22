@@ -239,19 +239,20 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <script src="../js/script.js"></script>
-<script src="../js/enviardados.js"></script>
+<script src="../js/enviarDados.js"></script>
 <script src="../js/carrinho.js"></script>
 
 </html>
 
 
 <script>
-    const toggleButton = document.getElementById('menu-toggle');
+    // const toggleButton = document.getElementById('menu-toggle');
     const sidebar = document.getElementById('sidebar');
 
-    toggleButton.addEventListener('click', () => {
-        sidebar.classList.toggle('show');
-    });
+    // Tava dando erro 
+    // toggleButton.addEventListener('click', () => {
+    //     sidebar.classList.toggle('show');
+    // });
 
     document.getElementById('foto_perfil').addEventListener('change', function(event) {
         const file = event.target.files[0];
