@@ -14,7 +14,6 @@ try {
     if (!empty($termo)) {
         $sql .= " AND (LOWER(name) LIKE LOWER(:termo) 
                       OR cpf LIKE :termo 
-                      OR LOWER(email) LIKE LOWER(:termo)
                       OR telephone LIKE :termo)";
     }
 
