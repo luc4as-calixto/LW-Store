@@ -7,7 +7,7 @@ try {
     $termo = isset($_GET['termo']) ? $_GET['termo'] : '';
     
     // Query base para contar produtos
-    $sqlCount = "SELECT COUNT(*) FROM product WHERE amount > 0";
+    $sqlCount = "SELECT COUNT(*) FROM product";
     
     if (!empty($termo)) {
         $sqlCount .= " AND (name LIKE :termo OR product_code LIKE :termo)";

@@ -188,7 +188,7 @@ body {
 }
 
 .dashboard-item[data-page="clientes"] i,
-.dashboard-item[data-page="relatorio-clientes"] i  {
+.dashboard-item[data-page="relatorio-clientes"] i {
     color: #f6c23e;
 }
 
@@ -541,15 +541,22 @@ table tbody tr:hover {
 }
 
 tbody td:last-child {
-    text-align: center; /* Centraliza a coluna Ações */
+    text-align: center;
 }
 
-th, td {
+th,
+td {
     font-size: 14px;
 }
 
 @media (max-width: 768px) {
-    table, thead, tbody, th, td, tr {
+
+    table,
+    thead,
+    tbody,
+    th,
+    td,
+    tr {
         display: block;
     }
 
@@ -582,7 +589,7 @@ th, td {
 }
 
 td.descricao {
-    max-width: 200px; 
+    max-width: 200px;
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -590,12 +597,14 @@ td.descricao {
 
 td.descricao:hover {
     white-space: normal;
-    background-color: #f9f9f9;
+    background-color: #ddd;
     position: relative;
     z-index: 1;
+    transition: background-color 0.3s ease; 
 }
 
-#logo, #logo a {
+#logo,
+#logo a {
     width: 250px;
     color: black;
     font-size: 1.25em;
@@ -624,12 +633,15 @@ td.descricao:hover {
     0% {
         transform: scale(1);
     }
+
     30% {
         transform: scale(1.2);
     }
+
     60% {
         transform: scale(0.95);
     }
+
     100% {
         transform: scale(1);
     }
@@ -666,4 +678,13 @@ td.descricao:hover {
 
 a {
     color: black;
+}
+
+.esgotado {
+    background-color: #ffb3b3 !important;
+    /* vermelho claro */
+}
+
+tr.esgotado:hover>td.descricao:hover {
+    background-color: #ffb3b3 !important;
 }

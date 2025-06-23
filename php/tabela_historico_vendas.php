@@ -47,7 +47,7 @@ try {
             echo "<tr class='linha-venda' onclick=\"window.open('comprovante.php?id={$id_sale}', '_blank')\">";
             // echo "<td>" . $codigo++ . "</td>";
             echo "<td>" . htmlspecialchars($id_sale) . "</td>";
-            echo "<td>" . implode(', ', $dados['produtos']) . "</td>";
+            echo "<td class='descricao'>" . implode(', ', $dados['produtos']) . "</td>";
             echo "<td>" . $dados['quantidade_total'] . "</td>";
             echo "<td>R$ " . number_format($dados['preco_total'], 2, ',', '.') . "</td>";
             echo "</tr>";
