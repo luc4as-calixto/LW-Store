@@ -81,7 +81,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
             </a>
             <div class="collapse" id="movimentacoes">
                 <a href="#" class="nav-link submenu" data-page="vendas">Vendas</a>
-                <a href="#" class="nav-link submenu" data-page="historico-vendas">Histórico de Vendas</a>
+                <a href="#" class="nav-link submenu" data-page="historico_vendas">Histórico de Vendas</a>
             </div>
             <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#relatorios" role="button" aria-expanded="false" aria-controls="relatorios">
                 <span><i class="bi bi-graph-up"></i> Relatórios</span>
@@ -124,7 +124,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                 <i class="bi bi-bar-chart-line"></i>
                 <p>Relatórios</p>
             </a>
-            <a href="#" class="dashboard-item submenu" data-page="historico">
+            <a href="#" class="dashboard-item submenu" data-page="historico_vendas">
                 <i class="bi bi-clock-history"></i>
                 <p>Histórico</p>
             </a>

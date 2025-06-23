@@ -77,14 +77,14 @@ $_SESSION['logado'] = false;
     // Deixa vermelho o campo de login e senha quando estiverem vazios
     // e remove o vermelho quando o usuário digitar algo
 
-    const login = document.getElementById('login');
-    const password = document.getElementById('password');
+    const login = document.getElementById('login-painel');
+    const password = document.getElementById('password-painel-login');
 
     login.addEventListener('blur', (event) => {
         if (login.value === '') {
             login.classList.add('erro');
         } else {
-            login.classList.remove('erro');
+            login.classList.remove('erro'); 
         }
     });
 
@@ -99,7 +99,7 @@ $_SESSION['logado'] = false;
     // Olho da senha para mostrar/esconder a senha
 
     const togglePassword = document.getElementById('togglePassword');
-    const passwordInput = document.getElementById('password');
+    const passwordInput = document.getElementById('password-painel-login');
     const eyeIcon = document.getElementById('eyeIcon');
 
     togglePassword.addEventListener('click', function() {
@@ -108,6 +108,7 @@ $_SESSION['logado'] = false;
         eyeIcon.classList.toggle('bi-eye');
         eyeIcon.classList.toggle('bi-eye-slash');
     });
+
 </script>
 
 <script src="../js/enviarDados.js"></script>

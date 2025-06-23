@@ -22,12 +22,12 @@ try {
             echo "<td>" . htmlspecialchars($row['type_packaging']) . "</td>";
             echo "<td class='descricao'>" . htmlspecialchars($row['description']) . "</td>";
             echo "<td class='text-center'>
-                <a class='acoes' style='color: black; cursor: pointer;' href='#' 
-                class='editar-btn view_data' id='" . htmlspecialchars($row['product_code']) . "' data-id='" . htmlspecialchars($row['product_code']) . "' data-nome='" . htmlspecialchars($row['name']) . "'> 
+                <a style='color: black; cursor: pointer;' href='#' 
+                class='acoes editar-btn view_data' id='" . htmlspecialchars($row['product_code']) . "' data-id='" . htmlspecialchars($row['product_code']) . "' data-nome='" . htmlspecialchars($row['name']) . "'> 
                 <i class='bi bi-pencil'></i>
                 </a>
                 &nbsp &nbsp;
-                <a class='acoes' style='color: black; cursor: pointer;' href='#' class='excluir-btn' data-id='" . htmlspecialchars($row['product_code']) . "' data-nome='" . htmlspecialchars($row['name']) . "'>
+                <a style='color: black; cursor: pointer;' href='#' class='acoes excluir-btn' data-id='" . htmlspecialchars($row['product_code']) . "' data-nome='" . htmlspecialchars($row['name']) . "'>
                 <i class='bi bi-trash'></i>
                 </a>
             </td>";
