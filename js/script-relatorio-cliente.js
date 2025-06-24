@@ -36,8 +36,7 @@ $(document).ready(function () {
                         const modalEl = document.getElementById('modalConfirmExclusao');
                         const modal = bootstrap.Modal.getInstance(modalEl);
                         modal.hide();
-
-                        // Atualiza só a tabela para refletir a exclusão
+                        
                         atualizarTabelaClientes();
 
                     }, 2000);

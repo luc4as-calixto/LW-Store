@@ -55,6 +55,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
         }
 
+        // Verifica se o login já existe
+        $stmt = $conn->prepare("SELECT COUNT(*) FROM users WHERE login = ?");
+        $stmt->execute([$login]);
+        if ($stmt->fetchColumn() > 0) {
+            echo json_encode(['error' => 'O login informado já está em uso.']);
+            exit;
+        }
+
+
         // Inserção no banco
         $sql = "INSERT INTO users
                 (login, password, type_user) 

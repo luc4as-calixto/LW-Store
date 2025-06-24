@@ -124,7 +124,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                 <i class="bi bi-bar-chart-line"></i>
                 <p>Relatórios</p>
             </a>
-            <a href="#" class="dashboard-item submenu" data-page="historico_vendas">
+            <a href="#" class="dashboard-item submenu" data-page="historico-vendas">
                 <i class="bi bi-clock-history"></i>
                 <p>Histórico</p>
             </a>
@@ -171,11 +171,11 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                                 <input type="email" class="form-control" id="email" name="email" value="<?php echo $_SESSION['email'] ?? ''; ?>">
                             </div>
                             <div class="col-md-6">
-                                <label for="ds_password" class="form-label">Nova Senha</label>
+                                <label for="password" class="form-label">Nova Senha</label>
                                 <input type="password" class="form-control" id="password" name="password">
                             </div>
                             <div class="col-md-6">
-                                <label for="ds_password" class="form-label">Confirme Sua Senha</label>
+                                <label for="confirm_password" class="form-label">Confirme Sua Senha</label>
                                 <input type="password" class="form-control" id="confirm_password" name="confirm_password">
                             </div>
 

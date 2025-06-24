@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $photo = $_FILES['photo'] ?? null;
 
         // Verifica se todos os campos obrigatórios estão preenchidos
-        if (empty($product_id) || empty($product_code) || empty($name) || empty($price) || empty($amount) || empty($type_packaging) || empty($description)) {
+        if (empty($product_id) || empty($product_code) || empty($name) || empty($price) || empty($type_packaging) || empty($description)) {
             echo json_encode(['error' => 'Todos os campos são obrigatórios.']);
             exit;
         }
@@ -26,10 +26,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->execute();
         $produto = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        if ($produto['product_code'] == $product_code || $produto['name'] == $name || $produto['price'] == $price || $produto['amount'] == $amount || $produto['type_packaging'] == $type_packaging || $produto['description'] == $description) {
+        if (
+            $produto['product_code'] == $product_code &&
+            $produto['name'] == $name &&
+            $produto['price'] == $price &&
+            $produto['amount'] == $amount &&
+            $produto['type_packaging'] == $type_packaging &&
+            $produto['description'] == $description
+        ) {
             echo json_encode(['error' => 'Nenhum dado foi alterado.']);
             exit;
         }
+
 
         // Verifica se o produto existe
         $check = $conn->prepare("SELECT COUNT(*) FROM product WHERE product_id = :product_id");

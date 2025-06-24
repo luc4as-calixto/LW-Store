@@ -89,7 +89,7 @@ $(document).ready(function () {
 
                         $.ajax({
                             url: "../php/editar_produto.php",
-                            type: "POST",
+                            type: "POST",   
                             data: formData,
                             processData: false,
                             contentType: false,

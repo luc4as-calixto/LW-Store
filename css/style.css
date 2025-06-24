@@ -617,7 +617,7 @@ td.descricao:hover {
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
 
-.preview-img {
+img {
     width: 150px;
     height: 150px;
     object-fit: cover;

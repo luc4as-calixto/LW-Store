@@ -7,13 +7,13 @@ try {
     $offset = ($pagina - 1) * $limite;
     $termo = isset($_GET['termo']) ? $_GET['termo'] : '';
 
-    $sql = "SELECT * FROM product WHERE amount > 0";
+    $sql = "SELECT * FROM product WHERE 1";
 
     if (!empty($termo)) {
         $sql .= " AND (name LIKE :termo OR product_code LIKE :termo)";
     }
 
-    $sql .= " ORDER BY product_code ASC LIMIT :limite OFFSET :offset";
+    $sql .= " ORDER BY (amount = 0),product_code ASC LIMIT :limite OFFSET :offset";
     $stmt = $conn->prepare($sql);
 
     if (!empty($termo)) {
@@ -27,7 +27,9 @@ try {
 
     if ($stmt->rowCount() > 0) {
         while ($row = $stmt->fetch(PDO::FETCH_ASSOC)) {
-            echo "<tr>";
+            $classe = ($row['amount'] == 0) ? "class='esgotado'" : "";
+
+            echo "<tr $classe>";
             echo "<td>" . htmlspecialchars($row['product_code']) . "</td>";
             echo "<td>" . htmlspecialchars($row['name']) . "</td>";
             echo "<td>R$ " . number_format($row['price'], 2, ',', '.') . "</td>";
@@ -39,8 +41,7 @@ try {
                 class='editar-btn view_data' id='" . htmlspecialchars($row['product_code']) . "' data-id='" . htmlspecialchars($row['product_code']) . "' data-nome='" . htmlspecialchars($row['name']) . "'> 
                 <i class='bi bi-pencil'></i>
                 </a>
-                
-                &nbsp &nbsp;
+                &nbsp;&nbsp;
                 <a style='color: black; cursor: pointer;' href='#' class='excluir-btn' data-id='" . htmlspecialchars($row['product_code']) . "' data-nome='" . htmlspecialchars($row['name']) . "'>
                 <i class='bi bi-trash'></i>
                 </a>

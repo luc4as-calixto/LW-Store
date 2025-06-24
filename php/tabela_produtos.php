@@ -7,7 +7,7 @@ try {
     $offset = ($pagina - 1) * $limite;
 
     // Removido o filtro WHERE amount > 0
-    $stmt = $conn->prepare("SELECT * FROM product ORDER BY product_code ASC LIMIT :limite OFFSET :offset");
+    $stmt = $conn->prepare("SELECT * FROM product ORDER BY (amount = 0), product_code ASC LIMIT :limite OFFSET :offset");
     $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
     $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
     $stmt->execute();
