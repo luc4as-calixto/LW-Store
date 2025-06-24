@@ -42,8 +42,8 @@ $(document).ready(function () {
                 url: "../php/cadastrar_produto.php",
                 type: "POST",
                 data: formData,
-                contentType: false,  // Necessário para enviar arquivos
-                processData: false,  // Necessário para enviar arquivos
+                contentType: false, 
+                processData: false,  
                 dataType: "json",
                 success: function (response) {
                     if (response.success) {
@@ -111,7 +111,7 @@ $(document).ready(function () {
         $("#formConfigUsuario").on("submit", function (e) {
             e.preventDefault();
 
-            const form = this; // <-- salva o 'this' corretamente
+            const form = this;
 
             $.ajax({
                 url: "../php/config_usuario.php",

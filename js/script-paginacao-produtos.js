@@ -44,6 +44,5 @@ $(document).ready(function () {
         carregarProdutos(pagina);
     });
 
-    // Carregar primeira página
     carregarProdutos();
 });

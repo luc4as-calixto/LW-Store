@@ -121,8 +121,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                 <i class="bi bi-person-badge"></i>
                 <p>Vendedores</p>
             </a>
-
-            <a href="#" class="dashboard-item submenu" data-page="historico_vendas">
+            <a href="#" class="dashboard-item submenu" data-page="historico-vendas">
                 <i class="bi bi-clock-history"></i>
                 <p>Histórico</p>
             </a>

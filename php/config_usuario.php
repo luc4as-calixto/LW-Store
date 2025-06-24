@@ -12,6 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $email = $_POST['email'] ?? $_SESSION['email'];
         $id_user = $_SESSION['id_user'];
 
+        // Senha
         if (!empty($_POST['password'])) {
             $password = $_POST['password'];
             $confirm_password = $_POST['confirm_password'] ?? '';
@@ -23,24 +24,25 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             $new_password = password_hash($password, PASSWORD_DEFAULT);
         } else {
-            $new_password = $_SESSION['password']; // mantém senha atual (já com hash)
+            $new_password = $_SESSION['password']; // mantém a senha atual (já com hash)
         }
 
+        // Upload da imagem
+        $caminho_salvar = $_SESSION['photo']; // valor padrão: mantém imagem atual
         if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
-            $pasta = "../uploads/users/";
-            $nome_original = basename($_FILES["photo"]["name"]);
-            $extensao = pathinfo($nome_original, PATHINFO_EXTENSION);
+            $photo = $_FILES['photo'];
+            $pasta = "../uploads/";
+            $extensao = strtolower(pathinfo($photo["name"], PATHINFO_EXTENSION));
             $novo_nome = uniqid() . "." . $extensao;
             $caminho_salvar = $pasta . $novo_nome;
 
-            if (!move_uploaded_file($_FILES["photo"]["tmp_name"], $caminho_salvar)) {
+            if (!move_uploaded_file($photo["tmp_name"], $caminho_salvar)) {
                 echo json_encode(['error' => 'Erro ao salvar a foto no servidor.']);
                 exit;
             }
-        } else {
-            $caminho_salvar = $_SESSION['photo'] ?? "../uploads/sem-foto.webp";
         }
 
+        // Verifica se já existe outro usuário com o mesmo login
         $sql = "SELECT id_user FROM users WHERE login = :login";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':login', $login);
@@ -52,6 +54,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             exit;
         }
 
+        // Atualiza tabela users
         $sql = "UPDATE users SET login = :login, password = :password WHERE id_user = :id_user";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':login', $login);
@@ -59,6 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(':id_user', $id_user, PDO::PARAM_INT);
         $stmt->execute();
 
+        // Atualiza tabela sellers
         $sql = "UPDATE sellers SET name = :name, email = :email, photo = :photo WHERE fk_id_user = :id_user";
         $stmt = $conn->prepare($sql);
         $stmt->bindParam(':name', $name);
@@ -67,6 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(':id_user', $id_user, PDO::PARAM_INT);
         $stmt->execute();
 
+        // Atualiza sessão
         $_SESSION['name'] = $name;
         $_SESSION['login'] = $login;
         $_SESSION['email'] = $email;

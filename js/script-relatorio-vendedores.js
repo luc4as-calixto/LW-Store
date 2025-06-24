@@ -85,8 +85,6 @@ $(document).ready(function () {
                     var vendedor = retorno.dados;
                     fotoOriginal = vendedor.photo || '../uploads/sem-foto.webp';
 
-                    var vendedor = retorno.dados;
-
                     $('#id_seller').val(vendedor.id_seller);
                     $('#vendedorEditar').text(vendedor.name);
                     $('#name').val(vendedor.name);
@@ -132,7 +130,7 @@ $(document).ready(function () {
                                         setTimeout(() => {
                                             $("#message-modal-editar").fadeOut();
                                             modal.hide();
-                                            atualizarTabelaVendedores(); // Corrigido para vendedores
+                                            atualizarTabelaVendedores(); 
                                         }, 2000);
                                     } else {
                                         $("#message-modal-editar").removeClass("success").addClass("error")
