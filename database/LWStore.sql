@@ -40,21 +40,6 @@ CREATE TABLE
         photo VARCHAR(255)
     );
 
-CREATE TABLE
-    cart (
-        id_cart INT PRIMARY KEY AUTO_INCREMENT,
-        fk_id_user INT,
-        status VARCHAR(100) NOT NULL
-    );
-
-CREATE TABLE
-    itens_cart (
-        id_itens_cart INT PRIMARY KEY AUTO_INCREMENT,
-        fk_id_cart INT,
-        fk_id_product INT,
-        amount INT NOT NULL,
-        unit_value DECIMAL(10, 2) NOT NULL
-    );
 
 CREATE TABLE
     product (

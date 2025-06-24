@@ -68,19 +68,20 @@ body {
 /* CONTEÚDO PRINCIPAL */
 #main {
     flex: 1;
-    margin-left: 250px;
+    margin: auto;
+    margin-left: 150px;
     padding: 30px;
-    min-height: calc(100vh - 65px);
+    /* min-height: calc(100vh - 65px); */
     display: flex;
     align-items: center;
     justify-content: center;
     background-color: #f8f9fa;
 }
 
-/* GRID DE MENU ITEMS - SOLUÇÃO DEFINITIVA */
+/* GRID DE MENU ITEMS */
 .dashboard-grid {
     display: grid;
-    grid-template-columns: repeat(4, minmax(180px, 1fr));
+    grid-template-columns: repeat(3, minmax(180px, 1fr));
     gap: 25px;
     width: 100%;
     max-width: 1200px;
@@ -178,26 +179,40 @@ body {
 }
 
 /* CORES DE FUNDO PARA ÍCONES */
-.dashboard-item[data-page="vendas"] i {
+.dashboard-item[data-page="checkout"] i {
     color: #36b9cc;
 }
 
 .dashboard-item[data-page="produtos"] i,
-.dashboard-item[data-page="relatorio-produtos"] i {
-    color: #1cc88a;
+.dashboard-item[data-page="clientes"] i {
+    color: #1f4db1;
 }
 
-.dashboard-item[data-page="clientes"] i,
-.dashboard-item[data-page="relatorio-clientes"] i {
-    color: #f6c23e;
-}
-
-.dashboard-item[data-page="relatorios"] i {
+.dashboard-item[data-page="relatorio-clientes"] i,
+.dashboard-item[data-page="relatorio-produtos"] i,
+ .dashboard-item[data-page="relatorio-vendedores"] i{
     color: #e74a3b;
 }
 
-.dashboard-item[data-page="relatorio-vendedores"] i {
-    color: #1f4db1;
+.dashboard-item[data-page="cadastro-clientes"] i,
+.dashboard-item[data-page="cadastro-produtos"] i,
+.dashboard-item[data-page="produtos-home"] i,
+.dashboard-item[data-page="cadastro-vendedores"] i,
+.dashboard-item[data-bs-target="#modaldashboardProdutos"] i {
+    color: #1cc88a;
+}
+
+.dashboard-item[data-bs-target="#modaldashboardVendedores"] i {
+    color: black;
+}
+
+.dashboard-item[data-page="clientes-home"] i,
+.dashboard-item[data-bs-target="#modaldashboardClientes"] i {
+    color: #f6c23e;
+}
+
+.dashboard-item[data-page="historico_vendas"] i {
+    color: #800080;
 }
 
 a {

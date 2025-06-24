@@ -97,9 +97,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                 <i class="bi bi-chevron-down"></i>
             </a>
             <div class="collapse" id="administracao">
-                <a href="#" class="nav-link submenu" data-page="usuarios">Usuários</a>
-                <a href="#" class="nav-link submenu" data-page="permissoes">Permissões</a>
-                <a href="#" class="nav-link submenu" data-bs-toggle="modal" data-bs-target="#modalConfigUsuario">Configurações</a>
+                <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#modalConfigUsuario">Configurações</a>
                 </a>
             </div>
         </nav>
@@ -108,44 +106,126 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
     <!-- Conteúdo principal -->
     <div id="main">
         <div class="dashboard-grid">
-            <a href="#" class="dashboard-item submenu" data-page="checkout">
-                <i class="bi bi-cart-plus"></i>
-                <p>Vendas</p>
-            </a>
-            <a href="#" class="dashboard-item submenu" data-page="produtos">
+            
+            <a href="#" class="dashboard-item" data-bs-toggle="modal" data-bs-target="#modaldashboardProdutos">
                 <i class="bi bi-box-seam"></i>
                 <p>Produtos</p>
             </a>
-            <a href="#" class="dashboard-item submenu" data-page="clientes">
+
+            <a href="#" class="dashboard-item" data-bs-toggle="modal" data-bs-target="#modaldashboardClientes">
                 <i class="bi bi-people"></i>
                 <p>Clientes</p>
             </a>
-            <a href="#" class="dashboard-item submenu" data-page="relatorios">
-                <i class="bi bi-bar-chart-line"></i>
-                <p>Relatórios</p>
+
+            <a href="#" class="dashboard-item" data-bs-toggle="modal" data-bs-target="#modaldashboardVendedores">
+                <i class="bi bi-person-badge"></i>
+                <p>Vendedores</p>
             </a>
+
             <a href="#" class="dashboard-item submenu" data-page="historico_vendas">
                 <i class="bi bi-clock-history"></i>
                 <p>Histórico</p>
             </a>
-            <a href="#" class="dashboard-item submenu" data-page="financeiro">
-                <i class="bi bi-cash-coin"></i>
-                <p>Financeiro</p>
+
+            <a href="#" class="dashboard-item submenu" data-page="checkout">
+                <i class="bi bi-cart-plus"></i>
+                <p>Vendas</p>
             </a>
+
             <a href="#" class="dashboard-item" data-bs-toggle="modal" data-bs-target="#modalConfigUsuario">
                 <i class="bi bi-gear"></i>
                 <p>Configurações</p>
             </a>
-            <a href="#" class="dashboard-item submenu" data-page="suporte">
-                <i class="bi bi-headset"></i>
-                <p>Suporte</p>
-            </a>
+
         </div>
 
     </div>
 
+    <!-- Modal Produtos -->
+    <div class="modal fade" id="modaldashboardProdutos" tabindex="-1" aria-labelledby="modaldashboardProdutosLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content user-modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modaldashboardProdutosLabel">Produtos</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="dashboard-grid">
 
+                        <a href="#" class="dashboard-item submenu" data-page="produtos">
+                            <i class="bi bi-box-seam"></i>
+                            <p>Produtos</p>
+                        </a>
 
+                        <a href="#" class="dashboard-item submenu" data-page="cadastro-produtos">
+                            <i class="bi bi-plus-circle"></i>
+                            <p>Cadastrar Produto</p>
+                        </a>
+
+                        <a href="#" class="dashboard-item submenu" data-page="relatorio-produtos">
+                            <i class="bi bi-bar-chart-line"></i>
+                            <p>Relatórios</p>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Clientes -->
+    <div class="modal fade" id="modaldashboardClientes" tabindex="-1"
+        aria-labelledby="modaldashboardClientesLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content user-modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modaldashboardClientesLabel">Clientes</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="dashboard-grid">
+
+                        <a href="#" class="dashboard-item submenu" data-page="cadastro-clientes">
+                            <i class="bi bi-plus-circle"></i>
+                            <p>Cadastrar Cliente</p>
+                        </a>
+
+                        <a href="#" class="dashboard-item submenu" data-page="relatorio-clientes">
+                            <i class="bi bi-bar-chart-line"></i>
+                            <p>Relatórios</p>
+                        </a>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal Vendedores -->
+    <div class="modal fade" id="modaldashboardVendedores" tabindex="-1" aria-labelledby="modaldashboardVendedoresLabel" aria-hidden="true">
+        <div class="modal-dialog modal-lg modal-dialog-centered">
+            <div class="modal-content user-modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="modaldashboardVendedoresLabel">Vendedores</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="dashboard-grid">
+
+                        <a href="#" class="dashboard-item submenu" data-page="cadastro-vendedores">
+                            <i class="bi bi-plus-circle"></i>
+                            <p>Cadastrar Vendedor</p>
+                        </a>
+
+                        <a href="#" class="dashboard-item submenu" data-page="relatorio-vendedores">
+                            <i class="bi bi-bar-chart-line"></i>
+                            <p>Relatórios</p>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Modal de dados do  usuário -->
     <div class="modal fade" id="modalConfigUsuario" tabindex="-1" aria-labelledby="modalConfigUsuarioLabel" aria-hidden="true">
@@ -171,11 +251,11 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                                 <input type="email" class="form-control" id="email" name="email" value="<?php echo $_SESSION['email'] ?? ''; ?>">
                             </div>
                             <div class="col-md-6">
-                                <label for="ds_password" class="form-label">Nova Senha</label>
+                                <label for="password" class="form-label">Nova Senha</label>
                                 <input type="password" class="form-control" id="password" name="password">
                             </div>
                             <div class="col-md-6">
-                                <label for="ds_password" class="form-label">Confirme Sua Senha</label>
+                                <label for="confirm_password" class="form-label">Confirme Sua Senha</label>
                                 <input type="password" class="form-control" id="confirm_password" name="confirm_password">
                             </div>
 
@@ -231,7 +311,19 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
         </div>
     </div>
     <!--Fim do modal de Carrinho-->
-    
+
+    <script>
+        document.querySelectorAll('.dashboard-item').forEach(item => {
+        item.addEventListener('click', () => {
+            // Verifica se o item está dentro de algum modal aberto
+            const modalElement = item.closest('.modal.show');
+            if (modalElement) {
+                const modal = bootstrap.Modal.getInstance(modalElement);
+                if (modal) modal.hide();
+            }
+        });
+    });
+    </script>
 </body>
 
 <!-- Bootstrap JS -->
@@ -246,13 +338,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
 
 
 <script>
-    // const toggleButton = document.getElementById('menu-toggle');
     const sidebar = document.getElementById('sidebar');
-
-    // Tava dando erro 
-    // toggleButton.addEventListener('click', () => {
-    //     sidebar.classList.toggle('show');
-    // });
 
     document.getElementById('foto_perfil').addEventListener('change', function(event) {
         const file = event.target.files[0];
@@ -260,13 +346,11 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
 
         const preview = document.createElement('img');
         preview.width = 240;
-        // preview.classList.add('rounded-circle', 'mb-2');
 
         const reader = new FileReader();
         reader.onload = function(e) {
             preview.src = e.target.result;
 
-            // Remove pré-visualização anterior se houver
             const container = document.getElementById('preview-container');
             container.innerHTML = '';
             container.appendChild(preview);
