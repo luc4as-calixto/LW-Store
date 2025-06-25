@@ -9,13 +9,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $email = $_POST['email'] ?? '';
         $cpf = $_POST['CPF'] ?? '';
         $telephone = $_POST['telephone'] ?? '';
+        $zipCode = $_POST['cep'] ?? '';
         $address = $_POST['address'] ?? '';
+        $nrAddress = $_POST['numberAdress'] ?? '';
+        $neighborhood = $_POST['bairro'] ?? '';
+        $city = $_POST['city'] ?? '';
+        $state = $_POST['state'] ?? '';
         $gender = $_POST['gender'] ?? '';
         $birthdate = $_POST['birthdate'] ?? '';
         $photo = $_FILES['photo'] ?? null;
 
         // Validação dos campos obrigatórios
-        if (empty($name) || empty($gender) || empty($telephone) || empty($cpf) || empty($birthdate) || empty($email) || empty($address)) {
+        if (empty($name) || empty($gender) || empty($telephone) || empty($cpf) || empty($birthdate) || empty($email) || empty($address) || empty($nrAddress) || empty($neighborhood) || empty($city) || empty($state) || empty($zipCode)) {
             echo json_encode(['error' => 'Todos os campos obrigatórios devem ser preenchidos.']);
             exit;
         }
@@ -51,6 +56,9 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
         }
 
+        // Formatação do endereço
+        $newAddress = trim($address) . ', ' . trim($nrAddress) . ', ' . trim($neighborhood) . ', ' . trim($city) . ', ' . trim($state) . ' - ' . trim($zipCode);
+
         // Inserção no banco
         $sql = "INSERT INTO customers
         (name, gender, telephone, cpf, birthdate, email, address, photo)
@@ -63,7 +71,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(':cpf', $cpf);
         $stmt->bindParam(':birthdate', $birthdate);
         $stmt->bindParam(':email', $email);
-        $stmt->bindParam(':address', $address);
+        $stmt->bindParam(':address', $newAddress);
         $stmt->bindParam(':photo', $caminho_salvar);
         $stmt->execute();
 
