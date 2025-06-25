@@ -14,12 +14,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $cpf = $_POST['CPF'] ?? '';
         $birthdate = $_POST['birthdate'] ?? '';
         $email = $_POST['email'] ?? '';
-        $address = $_POST['address'] ?? '';
+        $zipCode = $_POST['cep'] ?? '';
+        $address = $_POST['rua'] ?? '';
+        $nrAddress = $_POST['numberAddress'] ?? '';
+        $neighborhood = $_POST['bairro'] ?? '';
+        $city = $_POST['city'] ?? '';
+        $state = $_POST['state'] ?? '';
         $type_user = "vendedor";
         $photo = $_FILES['photo'] ?? null;
 
         // Validação dos campos obrigatórios
-        if (empty($name) || empty($gender) || empty($telephone) || empty($login) || empty($create_password) || empty($password_confirmation) || empty($cpf) || empty($birthdate) || empty($email) || empty($address)) {
+        if (empty($name) || empty($gender) || empty($telephone) || empty($login) || empty($create_password) || empty($password_confirmation) || empty($cpf) || empty($birthdate) || empty($email) || empty($address) || empty($nrAddress) || empty($neighborhood) || empty($city) || empty($state)) {
             echo json_encode(['error' => 'Todos os campos obrigatórios devem ser preenchidos.']);
             exit;
         }
@@ -63,6 +68,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             exit;
         }
 
+        // Formatação do endereço
+        $newAddress = trim($address) . ', ' . trim($nrAddress) . ', ' . trim($neighborhood) . ', ' . trim($city) . ', ' . trim($state) . ', ' . trim($zipCode);
 
         // Inserção no banco
         $sql = "INSERT INTO users
@@ -88,7 +95,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(':telephone', $telephone);
         $stmt->bindParam(':cpf', $cpf);
         $stmt->bindParam(':birthdate', $birthdate);
-        $stmt->bindParam(':address', $address);
+        $stmt->bindParam(':address', $newAddress);
         $stmt->bindParam(':photo', $caminho_salvar);
         $stmt->bindParam(':fk_id_user', $user_id); // <-- corrigido aqui
         $stmt->execute();

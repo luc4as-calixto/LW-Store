@@ -11,6 +11,11 @@
                 </div>
 
                 <div class="mb-3">
+                    <label for="CPF" class="form-label">CPF</label>
+                    <input type="text" class="form-control" id="CPF" name="CPF" placeholder="Digite o CPF*" required>
+                </div>
+
+                <div class="mb-3">
                     <label for="login_ven" class="form-label">login do Vendedor</label>
                     <input type="text" class="form-control" id="login_ven" name="login_ven" placeholder="Digite o login do vendedor*" required>
                 </div>
@@ -39,17 +44,22 @@
                     <input type="password" class="form-control" id="password-confirmation" name="password-confirmation" placeholder="Confirme a senha*" required>
                 </div>
 
-                <p style="text-align: left;">( * ) campos obrigatórios</p>
+                <div class="mb-4">
+                    <label for="photo" class="form-label">Foto de Perfil</label>
+                    <div class="d-flex align-items-center gap-3">
+                        <!-- Input de arquivo -->
+                        <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
+
+                    </div>
+                </div>
+
+                <!-- Pré-visualização da imagem -->
+                <div id="preview-container"></div>
 
             </div>
 
             <!-- Coluna da direita -->
             <div class="col-md-6">
-
-                <div class="mb-3">
-                    <label for="CPF" class="form-label">CPF</label>
-                    <input type="text" class="form-control" id="CPF" name="CPF" placeholder="Digite o CPF*" required>
-                </div>
 
                 <div class="mb-3">
                     <label for="birthdate" class="form-label">Data de Nascimento</label>
@@ -62,22 +72,35 @@
                 </div>
 
                 <div class="mb-3">
-                    <label for="address" class="form-label">Endereço</label>
-                    <input type="text" class="form-control" id="address" name="address" placeholder="Digite o endereço*" required>
+                    <label for="cep" class="form-label">CEP</label>
+                    <input type="text" class="form-control" id="cep" name="cep" placeholder="Digite o CEP*" required>
                 </div>
 
-                <div class="mb-4">
-                    <label for="photo" class="form-label">Foto de Perfil</label>
-                    <div class="d-flex align-items-center gap-3">
-                        <!-- Input de arquivo -->
-                        <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
-
-                    </div>
+                <div class="mb-3">
+                    <label for="rua" class="form-label">Rua</label>
+                    <input type="text" class="form-control" id="rua" name="rua" placeholder="Digite a rua*" required>
                 </div>
-                
-                <!-- Pré-visualização da imagem -->
-                <div id="preview-container"></div>
-                
+
+                <div class="mb-3">
+                    <label for="number" class="form-label">Número</label>
+                    <input type="text" class="form-control" id="number" name="numberAddress" placeholder="Digite o número*" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="bairro" class="form-label">Bairro</label>
+                    <input type="text" class="form-control" id="bairro" name="bairro" placeholder="Digite o bairro*" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="cidade" class="form-label">Cidade</label>
+                    <input type="text" class="form-control" id="cidade" name="city" placeholder="Digite a cidade*" required>
+                </div>
+
+                <div class="mb-3">
+                    <label for="uf" class="form-label">Estado</label>
+                    <input type="text" class="form-control" id="uf" name="state" placeholder="Digite o estado*" required>
+                </div>
+
             </div>
         </div>
         <button id="btn" type="submit" class="btn-normal"><i class="bi bi-tags"></i> Cadastrar Vendedor</button>
@@ -109,4 +132,68 @@
         };
         reader.readAsDataURL(file);
     });
-</script>F
+
+
+    $(document).ready(function() {
+
+        function limpa_formulário_cep() {
+            // Limpa valores do formulário de cep.
+            $("#rua").val("");
+            $("#bairro").val("");
+            $("#cidade").val("");
+            $("#uf").val("");
+        }
+
+        //Quando o campo cep perde o foco.
+        $("#cep").blur(function() {
+
+            //Nova variável "cep" somente com dígitos.
+            var cep = $(this).val().replace(/\D/g, '');
+
+            //Verifica se campo cep possui valor informado.
+            if (cep != "") {
+
+                //Expressão regular para validar o CEP.
+                var validacep = /^[0-9]{8}$/;
+
+                //Valida o formato do CEP.
+                if (validacep.test(cep)) {
+
+                    //Preenche os campos com "..." enquanto consulta webservice.
+                    $("#rua").val("...");
+                    $("#bairro").val("...");
+                    $("#cidade").val("...");
+                    $("#uf").val("...");
+
+                    //Consulta o webservice viacep.com.br/
+                    $.getJSON("https://viacep.com.br/ws/" + cep + "/json/?callback=?", function(dados) {
+
+                        if (!("erro" in dados)) {
+                            //Atualiza os campos com os valores da consulta.
+                            $("#rua").val(dados.logradouro);
+                            $("#bairro").val(dados.bairro);
+                            $("#cidade").val(dados.localidade);
+                            $("#uf").val(dados.uf);
+                        } //end if.
+                        else {
+                            //CEP pesquisado não foi encontrado.
+                            limpa_formulário_cep();
+                            $("#message").removeClass("success").addClass("error")
+                                .text("CEP não encontrado.").fadeIn(500).delay(3000).fadeOut(500);
+                        }
+                    });
+                } //end if.
+                else {
+                    //cep é inválido.
+                    limpa_formulário_cep();
+                    $("#message").removeClass("success").addClass("error")
+                        .text("Formato de CEP inválido.").fadeIn(500).delay(3000).fadeOut(500);
+                }
+            } //end if.
+            else {
+                //cep sem valor, limpa formulário.
+                limpa_formulário_cep();
+            }
+        });
+    });
+</script>
