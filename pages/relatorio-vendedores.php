@@ -32,7 +32,7 @@
                     <th>Telefone</th>
                     <th>Endereço</th>
                     <th>Gênero</th>
-                    <th>Aniverssário</th>
+                    <th>Aniversário</th>
                     <th>Ações</th>
                 </tr>
             </thead>
@@ -41,7 +41,7 @@
             <tbody id="corpoTabelaVendedores">
                 <?php include '../php/tabela_vendedores.php'; ?>
                 <tr id="mensagem-vazio" style="display: none;">
-                    <td colspan="9" class="text-center">Nenhum Vendedor encontrado.</td>
+                    <td colspan="10" class="text-center">Nenhum Vendedor encontrado.</td>
                 </tr>
             </tbody>
 

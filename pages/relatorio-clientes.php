@@ -31,7 +31,7 @@ require_once "../php/conexao.php";
                 <th>Telefone</th>
                 <th>Endereço</th>
                 <th>Gênero</th>
-                <th>Aniverssário</th>
+                <th>Aniversário</th>
                 <th>Ações</th>
             </tr>
         </thead>
