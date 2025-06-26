@@ -31,6 +31,13 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
         <div id="logo" class="text-center fw-bold py-3">
             <a href="../pages/index.php"><i class="bi bi-speedometer2 me-2"></i> LW Store</a>
         </div>
+
+        <!-- Botão Hamburguer para dispositivos móveis -->
+        <button class="btn btn-outline-dark d-md-none ms-2" type="button" data-bs-toggle="offcanvas" data-bs-target="#sidebarOffcanvas" aria-controls="sidebarOffcanvas">
+            <i class="bi bi-list fs-4"></i>
+        </button>
+
+
         <div id="user-menu" class="container-fluid d-flex justify-content-end" style="margin-top: -6px;">
             <div style="margin-right: 15px;" class="ms-auto dropdown">
                 <button id="btnCarrinho" class="btn btn-dark position-fixed" style="top: 20px; right: 200px; display: none;" onclick="abrirCarrinho()">
@@ -61,10 +68,57 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
         </div>
     </nav>
 
-    <!-- Menu Lateral -->
-    <div id="sidebar">
+    <!-- Sidebar Offcanvas (para dispositivos móveis) -->
+    <div class="offcanvas offcanvas-start d-md-none" tabindex="-1" id="sidebarOffcanvas" aria-labelledby="sidebarOffcanvasLabel">
+        <div class="offcanvas-header">
+            <h5 class="offcanvas-title" id="sidebarOffcanvasLabel">Menu</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Fechar"></button>
+        </div>
+        <div class="offcanvas-body">
+            <nav class="nav flex-column pt-2">
+                <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#cadastros" role="button" aria-expanded="false" aria-controls="cadastros">
+                    <span class="text-dark"><i class="bi bi-folder"></i> Cadastros</span>
+                    <i class="bi bi-chevron-down text-dark"></i>
+                </a>
+                <div class="collapse" id="cadastros">
+                    <a href="#" class="nav-link text-dark sibebar-responsivo submenu" data-page="cadastro-clientes">Clientes</a>
+                    <a href="#" class="nav-link text-dark sibebar-responsivo submenu" data-page="cadastro-vendedores">Vendedores</a>
+                    <a href="#" class="nav-link text-dark sibebar-responsivo submenu" data-page="cadastro-produtos">Produtos</a>
+                </div>
 
-        <nav class="nav flex-column pt-2">
+                <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#movimentacoes" role="button" aria-expanded="false" aria-controls="movimentacoes">
+                    <span class="text-dark"><i class="bi bi-cart text-dark"></i> Movimentações</span>
+                    <i class="bi bi-chevron-down text-dark"></i>
+                </a>
+                <div class="collapse" id="movimentacoes">
+                    <a href="#" class="nav-link text-dark sibebar-responsivo submenu" data-page="checkout">Vendas</a>
+                    <a href="#" class="nav-link text-dark sibebar-responsivo submenu" data-page="historico-vendas">Histórico de Vendas</a>
+                </div>
+
+                <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#relatorios" role="button" aria-expanded="false" aria-controls="relatorios">
+                    <span class="text-dark"><i class="bi bi-graph-up"></i> Relatórios</span>
+                    <i class="bi bi-chevron-down text-dark"></i>
+                </a>
+                <div class="collapse" id="relatorios">
+                    <a href="#" class="nav-link text-dark sibebar-responsivo submenu" data-page="relatorio-clientes">Clientes</a>
+                    <a href="#" class="nav-link text-dark sibebar-responsivo submenu" data-page="relatorio-vendedores">Vendedores</a>
+                    <a href="#" class="nav-link text-dark sibebar-responsivo submenu" data-page="relatorio-produtos">Produtos</a>
+                </div>
+
+                <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#administracao" role="button" aria-expanded="false" aria-controls="administracao">
+                    <span class="text-dark"><i class="bi bi-person-gear"></i> Administração</span>
+                    <i class="bi bi-chevron-down text-dark"></i>
+                </a>
+                <div class="collapse" id="administracao">
+                    <a href="#" class="nav-link text-dark sibebar-responsivo" data-bs-toggle="modal" data-bs-target="#modalConfigUsuario">Configurações</a>
+                </div>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Sidebar Lateral Fixo (visível em telas médias ou maiores) -->
+    <div id="sidebar" class="d-none d-md-block bg-dark border-end vh-100 p-2">
+        <nav class="nav flex-column pt-2 mt-4">
             <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#cadastros" role="button" aria-expanded="false" aria-controls="cadastros">
                 <span><i class="bi bi-folder"></i> Cadastros</span>
                 <i class="bi bi-chevron-down"></i>
@@ -74,15 +128,16 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                 <a href="#" class="nav-link submenu" data-page="cadastro-vendedores">Vendedores</a>
                 <a href="#" class="nav-link submenu" data-page="cadastro-produtos">Produtos</a>
             </div>
-            <!--Movimentos-->
-            <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#movimentacoes" role="button" aria-expanded="false" aria-controls="movimentacao">
-                <span><i class="bi-cart"></i> Movimentações</span>
+
+            <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#movimentacoes" role="button" aria-expanded="false" aria-controls="movimentacoes">
+                <span><i class="bi bi-cart"></i> Movimentações</span>
                 <i class="bi bi-chevron-down"></i>
             </a>
             <div class="collapse" id="movimentacoes">
-                <a href="#" class="nav-link submenu" data-page="vendas">Vendas</a>
-                <a href="#" class="nav-link submenu" data-page="historico_vendas">Histórico de Vendas</a>
+                <a href="#" class="nav-link submenu" data-page="checkout">Vendas</a>
+                <a href="#" class="nav-link submenu" data-page="historico-vendas">Histórico de Vendas</a>
             </div>
+
             <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#relatorios" role="button" aria-expanded="false" aria-controls="relatorios">
                 <span><i class="bi bi-graph-up"></i> Relatórios</span>
                 <i class="bi bi-chevron-down"></i>
@@ -92,13 +147,13 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                 <a href="#" class="nav-link submenu" data-page="relatorio-vendedores">Vendedores</a>
                 <a href="#" class="nav-link submenu" data-page="relatorio-produtos">Produtos</a>
             </div>
+
             <a class="nav-link d-flex justify-content-between align-items-center" data-bs-toggle="collapse" href="#administracao" role="button" aria-expanded="false" aria-controls="administracao">
-                <span><i class="bi bi-person-gear"></i>Administração</span>
+                <span><i class="bi bi-person-gear"></i> Administração</span>
                 <i class="bi bi-chevron-down"></i>
             </a>
             <div class="collapse" id="administracao">
                 <a href="#" class="nav-link" data-bs-toggle="modal" data-bs-target="#modalConfigUsuario">Configurações</a>
-                </a>
             </div>
         </nav>
     </div>
@@ -106,7 +161,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
     <!-- Conteúdo principal -->
     <div id="main">
         <div class="dashboard-grid">
-            
+
             <a href="#" class="dashboard-item" data-bs-toggle="modal" data-bs-target="#modaldashboardProdutos">
                 <i class="bi bi-box-seam"></i>
                 <p>Produtos</p>
@@ -313,15 +368,25 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
 
     <script>
         document.querySelectorAll('.dashboard-item').forEach(item => {
-        item.addEventListener('click', () => {
-            // Verifica se o item está dentro de algum modal aberto
-            const modalElement = item.closest('.modal.show');
-            if (modalElement) {
-                const modal = bootstrap.Modal.getInstance(modalElement);
-                if (modal) modal.hide();
-            }
+            item.addEventListener('click', () => {
+                // Verifica se o item está dentro de algum modal aberto
+                const modalElement = item.closest('.modal.show');
+                if (modalElement) {
+                    const modal = bootstrap.Modal.getInstance(modalElement);
+                    if (modal) modal.hide();
+                }
+            });
         });
-    });
+
+        document.querySelectorAll('.sibebar-responsivo').forEach(item => {
+            item.addEventListener('click', (event) => {
+                const modalElement = document.querySelector('.offcanvas.show');
+                if (modalElement) {
+                    const modal = bootstrap.Offcanvas.getInstance(modalElement);
+                    if (modal) modal.hide();
+                }
+            });
+        });
     </script>
 </body>
 

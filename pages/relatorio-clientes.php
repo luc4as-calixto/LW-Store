@@ -81,7 +81,7 @@ require_once "../php/conexao.php";
             <div class="modal-header">
                 <h5 class="modal-title" id="modalEditarLabel">Editar</h5>
             </div>
-            <div class="modal-body text-center">
+            <div class="modal-body">
                 <h5>Nome do cliente: <strong id="clienteEditar"></strong></h5>
 
                 <form id="formClienteEditar" method="POST" enctype="multipart/form-data">
@@ -89,7 +89,7 @@ require_once "../php/conexao.php";
                     <div class="row mb-3">
                         <!-- Coluna da esquerda -->
                         <div class="col-md-6">
-                            <div class="mb-3">
+                            <div class="mb-3" >
                                 <label style="text-align:left" for="name" class="form-label">Nome do Cliente</label>
                                 <input type="text" class="form-control" id="name" name="name" placeholder="Digite o nome do cliente*" value="<?php  ?>" required>
                             </div>
