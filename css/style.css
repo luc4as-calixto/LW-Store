@@ -592,27 +592,15 @@ select:focus {
     border: 1px solid #c3e6cb;
     margin-top: 10px;
     display: block;
-    /* Exibe a mensagem de sucesso */
     padding: 10px;
-    /* Adiciona preenchimento interno */
     border-radius: 5px;
-    /* Adiciona bordas arredondadas */
     margin-bottom: 10px;
-    /* Adiciona margem inferior */
     font-size: 1rem;
-    /* Aumenta o tamanho da fonte */
     font-weight: bold;
-    /* Deixa o texto em negrito */
     text-align: center;
-    /* Centraliza o texto */
     width: 100%;
-    /* Faz a mensagem ocupar toda a largura do contêiner */
     box-sizing: border-box;
-    /* Inclui o preenchimento e a borda na largura total */
     position: relative;
-    /* Permite o uso de posicionamento absoluto para o botão de fechar */
-
-
 }
 .error {
     background-color: #f8d7da;
@@ -620,23 +608,20 @@ select:focus {
     border: 1px solid #f5c6cb;
     margin-top: 10px;
     display: block;
-    /* Exibe a mensagem de sucesso */
     padding: 10px;
-    /* Adiciona preenchimento interno */
     border-radius: 5px;
-    /* Adiciona bordas arredondadas */
     margin-bottom: 10px;
-    /* Adiciona margem inferior */
     font-size: 1rem;
-    /* Aumenta o tamanho da fonte */
     font-weight: bold;
-    /* Deixa o texto em negrito */
     text-align: center;
-    /* Centraliza o texto */
     width: 100%;
-    /* Faz a mensagem ocupar toda a largura do contêiner */
     box-sizing: border-box;
-    /* Inclui o preenchimento e a borda na largura total */
     position: relative;
-    /* Permite o uso de posicionamento absoluto para o botão de fechar */
+}
+
+.user-modal-content {
+    border-radius: 12px;
+    padding: 20px;
+    background: #f8f9fa;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
 }
