@@ -22,6 +22,8 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
     <!-- Custom CSS -->
     <link rel="stylesheet" href="../css/style.css">
     <!-- <link rel="stylesheet" href="../css/styles_bootstrap.css"> -->
+
+    <link rel="icon" type="image/png" href="../assets/lwstore-cart-only.png">
 </head>
 
 <body style="padding-top: 65px !important;">
@@ -29,7 +31,9 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
     <!-- Barra superior -->
     <nav class="navbar navbar-expand-lg navbar-light bg-light fixed-top">
         <div id="logo" class="text-center fw-bold py-3">
-            <a href="../pages/index.php"><i class="bi bi-speedometer2 me-2"></i> LW Store</a>
+            <a href="../pages/index.php">
+                <img src="../assets/lwstore-logo-transparent.png" alt="lwstore-logo" style="height: 40px; object-fit:contain; object-position:center;">
+            </a>
         </div>
         <div id="user-menu" class="container-fluid d-flex justify-content-end" style="margin-top: -6px;">
             <div style="margin-right: 15px;" class="ms-auto dropdown">
@@ -106,7 +110,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
     <!-- Conteúdo principal -->
     <div id="main">
         <div class="dashboard-grid">
-            
+
             <a href="#" class="dashboard-item" data-bs-toggle="modal" data-bs-target="#modaldashboardProdutos">
                 <i class="bi bi-box-seam"></i>
                 <p>Produtos</p>
@@ -313,15 +317,15 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
 
     <script>
         document.querySelectorAll('.dashboard-item').forEach(item => {
-        item.addEventListener('click', () => {
-            // Verifica se o item está dentro de algum modal aberto
-            const modalElement = item.closest('.modal.show');
-            if (modalElement) {
-                const modal = bootstrap.Modal.getInstance(modalElement);
-                if (modal) modal.hide();
-            }
+            item.addEventListener('click', () => {
+                // Verifica se o item está dentro de algum modal aberto
+                const modalElement = item.closest('.modal.show');
+                if (modalElement) {
+                    const modal = bootstrap.Modal.getInstance(modalElement);
+                    if (modal) modal.hide();
+                }
+            });
         });
-    });
     </script>
 </body>
 

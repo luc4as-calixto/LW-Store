@@ -190,7 +190,7 @@ body {
 
 .dashboard-item[data-page="relatorio-clientes"] i,
 .dashboard-item[data-page="relatorio-produtos"] i,
- .dashboard-item[data-page="relatorio-vendedores"] i{
+.dashboard-item[data-page="relatorio-vendedores"] i {
     color: #e74a3b;
 }
 
@@ -615,7 +615,7 @@ td.descricao:hover {
     background-color: #ddd;
     position: relative;
     z-index: 1;
-    transition: background-color 0.3s ease; 
+    transition: background-color 0.3s ease;
 }
 
 #logo,
@@ -635,9 +635,8 @@ td.descricao:hover {
 img {
     width: 150px;
     height: 150px;
-    object-fit: cover;
+    object-fit: contain;
     border-radius: 8px;
-    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }
 
 #preview-container {
