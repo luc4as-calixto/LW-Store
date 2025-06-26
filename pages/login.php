@@ -32,7 +32,7 @@ $_SESSION['logado'] = false;
     <div class="container-painel painel-login">
         <div class="row">
             <div class="col-12">
-                <h1>Acessar conta</h1>
+                <h1 class="text-center">Acessar conta</h1>
                 <form id="FormLogin" method="post">
                     <div class="label-input">
                         <label for="login-painel">Login</label>
