@@ -84,7 +84,7 @@
                 <div class="modal-header">
                     <h5 class="modal-title" id="modalEditarLabel">Editar</h5>
                 </div>
-                <div class="modal-body text-center">
+                <div class="modal-body">
                     <h5>Nome do vendedor: <strong id="vendedorEditar"></strong></h5>
 
                     <form id="formVendedorEditar" method="POST" enctype="multipart/form-data">
