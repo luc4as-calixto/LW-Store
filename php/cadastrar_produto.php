@@ -60,8 +60,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(':amount', $amount);
         $stmt->bindParam(':type_packaging', $type_packaging);
         $stmt->bindParam(':description', $description);
-        $stmt->bindParam(':photo', $caminho_salvar); // salva o caminho da imagem ou NULL se não tiver
-
+        $stmt->bindParam(':photo', $caminho_salvar); 
         $stmt->execute();
 
         echo json_encode([

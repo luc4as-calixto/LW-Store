@@ -11,7 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $telephone = $_POST['telephone'] ?? '';
         $zipCode = $_POST['cep'] ?? '';
         $address = $_POST['address'] ?? '';
-        $nrAddress = $_POST['numberAdress'] ?? '';
+        $nrAddress = $_POST['numberAddress'] ?? '';
         $neighborhood = $_POST['bairro'] ?? '';
         $city = $_POST['city'] ?? '';
         $state = $_POST['state'] ?? '';

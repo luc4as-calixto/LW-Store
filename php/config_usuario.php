@@ -11,6 +11,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $login = $_POST['login'] ?? $_SESSION['login'];
         $email = $_POST['email'] ?? $_SESSION['email'];
         $id_user = $_SESSION['id_user'];
+        $photo = $_FILES['photo'] ?? null;
 
         // Senha
         if (!empty($_POST['password'])) {

@@ -29,7 +29,7 @@ try {
             echo "<td>" . htmlspecialchars($row['cpf']) . "</td>";
             echo "<td>" . htmlspecialchars($row['email']) . "</td>";
             echo "<td>" . htmlspecialchars($row['telephone']) . "</td>";
-            echo "<td>" . htmlspecialchars($row['address']) . "</td>";
+            echo "<td class='descricao'>" . htmlspecialchars($row['address']) . "</td>";
             echo "<td>" . htmlspecialchars($row['gender']) . "</td>";
             echo "<td>" . htmlspecialchars($row['birthdate']) . "</td>";
             echo "<td class='text-center'>
