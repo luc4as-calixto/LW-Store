@@ -42,8 +42,8 @@ $(document).ready(function () {
                 url: "../php/cadastrar_produto.php",
                 type: "POST",
                 data: formData,
-                contentType: false, 
-                processData: false,  
+                contentType: false,
+                processData: false,
                 dataType: "json",
                 success: function (response) {
                     if (response.success) {
@@ -75,10 +75,14 @@ $(document).ready(function () {
         $("#formVendedor").on("submit", function (e) {
             e.preventDefault();
 
+            const formData = new FormData(this);
+
             $.ajax({
                 url: "../php/cadastrar_vendedor.php",
                 type: "POST",
-                data: $(this).serialize(),
+                data: formData,
+                contentType: false,    
+                processData: false,
                 dataType: "json",
                 success: function (response) {
                     if (response.success) {

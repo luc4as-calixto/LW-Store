@@ -128,7 +128,7 @@
 
                                 <div class="mb-3">
                                     <label style="text-align:left" for="birthdate" class="form-label">Aniversário</label>
-                                    <input type="date" class="form-control" id="birthdate" name="birthdate" value="<?php  ?>" required>
+                                    <input type="date" class="form-control mt-1" id="birthdate" name="birthdate" value="<?php  ?>" required>
                                 </div>
 
                                 <div class="mb-3">
@@ -137,7 +137,7 @@
                                 </div>
 
                                 <div class="mb-3">
-                                    <label style="text-align:left" for="photo" class="form-label">Foto do Vendedor</label>
+                                    <label style="text-align:left ; margin-top: 6px" for="photo" class="form-label">Foto do Vendedor</label>
                                     <div class="d-flex align-items-center gap-3">
                                         <!-- Input de arquivo -->
                                         <input type="file" class="form-control" id="photo" name="photo" accept="image/*">

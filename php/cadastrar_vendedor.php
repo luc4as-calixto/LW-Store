@@ -97,7 +97,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(':birthdate', $birthdate);
         $stmt->bindParam(':address', $newAddress);
         $stmt->bindParam(':photo', $caminho_salvar);
-        $stmt->bindParam(':fk_id_user', $user_id); // <-- corrigido aqui
+        $stmt->bindParam(':fk_id_user', $user_id);
         $stmt->execute();
 
         echo json_encode([

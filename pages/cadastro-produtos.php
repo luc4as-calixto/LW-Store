@@ -27,7 +27,7 @@
 
                     <div class="mb-3">
                         <label for="type_packaging" class="form-label">Tipo da embalagem</label>
-                        <select name="type_packaging" id="type_packaging"  class="form-select" required>
+                        <select name="type_packaging" id="type_packaging" class="form-select" required>
                             <option value="" disabled selected>Selecione o tipo de embalagem</option>
                             <option value="Caixa">Caixa</option>
                             <option value="Saco">Saco</option>
@@ -45,20 +45,20 @@
                 <!-- Coluna da direita -->
                 <div class="col-md-6">
 
-                    <div style="margin-bottom: 20px;">  
+                    <div style="margin-bottom: 20px;">
                         <label for="description" class="form-label">Descrição</label>
-                        <textarea name="description" id="description" class="form-control" style="resize: none;" rows="8" placeholder="Descreva o produto aqui..." required ></textarea>
+                        <textarea name="description" id="description" class="form-control" style="resize: none;" rows="8" placeholder="Descreva o produto aqui..." required></textarea>
                     </div>
 
                     <div class="mb-3">
                         <label for="photo" class="form-label">Foto do Produto</label>
                         <div class="d-flex align-items-center gap-3">
                             <!-- Input de arquivo -->
-                            <input type="file" class="form-control" id="photo" name="photo" accept="image/*" >
+                            <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
 
                         </div>
                     </div>
-                    
+
                     <!-- Pré-visualização da imagem -->
                     <div id="preview-container"></div>
 
