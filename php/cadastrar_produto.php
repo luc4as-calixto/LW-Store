@@ -34,6 +34,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         // Caminho da foto que será salva no banco
+        $caminho_salvar = "../uploads/produto-sem-imagem.webp";
 
         if ($photo && $photo['error'] === UPLOAD_ERR_OK) {
             $pasta = "../uploads/";
@@ -46,8 +47,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
                 echo json_encode(['error' => 'Erro ao salvar a foto no servidor.']);
                 exit;
             }
-        } else {
-            $caminho_salvar = "../uploads/produto-sem-imagem.webp";
         }
 
         // Inserindo no banco de dados

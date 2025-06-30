@@ -1,6 +1,10 @@
 <?php
 require_once '../php/conexao.php';
 session_start();
+if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
+    header('Location: ../pages/login.php');
+    exit();
+}
 
 if (!isset($_GET['id'])) {
     die('ID do pedido não informado.');
@@ -64,6 +68,10 @@ $itens = $stmtItens->fetchAll(PDO::FETCH_ASSOC);
 
         @media print {
             .btn-print {
+                display: none;
+            }
+
+            header, footer {
                 display: none;
             }
         }

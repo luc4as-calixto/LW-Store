@@ -22,13 +22,13 @@ try {
 
         $insertStmtSeller->execute([
             ':name' => 'Administrador',
-            ':email' => 'admin@gmail.com',
+            ':email' => 'admin@admin.com',
             ':cpf' => '12345678901',
             ':telephone' => '11999999999',
             ':address' => 'Rua admin, 123',
             ':gender' => 'M',
             ':birthdate' => '2000-01-01',
-            ':photo' => '../uploads/sem-foto.webp'
+            ':photo' => '/uploads/sem-foto.webp'
         ]);        
 
     }
@@ -65,7 +65,8 @@ try {
         $_SESSION['address'] = $sellers['address'];
         $_SESSION['gender'] = $sellers['gender'];
         $_SESSION['birthdate'] = $sellers['birthdate'];
-        $_SESSION['photo'] = !empty($sellers['photo']) ? $sellers['photo'] : 'sem-foto.webp';
+        $_SESSION['photo'] = !empty($sellers['photo']) ? $_SESSION['photo'] = ltrim(str_replace('../', '', $sellers['photo']), '/') : 'uploads/sem-foto.webp';
+
 
         $_SESSION['logado'] = true;
 

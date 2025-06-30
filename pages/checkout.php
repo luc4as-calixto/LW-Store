@@ -1,6 +1,10 @@
 <?php
 
 session_start();
+if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
+    header('Location: ../pages/login.php');
+    exit();
+}
 require_once '../php/conexao.php';
 
 // Buscar todos os clientes

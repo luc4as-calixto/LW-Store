@@ -1,3 +1,13 @@
+<?php
+
+session_start();
+if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
+    header('Location: ../pages/login.php');
+    exit();
+}
+
+?>
+
 <div class="container mt-4" id="pagina">
     <h1>Cadastro de Cliente</h1>
     <form id="formCliente" method="POST" enctype="multipart/form-data">
