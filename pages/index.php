@@ -330,7 +330,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                                 </div>
                                 <div id="preview-container" class="text-center">
                                     <?php if (!empty($_SESSION['photo']) && isset($_SESSION['photo'])): ?>
-                                        <img src="../uploads/<?php echo $_SESSION['photo']; ?>" alt="Foto de Perfil"
+                                        <img src="/<?php echo $_SESSION['photo']; ?>" alt="Foto de Perfil"
                                             class="preview-img">
                                     <?php endif; ?>
                                 </div>
