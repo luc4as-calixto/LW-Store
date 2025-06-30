@@ -37,10 +37,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Processamento da foto
         $caminho_salvar = "../uploads/sem-foto.webp"; // padrão
         if ($photo && $photo['error'] === UPLOAD_ERR_OK) {
-            $pasta = "../uploads/";
-            $extensao = strtolower(pathinfo($photo["name"], PATHINFO_EXTENSION));
-
-            // Verifica se é uma extensão permitida
             $ext_permitidas = ['jpg', 'jpeg', 'png', 'webp'];
             if (!in_array($extensao, $ext_permitidas)) {
                 echo json_encode(['error' => 'Formato de imagem não permitido.']);
@@ -48,7 +44,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
 
             $novo_nome = uniqid() . "." . $extensao;
-            $caminho_salvar = $pasta . $novo_nome;
+            $caminho_salvar = $novo_nome;
 
             if (!move_uploaded_file($photo["tmp_name"], $caminho_salvar)) {
                 echo json_encode(['error' => 'Erro ao salvar a foto no servidor.']);

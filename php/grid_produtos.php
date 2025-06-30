@@ -32,7 +32,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php foreach ($produtos as $produto): ?>
         <div class="col-sm-6 col-md-3 produto">
             <div class="card h-100 shadow-sm produto-card">
-                <img src="<?= htmlspecialchars($produto['photo']); ?>" class="card-img-top" alt="<?= htmlspecialchars($produto['name']); ?>">
+                <img src="../uploads/<?= htmlspecialchars($produto['photo']); ?>" class="card-img-top" alt="<?= htmlspecialchars($produto['name']); ?>">
                 <div class="card-body">
                     <h5 class="card-title"><?= htmlspecialchars($produto['name']); ?></h5>
                     <p class="card-text"><?= htmlspecialchars($produto['description']); ?></p>
