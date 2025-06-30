@@ -456,7 +456,7 @@ img {
     background-color: #ffb3b3 !important;
 }
 
-tr.esgotado:hover>td.descriocao:hover {
+tr.esgotado:hover>td.descricao:hover {
     background-color: #ffb3b3 !important;
 }
 
@@ -464,7 +464,7 @@ label.form-label {
     text-align: left !important;
 }
 
-.container-painel {
+.container-painel { 
     background: white;
     padding: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
