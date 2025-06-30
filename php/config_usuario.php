@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // Senha
         if (!empty($_POST['password'])) {
-            $password = $_POST['password'];
+            $password = $_POST['passw ord'];
             $confirm_password = $_POST['confirm_password'] ?? '';
 
             if ($password !== $confirm_password) {
@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $novo_nome = uniqid() . "." . $extensao;
 
             // Caminhos
-            $caminho_relativo = 'uploads/' . $novo_nome;
+            $caminho_relativo = $novo_nome;
             $caminho_fisico = __DIR__ . '/../uploads/' . $novo_nome;
 
             if (move_uploaded_file($_FILES["photo"]["tmp_name"], $caminho_fisico)) {
