@@ -13,10 +13,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $type_packaging = $_POST['type_packaging'] ?? '';
         $description = $_POST['description'] ?? '';
         $photo = $_FILES['photo'] ?? null;
-       
+
         $stmt1 = $conn->prepare("SELECT product_code FROM product WHERE product_code =:product_code");
         $stmt1->bindParam(':product_code', $product_code);
-        $stmt1->execute();        
+        $stmt1->execute();
         $rowCount = $stmt1->rowCount();
         if ($rowCount > 0) {
             echo json_encode(['error' => 'Já existe um produto cadastrado com este código.']);
@@ -30,6 +30,16 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             empty($amount) || empty($type_packaging) || empty($description)
         ) {
             echo json_encode(['error' => 'Todos os campos obrigatórios devem ser preenchidos.']);
+            exit;
+        }
+
+        if (!is_numeric($price) || !is_numeric($amount)) {
+            echo json_encode(['error' => 'Preço e quantidade devem ser numéricos.']);
+            exit;
+        }
+
+        if ($price <= 0 || $amount <= 0) {
+            echo json_encode(['error' => 'Preço e quantidade não podem ser negativos.']);
             exit;
         }
 
@@ -58,14 +68,13 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $stmt->bindParam(':amount', $amount);
         $stmt->bindParam(':type_packaging', $type_packaging);
         $stmt->bindParam(':description', $description);
-        $stmt->bindParam(':photo', $caminho_salvar); 
+        $stmt->bindParam(':photo', $caminho_salvar);
         $stmt->execute();
 
         echo json_encode([
             'success' => true,
             'message' => 'Produto cadastrado com sucesso!'
         ]);
-
     } catch (Exception $e) {
         echo json_encode(['error' => 'Erro ao cadastrar produto: ' . $e->getMessage()]);
         exit;
