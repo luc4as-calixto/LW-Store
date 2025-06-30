@@ -53,6 +53,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $novo_nome = uniqid() . "." . $extensao;
             $caminho_salvar = $novo_nome;
 
+
+            //ERRO AQUI 
             if (!move_uploaded_file($photo["tmp_name"], $caminho_salvar)) {
                 echo json_encode(['error' => 'Erro ao salvar a foto no servidor.']);
                 exit;
