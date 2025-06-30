@@ -52,7 +52,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                 </button>
                 <a class="nav-link dropdown-toggle d-flex align-items-center" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                     <?php if (!empty($_SESSION['photo'])): ?>
-                        <img src="/<?php echo htmlspecialchars($_SESSION['photo']) ?>" alt="Foto de Perfil" style="width:32px; height:32px; object-fit:cover; border-radius:50%; margin-right:8px;">
+                        <img src="../uploads/<?php echo htmlspecialchars($_SESSION['photo']) ?>" alt="Foto de Perfil" style="width:32px; height:32px; object-fit:cover; border-radius:50%; margin-right:8px;">
                     <?php else: ?>
                         <i class="bi bi-person-circle fs-4 me-2"></i>
                     <?php endif; ?>

@@ -31,13 +31,17 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         // Upload da imagem
         $caminho_salvar = $_SESSION['photo']; // valor padrão: mantém imagem atual
         if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
-            $photo = $_FILES['photo'];
-            $pasta = "../uploads/";
-            $extensao = strtolower(pathinfo($photo["name"], PATHINFO_EXTENSION));
+            $extensao = strtolower(pathinfo($_FILES["photo"]["name"], PATHINFO_EXTENSION));
             $novo_nome = uniqid() . "." . $extensao;
-            $caminho_salvar = $pasta . $novo_nome;
 
-            if (!move_uploaded_file($photo["tmp_name"], $caminho_salvar)) {
+            // Caminhos
+            $caminho_relativo = 'uploads/' . $novo_nome;
+            $caminho_fisico = __DIR__ . '/../uploads/' . $novo_nome;
+
+            if (move_uploaded_file($_FILES["photo"]["tmp_name"], $caminho_fisico)) {
+                $caminho_salvar = $caminho_relativo;
+                $_SESSION['photo'] = $caminho_salvar; // atualiza a sessão
+            } else {
                 echo json_encode(['error' => 'Erro ao salvar a foto no servidor.']);
                 exit;
             }

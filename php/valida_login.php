@@ -28,7 +28,7 @@ try {
             ':address' => 'Rua admin, 123',
             ':gender' => 'M',
             ':birthdate' => '2000-01-01',
-            ':photo' => '/uploads/sem-foto.webp'
+            ':photo' => 'sem-foto.webp'
         ]);        
 
     }
