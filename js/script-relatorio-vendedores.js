@@ -97,7 +97,7 @@ $(document).ready(function () {
 
                     // Atualiza a imagem
                     if (vendedor.photo && vendedor.photo !== '') {
-                        $('#imagemAtual').attr('src', vendedor.photo);
+                        $('#imagemAtual').attr('src', `../uploads/${vendedor.photo}`);
                     } else {
                         $('#imagemAtual').attr('src', '../uploads/sem-foto.webp');
                     }
