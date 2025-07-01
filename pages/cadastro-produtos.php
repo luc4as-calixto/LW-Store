@@ -42,10 +42,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                     <select name="type_packaging" id="type_packaging" class="form-select" required>
                         <option value="" disabled selected>Selecione o tipo de embalagem</option>
                         <option value="Caixa">Caixa</option>
-                        <option value="Saco">Saco</option>
-                        <option value="Lata">Lata</option>
                         <option value="Pacote">Pacote</option>
-                        <option value="Garrafa">Garrafa</option>
                         <option value="Outro">Outro</option>
                     </select>
                 </div>

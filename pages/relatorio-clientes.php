@@ -131,19 +131,19 @@ require_once "../php/conexao.php";
                                 <input type="text" class="form-control" id="address" name="address" placeholder="Digite o endereço do cliente*" value="<?php  ?>" required>
                             </div>
 
-                            <div class="mb-3">
+                            <div class="mb-3" style="margin-top: 20px;">
                                 <label style="text-align:left" for="birthdate" class="form-label">Aniversário</label>
                                 <input type="date" class="form-control" id="birthdate" name="birthdate" value="<?php  ?>" required>
                             </div>
 
-                            <div class="mb-3">
+                            <div class="mb-3" style="margin-top: 22px;">
                                 <label style="text-align:left" for="photo" class="form-label">Foto do cliente</label>
                                 <div class="d-flex align-items-center gap-3">
                                     <!-- Input de arquivo -->
                                     <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
                                 </div>
                                 <!-- Pré-visualização da imagem -->
-                                <div id="preview-container">
+                                <div id="preview-container" style="margin: 10px;">
                                     <img id="imagemAtual" src="../uploads/sem-foto.webp" alt="Foto do cliente"
                                         width="100" height="100"
                                         style="object-fit: cover; border-radius: 8px; border: 1px solid #ccc;">
