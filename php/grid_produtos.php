@@ -26,6 +26,10 @@ $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
 $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
 $stmt->execute();
 $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
+
+if ($produto['photo'] === null || $produto['photo'] === '') {
+    $produto['photo'] = 'produto-sem-imagem.webp';
+}
 ?>
 
 <?php if (count($produtos) > 0): ?>

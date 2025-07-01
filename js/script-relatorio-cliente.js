@@ -69,7 +69,7 @@ $(document).ready(function () {
                 $("#birthdate").val(response.birthdate);
 
                 if (response.photo && response.photo !== '') {
-                    $('#imagemAtual').attr('src', response.photo);
+                    $('#imagemAtual').attr('src', `../uploads/${response.photo}`);
                 } else {
                     $('#imagemAtual').attr('src', '../uploads/sem-foto.webp');
                 }

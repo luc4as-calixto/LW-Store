@@ -36,7 +36,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
             // Caminhos
             $caminho_relativo = $novo_nome;
-            $caminho_fisico = __DIR__ . '/../uploads/' . $novo_nome;
+            $caminho_fisico = `uploads/$caminho_relativo`;
 
             if (move_uploaded_file($_FILES["photo"]["tmp_name"], $caminho_fisico)) {
                 $caminho_salvar = $caminho_relativo;

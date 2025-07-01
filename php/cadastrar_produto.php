@@ -12,7 +12,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $amount = $_POST['amount'] ?? '';
         $type_packaging = $_POST['type_packaging'] ?? '';
         $description = $_POST['description'] ?? '';
-        $photo = $_FILES['photo'] ?? null;
+        $photo = $_FILES['photo'] ?? "produto-sem-imagem.webp";
 
         $stmt1 = $conn->prepare("SELECT product_code FROM product WHERE product_code =:product_code");
         $stmt1->bindParam(':product_code', $product_code);
@@ -50,7 +50,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $nome_original = basename($photo["name"]);
             $extensao = pathinfo($nome_original, PATHINFO_EXTENSION);
             $novo_nome = uniqid() . "." . $extensao;
-            $caminho_salvar = $novo_nome;
+            $caminho_salvar = `uploads/$novo_nome`;
 
             if (!move_uploaded_file($photo["tmp_name"], $caminho_salvar)) {
                 echo json_encode(['error' => 'Erro ao salvar a foto no servidor.']);
