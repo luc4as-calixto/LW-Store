@@ -7,16 +7,20 @@ $(document).ready(function () {
             method: 'GET',
             data: { pagina: pagina, termo: termo },
             success: function (html) {
-                $('#areaProdutos').html(html);
+                if ($.trim(html) === '' && pagina > 1) {
+                    carregarProdutos(pagina - 1); // Volta para página anterior
+                } else {
+                    $('#areaProdutos').html(html);
 
-                $.ajax({
-                    url: '../php/paginacao_produtos.php',
-                    method: 'GET',
-                    data: { pagina: pagina, termo: termo },
-                    success: function (html) {
-                        $('.pagination').html(html);
-                    }
-                });
+                    $.ajax({
+                        url: '../php/paginacao_produtos.php',
+                        method: 'GET',
+                        data: { pagina: pagina, termo: termo },
+                        success: function (html) {
+                            $('.pagination').html(html);
+                        }
+                    });
+                }
             },
             error: function () {
                 alert('Erro ao carregar os produtos.');

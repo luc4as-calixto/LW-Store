@@ -35,7 +35,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         // Processamento da foto
-        $caminho_salvar = "sem-foto.webp"; // padrão
+        $caminho_salvar = "../uploads/sem-foto.webp"; // padrão
         if ($photo && $photo['error'] === UPLOAD_ERR_OK) {
             $ext_permitidas = ['jpg', 'jpeg', 'png', 'webp'];
             $extensao = strtolower(pathinfo($photo['name'], PATHINFO_EXTENSION));
@@ -46,14 +46,15 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             }
 
             $novo_nome = uniqid() . "." . $extensao;
-            $caminho_salvar = `uploads/$novo_nome`;
+            $caminho_salvar = $novo_nome;
+            $caminho_rota = "../uploads/" . $caminho_salvar;
 
             if (!move_uploaded_file($photo["tmp_name"], $caminho_rota)) {
                 echo json_encode(['error' => 'Erro ao salvar a foto no servidor.']);
                 exit;
             }
         }
-
+        
         // Formatação do endereço
         $newAddress = trim($address) . ', ' . trim($nrAddress) . ', ' . trim($neighborhood) . ', ' . trim($city) . ', ' . trim($state) . ' - ' . trim($zipCode);
 

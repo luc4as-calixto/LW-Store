@@ -2,7 +2,7 @@
 require_once '../php/conexao.php';
 
 try {
-    $limite = 10;
+    $limite = 9;
     $pagina = isset($_GET['pagina']) && is_numeric($_GET['pagina']) ? (int)$_GET['pagina'] : 1;
     $termo = isset($_GET['termo']) ? $_GET['termo'] : '';
 

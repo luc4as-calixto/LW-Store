@@ -20,25 +20,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             exit;
         }
 
-        // Verifica se mudou algo 
-        $stmt = $conn->prepare("SELECT * FROM product WHERE product_id = :product_id");
-        $stmt->bindParam(':product_id', $product_id, PDO::PARAM_INT);
-        $stmt->execute();
-        $produto = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        if (
-            $produto['product_code'] == $product_code &&
-            $produto['name'] == $name &&
-            $produto['price'] == $price &&
-            $produto['amount'] == $amount &&
-            $produto['type_packaging'] == $type_packaging &&
-            $produto['description'] == $description
-        ) {
-            echo json_encode(['error' => 'Nenhum dado foi alterado.']);
-            exit;
-        }
-
-
         // Verifica se o produto existe
         $check = $conn->prepare("SELECT COUNT(*) FROM product WHERE product_id = :product_id");
         $check->bindParam(':product_id', $product_id, PDO::PARAM_INT);
@@ -53,7 +34,8 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         if ($photo && $photo['error'] === UPLOAD_ERR_OK) {
             $extensao = strtolower(pathinfo($photo["name"], PATHINFO_EXTENSION));
             $novo_nome = uniqid() . "." . $extensao;
-            $caminho_salvar = `uploads/$novo_nome`;
+            $pasta = "../uploads/";
+            $caminho_salvar = $pasta . $novo_nome;
 
             if (!move_uploaded_file($photo["tmp_name"], $caminho_salvar)) {
                 echo json_encode(['error' => 'Erro ao salvar a foto no servidor.']);

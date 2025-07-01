@@ -26,14 +26,15 @@ $stmt->bindValue(':limite', $limite, PDO::PARAM_INT);
 $stmt->bindValue(':offset', $offset, PDO::PARAM_INT);
 $stmt->execute();
 $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
-
-if ($produto['photo'] === null || $produto['photo'] === '') {
-    $produto['photo'] = 'produto-sem-imagem.webp';
-}
 ?>
 
 <?php if (count($produtos) > 0): ?>
     <?php foreach ($produtos as $produto): ?>
+        <?php 
+            if ($produto['photo'] === null || $produto['photo'] === '') {
+                $produto['photo'] = 'produto-sem-imagem.webp';
+            }
+        ?>
         <div class="col-sm-6 col-md-3 produto">
             <div class="card h-100 shadow-sm produto-card">
                 <img src="../uploads/<?= htmlspecialchars($produto['photo']); ?>" class="card-img-top" alt="<?= htmlspecialchars($produto['name']); ?>">
