@@ -72,7 +72,7 @@ $(document).ready(function () {
                 $('#id').val(produto.product_id); // Campo oculto com o ID
 
                 if (produto.photo && produto.photo !== '') {
-                    $('#imagemAtual').attr('src', produto.photo);
+                    $('#imagemAtual').attr('src', `../uploads/${produto.photo}`);
                 } else {
                     $('#imagemAtual').attr('src', '../uploads/produto-sem-imagem.webp');
                 }
