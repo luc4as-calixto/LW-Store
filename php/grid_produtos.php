@@ -32,7 +32,7 @@ $produtos = $stmt->fetchAll(PDO::FETCH_ASSOC);
     <?php foreach ($produtos as $produto): ?>
         <?php 
             if ($produto['photo'] === null || $produto['photo'] === '') {
-                $produto['photo'] = 'produto-sem-imagem.webp';
+                $produto['photo'] = '../uploads/produto-sem-imagem.webp';
             }
         ?>
         <div class="col-sm-6 col-md-3 produto">
