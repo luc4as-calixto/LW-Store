@@ -16,16 +16,6 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         $birthdate = $_POST['birthdate'] ?? '';
         $photo = $_FILES['photo'] ?? "sem-foto.webp";
 
-        // Verifica se mudou algo
-        $stmt = $conn->prepare("SELECT * FROM sellers WHERE id_seller = :id_seller");
-        $stmt->bindParam(':id_seller', $id_seller, PDO::PARAM_INT);
-        $stmt->execute();
-        $vendedor = $stmt->fetch(PDO::FETCH_ASSOC);
-        if ($vendedor['name'] == $name && $vendedor['email'] == $email && $vendedor['cpf'] == $cpf && $vendedor['telephone'] == $telephone && $vendedor['address'] == $address && $vendedor['gender'] == $gender && $vendedor['birthdate'] == $birthdate) {
-            echo json_encode(['error' => 'Nenhum dado foi alterado.']);
-            exit;
-        }
-
         // Verifica se todos os campos obrigatórios estão preenchidos
         if (empty($name) || empty($email) || empty($cpf) || empty($telephone) || empty($address) || empty($gender) || empty($birthdate)) {
             echo json_encode(['error' => 'Todos os campos são obrigatórios.']);
@@ -42,13 +32,18 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
         }
 
         // Upload da imagem
-        $caminho_salvar = null;
-        if ($photo && $photo['error'] === UPLOAD_ERR_OK) {
-            $extensao = strtolower(pathinfo($photo["name"], PATHINFO_EXTENSION));
+        $caminho_salvar = $_SESSION['photo']; // valor padrão: mantém imagem atual
+        if (isset($_FILES['photo']) && $_FILES['photo']['error'] === UPLOAD_ERR_OK) {
+            $extensao = strtolower(pathinfo($_FILES["photo"]["name"], PATHINFO_EXTENSION));
             $novo_nome = uniqid() . "." . $extensao;
-            $caminho_salvar = "../uploads/$novo_nome";
 
-            if (!move_uploaded_file($photo["tmp_name"], $caminho_salvar)) {
+            // Caminhos
+            $caminho_salvar = $novo_nome;
+            $caminho_fisico = "../uploads/$caminho_salvar";
+
+            if (move_uploaded_file($_FILES["photo"]["tmp_name"], $caminho_fisico)) {
+                $_SESSION['photo'] = $caminho_salvar; // atualiza a sessão
+            } else {
                 echo json_encode(['error' => 'Erro ao salvar a foto no servidor.']);
                 exit;
             }

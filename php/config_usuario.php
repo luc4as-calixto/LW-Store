@@ -15,7 +15,7 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
         // Senha
         if (!empty($_POST['password'])) {
-            $password = $_POST['passw ord'];
+            $password = $_POST['password'];
             $confirm_password = $_POST['confirm_password'] ?? '';
 
             if ($password !== $confirm_password) {
@@ -35,11 +35,10 @@ if ($_SERVER["REQUEST_METHOD"] === "POST") {
             $novo_nome = uniqid() . "." . $extensao;
 
             // Caminhos
-            $caminho_relativo = $novo_nome;
-            $caminho_fisico = "../uploads/$caminho_relativo";
+            $caminho_salvar = $novo_nome;
+            $caminho_fisico = "../uploads/$caminho_salvar";
 
             if (move_uploaded_file($_FILES["photo"]["tmp_name"], $caminho_fisico)) {
-                $caminho_salvar = $caminho_relativo;
                 $_SESSION['photo'] = $caminho_salvar; // atualiza a sessão
             } else {
                 echo json_encode(['error' => 'Erro ao salvar a foto no servidor.']);

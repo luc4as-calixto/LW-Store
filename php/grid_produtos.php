@@ -18,7 +18,7 @@ $totalStmt->execute($params);
 $total = $totalStmt->fetchColumn();
 $totalPaginas = ceil($total / $limite);
 
-$stmt = $conn->prepare("SELECT * FROM product $where ORDER BY product_code DESC LIMIT :limite OFFSET :offset");
+$stmt = $conn->prepare("SELECT * FROM product $where ORDER BY (amount = 0), product_code ASC LIMIT :limite OFFSET :offset");
 foreach ($params as $key => $val) {
     $stmt->bindValue($key, $val);
 }
