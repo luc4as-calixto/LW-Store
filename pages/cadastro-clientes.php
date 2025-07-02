@@ -50,7 +50,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                 </div>
 
                 <div class="mb-4">
-                    <label for="photo" class="form-label">Foto de Perfil</label>
+                    <label for="photo" class="form-label">Foto do Cliente</label>
                     <div class="d-flex align-items-center gap-3">
                         <!-- Input de arquivo -->
                         <input type="file" class="form-control" id="photo" name="photo" accept="image/*">
