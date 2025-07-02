@@ -91,7 +91,10 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                 </a>
                 <div class="collapse" id="cadastros">
                     <a href="#" class="nav-link text-dark sibebar-responsivo submenu" data-page="cadastro-clientes">Clientes</a>
-                    <a href="#" class="nav-link text-dark sibebar-responsivo submenu" data-page="cadastro-vendedores">Vendedores</a>
+                    <?php if ($_SESSION['type_user'] == "admin") {
+                        echo '<a href="#" class="nav-link text-dark sibebar-responsivo submenu" data-page="cadastro-vendedores">Vendedores</a>';
+                    };
+                    ?>
                     <a href="#" class="nav-link text-dark sibebar-responsivo submenu" data-page="cadastro-produtos">Produtos</a>
                 </div>
 
@@ -110,7 +113,10 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                 </a>
                 <div class="collapse" id="relatorios">
                     <a href="#" class="nav-link text-dark sibebar-responsivo submenu" data-page="relatorio-clientes">Clientes</a>
-                    <a href="#" class="nav-link text-dark sibebar-responsivo submenu" data-page="relatorio-vendedores">Vendedores</a>
+                    <?php if ($_SESSION['type_user'] == "admin") {
+                        echo '<a href="#" class="nav-link text-dark sibebar-responsivo submenu" data-page="relatorio-vendedores">Vendedores</a>';
+                    };
+                    ?>
                     <a href="#" class="nav-link text-dark sibebar-responsivo submenu" data-page="relatorio-produtos">Produtos</a>
                 </div>
 
@@ -134,7 +140,10 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
             </a>
             <div class="collapse" id="cadastros">
                 <a href="#" class="nav-link submenu" data-page="cadastro-clientes">Clientes</a>
-                <a href="#" class="nav-link submenu" data-page="cadastro-vendedores">Vendedores</a>
+                <?php if ($_SESSION['type_user'] == "admin") {
+                    echo '<a href="#" style:"color=white;" class="nav-link sibebar-responsivo submenu" data-page="cadastro-vendedores">Vendedores</a>';
+                };
+                ?>
                 <a href="#" class="nav-link submenu" data-page="cadastro-produtos">Produtos</a>
             </div>
 
@@ -153,7 +162,9 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
             </a>
             <div class="collapse" id="relatorios">
                 <a href="#" class="nav-link submenu" data-page="relatorio-clientes">Clientes</a>
-                <a href="#" class="nav-link submenu" data-page="relatorio-vendedores">Vendedores</a>
+                <?php if ($_SESSION['type_user'] == "admin") {
+                    echo '<a href="#" style:"color=white;" class="nav-link submenu" data-page="relatorio-vendedores">Vendedores</a>';
+                }; ?>
                 <a href="#" class="nav-link submenu" data-page="relatorio-produtos">Produtos</a>
             </div>
 
@@ -181,10 +192,14 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                 <p>Clientes</p>
             </a>
 
-            <a href="#" class="dashboard-item" data-bs-toggle="modal" data-bs-target="#modaldashboardVendedores">
-                <i class="bi bi-person-badge"></i>
-                <p>Vendedores</p>
-            </a>
+            <?php if ($_SESSION['type_user'] == "admin") {
+                echo '<a href="#" class="dashboard-item" data-bs-toggle="modal" data-bs-target="#modaldashboardVendedores">
+                        <i class="bi bi-person-badge"></i>
+                        <p>Vendedores</p>
+                      </a>';
+                }; 
+            ?>
+
             <a href="#" class="dashboard-item submenu" data-page="historico-vendas">
                 <i class="bi bi-clock-history"></i>
                 <p>Histórico</p>
