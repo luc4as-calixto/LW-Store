@@ -26,6 +26,8 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
     <link rel="icon" type="image/png" href="../assets/lwstore-cart-only.png">
 </head>
 
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
 <body style="padding-top: 65px !important;">
 
     <!-- Barra superior -->
@@ -197,7 +199,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                         <i class="bi bi-person-badge"></i>
                         <p>Vendedores</p>
                       </a>';
-                }; 
+            };
             ?>
 
             <a href="#" class="dashboard-item submenu" data-page="historico-vendas">
@@ -213,6 +215,11 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
             <a href="#" class="dashboard-item" data-bs-toggle="modal" data-bs-target="#modalConfigUsuario">
                 <i class="bi bi-gear"></i>
                 <p>Configurações</p>
+            </a>
+
+            <a href="#" class="dashboard-item submenu" data-page="dashboard">
+                <i class="bi bi-bar-chart"></i>
+                <p>Dashboard</p>
             </a>
 
         </div>

@@ -464,7 +464,7 @@ label.form-label {
     text-align: left !important;
 }
 
-.container-painel { 
+.container-painel {
     background: white;
     padding: 30px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -588,7 +588,7 @@ select:focus {
     padding: 10px;
     margin-top: 20px;
     border-radius: 5px;
-}   
+}
 
 .success {
     background-color: #d4edda;
@@ -606,6 +606,7 @@ select:focus {
     box-sizing: border-box;
     position: relative;
 }
+
 .error {
     background-color: #f8d7da;
     color: #721c24;
@@ -628,4 +629,10 @@ select:focus {
     padding: 20px;
     background: #f8f9fa;
     box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+}
+
+.grafico-pequeno {
+    max-width: 700px;
+    height: 800px;
+    margin: 0 auto;
 }
