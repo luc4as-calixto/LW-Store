@@ -29,8 +29,7 @@ try {
             ':gender' => 'M',
             ':birthdate' => '2000-01-01',
             ':photo' => 'sem-foto.webp'
-        ]);        
-
+        ]);
     }
 } catch (PDOException $e) {
     // Você pode logar o erro se necessário
@@ -68,11 +67,13 @@ try {
         $_SESSION['photo'] = !empty($sellers['photo']) ? $_SESSION['photo'] = ltrim(str_replace('../', '', $sellers['photo']), '/') : 'uploads/sem-foto.webp';
 
 
+
         $_SESSION['logado'] = true;
 
         echo json_encode([
             'success' => true,
             'message' => 'Login realizado com sucesso',
+            'login' => $user['login'], // ou use 'id_user' => $user['id_user']
             'redirect' => '../pages/index.php'
         ]);
     } else {

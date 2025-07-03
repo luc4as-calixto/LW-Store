@@ -73,13 +73,20 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
 
 
 <!-- <script src="../js/carrinho.js"></script> -->
-
+                    
 <script>
+    function getCarrinhoAtual() {
+        const usuario = localStorage.getItem("usuario_logado") || "anonimo";
+        return {
+            key: "carrinho_" + usuario,
+            dados: JSON.parse(localStorage.getItem("carrinho_" + usuario)) || []
+        };
+    }
+
     function renderCheckoutCarrinho() {
-        const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+        const { key, dados: carrinho } = getCarrinhoAtual();
         const container = document.getElementById("checkoutCarrinho");
         const totalSpan = document.getElementById("checkoutTotal");
-
 
         container.innerHTML = "";
         let total = 0;
@@ -91,39 +98,37 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             const disableMais = item.qtd >= item.estoque ? 'disabled' : '';
 
             container.innerHTML += `
-      <div class="d-flex justify-content-between align-items-center border-bottom py-2">
-        <div class="flex-grow-1 me-2">
-          <strong>${item.codigo} - ${item.nome}</strong><br>
-          <small>R$ ${item.preco.toFixed(2).replace('.', ',')} cada</small>
-        </div>
+                <div class="d-flex justify-content-between align-items-center border-bottom py-2">
+                    <div class="flex-grow-1 me-2">
+                        <strong>${item.codigo} - ${item.nome}</strong><br>
+                        <small>R$ ${item.preco.toFixed(2).replace('.', ',')} cada</small>
+                    </div>
 
-        <div class="d-flex align-items-center gap-1">
-          <button class="btn btn-sm btn-outline-secondary" onclick="alterarQtdCheckout(${i}, -1)">−</button>
-          <span class="px-2">${item.qtd}</span>
-          <button class="btn btn-sm btn-outline-secondary" onclick="alterarQtdCheckout(${i}, 1)" ${disableMais}>+</button>
-        </div>
+                    <div class="d-flex align-items-center gap-1">
+                        <button class="btn btn-sm btn-outline-secondary" onclick="alterarQtdCheckout(${i}, -1)">−</button>
+                        <span class="px-2">${item.qtd}</span>
+                        <button class="btn btn-sm btn-outline-secondary" onclick="alterarQtdCheckout(${i}, 1)" ${disableMais}>+</button>
+                    </div>
 
-        <div class="ms-3 text-end" style="width:110px;">
-          <small>Subtotal:</small><br>
-          <strong>R$ ${subtotal.toFixed(2).replace('.', ',')}</strong>
-        </div>
-      </div>
-    `;
+                    <div class="ms-3 text-end" style="width:110px;">
+                        <small>Subtotal:</small><br>
+                        <strong>R$ ${subtotal.toFixed(2).replace('.', ',')}</strong>
+                    </div>
+                </div>
+            `;
         });
 
         totalSpan.textContent = total.toFixed(2).replace('.', ',');
     }
 
     function alterarQtdCheckout(index, delta) {
-        let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+        const { key, dados: carrinho } = getCarrinhoAtual();
 
         if (!carrinho[index]) return;
 
         const novaQtd = carrinho[index].qtd + delta;
 
-        if (novaQtd > carrinho[index].estoque) {
-            return;
-        }
+        if (novaQtd > carrinho[index].estoque) return;
 
         if (novaQtd <= 0) {
             carrinho.splice(index, 1);
@@ -131,18 +136,20 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
             carrinho[index].qtd = novaQtd;
         }
 
-        localStorage.setItem("carrinho", JSON.stringify(carrinho));
+        localStorage.setItem(key, JSON.stringify(carrinho));
         renderCheckoutCarrinho();
         atualizarVisibilidadeBotaoCarrinho();
     }
 
     function limparCheckout() {
-        limparCarrinho();
+        const { key } = getCarrinhoAtual();
+        localStorage.removeItem(key);
         renderCheckoutCarrinho();
+        atualizarVisibilidadeBotaoCarrinho();
     }
 
     function enviarPedido() {
-        const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+        const { key, dados: carrinho } = getCarrinhoAtual();
         const id_cliente = document.getElementById("clienteSelect").value;
         const id_vendedor = document.getElementById('vendedor').value;
 
@@ -159,38 +166,35 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
 
         fetch("../php/finalizar_compra.php", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    itens: carrinho,
-                    id_cliente: id_cliente,
-                    id_vendedor: id_vendedor
-                })
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+                itens: carrinho,
+                id_cliente,
+                id_vendedor
             })
-
-            .then(res => res.json())
-            .then(data => {
-                console.log("Retorno do backend:", data);
-                if (data.success) {
-                    showSuccessModal();
-                    setTimeout(() => {
-                        window.open(`comprovante.php?id=${data.id_pedido}`, '_blank');
-                    }, 2000);
-                    clearCustomer();
-                    limparCarrinho();
-                    renderCheckoutCarrinho();
-                } else {
-                    document.getElementById("message").innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
-                    document.getElementById("message").style.display = "block";
-                }
-            })
-            .catch(error => {
-                console.error("Erro ao enviar pedido:", error);
-                document.getElementById("message").innerHTML = `<div class="alert alert-danger">Erro ao enviar pedido. Tente novamente mais tarde.</div>`;
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                showSuccessModal();
+                setTimeout(() => {
+                    window.open(`comprovante.php?id=${data.id_pedido}`, '_blank');
+                }, 2000);
+                clearCustomer();
+                localStorage.removeItem(key);
+                renderCheckoutCarrinho();
+                atualizarVisibilidadeBotaoCarrinho();
+            } else {
+                document.getElementById("message").innerHTML = `<div class="alert alert-danger">${data.message}</div>`;
                 document.getElementById("message").style.display = "block";
-            });
+            }
+        })
+        .catch(error => {
+            console.error("Erro ao enviar pedido:", error);
+            document.getElementById("message").innerHTML = `<div class="alert alert-danger">Erro ao enviar pedido. Tente novamente mais tarde.</div>`;
+            document.getElementById("message").style.display = "block";
+        });
     }
 
     function showSuccessModal() {
@@ -200,7 +204,7 @@ $clientes = $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
 
     function clearCustomer() {
-        option = document.getElementById("clienteSelect");
+        const option = document.getElementById("clienteSelect");
         option.selectedIndex = 0;
     }
 

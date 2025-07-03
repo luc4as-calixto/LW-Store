@@ -14,6 +14,8 @@ $(document).ready(function () {
                         $("#message").removeClass("error").addClass("success")
                             .text("Login realizado com sucesso").fadeIn();
 
+                            localStorage.setItem("usuario_logado", response.login); 
+
                         setTimeout(() => {
                             window.location.href = response.redirect || "../pages/index.php";
                         }, 1000);

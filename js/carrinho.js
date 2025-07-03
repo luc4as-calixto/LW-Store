@@ -2,8 +2,22 @@ document.addEventListener("DOMContentLoaded", () => {
   atualizarVisibilidadeBotaoCarrinho();
 });
 
+function obterUsuarioAtual() {
+  return localStorage.getItem("usuario_logado") || "anonimo";
+}
+
+function obterCarrinho() {
+  const usuario = obterUsuarioAtual();
+  return JSON.parse(localStorage.getItem("carrinho_" + usuario)) || [];
+}
+
+function salvarCarrinho(carrinho) {
+  const usuario = obterUsuarioAtual();
+  localStorage.setItem("carrinho_" + usuario, JSON.stringify(carrinho));
+}
+
 function adicionarAoCarrinho(codigo, produto, qtd = 1) {
-  let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+  let carrinho = obterCarrinho();
 
   const item = {
     ...produto,
@@ -26,7 +40,7 @@ function adicionarAoCarrinho(codigo, produto, qtd = 1) {
     }
   }
 
-  localStorage.setItem("carrinho", JSON.stringify(carrinho));
+  salvarCarrinho(carrinho);
   atualizarVisibilidadeBotaoCarrinho();
 
   const btn = document.getElementById("btnCarrinho");
@@ -43,15 +57,15 @@ function abrirCarrinho() {
 }
 
 function removerDoCarrinho(index) {
-  let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+  let carrinho = obterCarrinho();
   carrinho.splice(index, 1);
-  localStorage.setItem("carrinho", JSON.stringify(carrinho));
+  salvarCarrinho(carrinho);
   atualizarCarrinhoUI();
   atualizarVisibilidadeBotaoCarrinho();
 }
 
 function alterarQtd(index, delta) {
-  let carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+  let carrinho = obterCarrinho();
 
   if (!carrinho[index]) return;
 
@@ -67,13 +81,13 @@ function alterarQtd(index, delta) {
     carrinho[index].qtd = novaQtd;
   }
 
-  localStorage.setItem("carrinho", JSON.stringify(carrinho));
+  salvarCarrinho(carrinho);
   atualizarCarrinhoUI();
   atualizarVisibilidadeBotaoCarrinho();
 }
 
 function atualizarCarrinhoUI() {
-  const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+  const carrinho = obterCarrinho();
   const container = document.getElementById("carrinhoItens");
   const totalSpan = document.getElementById("carrinhoTotal");
 
@@ -120,7 +134,7 @@ function atualizarCarrinhoUI() {
 }
 
 function atualizarVisibilidadeBotaoCarrinho() {
-  const carrinho = JSON.parse(localStorage.getItem("carrinho")) || [];
+  const carrinho = obterCarrinho();
   const btn = document.getElementById("btnCarrinho");
   const badge = document.getElementById("carrinhoQtdBadge");
 
@@ -135,7 +149,8 @@ function atualizarVisibilidadeBotaoCarrinho() {
 }
 
 function limparCarrinho() {
-  localStorage.removeItem("carrinho");
+  const usuario = obterUsuarioAtual();
+  localStorage.removeItem("carrinho_" + usuario);
   atualizarCarrinhoUI();
   atualizarVisibilidadeBotaoCarrinho();
 }
