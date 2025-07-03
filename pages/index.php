@@ -217,6 +217,8 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                 <p>Configurações</p>
             </a>
 
+            <a href=""></a>
+
             <a href="#" class="dashboard-item submenu" data-page="dashboard">
                 <i class="bi bi-bar-chart"></i>
                 <p>Dashboard</p>
