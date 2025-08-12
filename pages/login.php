@@ -23,6 +23,8 @@ $_SESSION['logado'] = false;
     <link rel="stylesheet" href="../css/style.css">
     <link rel="stylesheet" href="../css/styles_bootstrap.css">
 
+    <link rel="icon" type="image/png" href="../assets/lwstore-cart-only.png">
+
     <!-- jQuery -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
