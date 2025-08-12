@@ -217,7 +217,10 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
                 <p>Configurações</p>
             </a>
 
-            <a href=""></a>
+            <?php if ($_SESSION['type_user'] == "admin") {
+                echo '<a href=""></a>';
+            };
+            ?>
 
             <a href="#" class="dashboard-item submenu" data-page="dashboard">
                 <i class="bi bi-bar-chart"></i>
