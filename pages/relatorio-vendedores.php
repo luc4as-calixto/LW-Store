@@ -103,7 +103,7 @@
 
                                 <div class="mb-3">
                                     <label style="text-align:left" for="cpf" class="form-label">CPF</label>
-                                    <input type="text" class="form-control" id="cpf" name="cpf" placeholder="Digite o CPF do vendedor*" value="<?php  ?>" required>
+                                    <input type="text" class="form-control" id="cpf" name="cpf" maxlength="11" placeholder="Digite o CPF do vendedor*" value="<?php  ?>" required>
                                 </div>
 
                                 <div class="mb-3">

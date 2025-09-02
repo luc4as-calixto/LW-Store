@@ -22,7 +22,7 @@ if (!isset($_SESSION['logado']) || $_SESSION['logado'] !== true) {
 
                 <div class="mb-3">
                     <label for="CPF" class="form-label">CPF</label>
-                    <input type="text" class="form-control" id="CPF" name="CPF" placeholder="Digite o CPF*" required>
+                    <input type="text" class="form-control" id="CPF" name="CPF" maxlength="11" placeholder="Digite o CPF*" required>
                 </div>
 
                 <div class="mb-3">
