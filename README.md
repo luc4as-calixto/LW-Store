@@ -3,8 +3,8 @@
 Sistema de gerenciamento de uma loja de eletrônicos, desenvolvido como parte da Situação de Aprendizagem (SA). O sistema permite realizar cadastro e controle de clientes, vendedores, produtos, além de gerenciar vendas e estoque.
 
 ## 👥 Desenvolvedores
-- Wellyson Rudnick  
-- Lucas Calixto
+- [Wellyson Rudnick]([https://github.com/wellysonrudnick](https://github.com/WellyRudnick))  
+- [Lucas Calixto]([https://github.com/lucascalixto](https://github.com/luc4as-calixto))
 
 ## 🎯 Objetivo
 Criar um sistema funcional e intuitivo para controle de vendas e estoque em uma loja de eletrônicos, com funcionalidades completas de cadastro, login e finalização de compras.
