@@ -1,5 +1,5 @@
 -- create database
-CREATE DATABASE lwstore;
+CREATE DATABASE IF NOT EXISTS lwstore;
 
 USE lwstore;
 

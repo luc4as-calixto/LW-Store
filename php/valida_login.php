@@ -4,6 +4,15 @@ require_once '../php/conexao.php';
 
 // Cria o usuário admin se não existir
 try {
+
+    if (!empty($databaseCreated) && $databaseCreated === true) {
+        echo json_encode([
+            'success' => false,
+            'message' => "Banco de dados inicializado. Tente logar novamente."
+        ]);
+        exit;
+    }
+
     $checkStmt = $conn->prepare("SELECT COUNT(*) FROM users WHERE login = :login");
     $checkStmt->execute([':login' => 'admin']);
     if ($checkStmt->fetchColumn() == 0) {
