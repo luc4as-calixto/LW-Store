@@ -20,7 +20,7 @@ CREATE TABLE
         cpf VARCHAR(11) NOT NULL,
         telephone VARCHAR(15) NOT NULL,
         address VARCHAR(255) NOT NULL,
-        gender CHAR(1) NOT NULL,
+        gender CHAR(5) NOT NULL,
         birthdate DATE NOT NULL,
         photo VARCHAR(255),
         fk_id_user INT,

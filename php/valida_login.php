@@ -31,12 +31,12 @@ try {
 
         $insertStmtSeller->execute([
             ':name' => 'Administrador',
-            ':email' => 'admin@admin.com',
-            ':cpf' => '12345678901',
-            ':telephone' => '11999999999',
-            ':address' => 'Rua admin, 123',
-            ':gender' => 'M',
-            ':birthdate' => '2000-01-01',
+            ':email' => 'Admin@Admin.Admin',
+            ':cpf' => 'Admin',
+            ':telephone' => 'Admin',
+            ':address' => 'Rua Admin, Admin',
+            ':gender' => 'Admin',
+            ':birthdate' => '0001-04-14',
             ':photo' => 'anya.jpg'
         ]);
     }
