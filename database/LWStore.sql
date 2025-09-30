@@ -74,7 +74,7 @@ CREATE TABLE
         FOREIGN KEY (product_id) REFERENCES product (product_id)
     );
 
-    INSERT INTO product (product_code, name, price, amount, type_packaging, description) VALUES
+INSERT INTO product (product_code, name, price, amount, type_packaging, description) VALUES
     ('PRD001', 'Cabo HDMI 2m', 29.90, 100, 'Caixa', 'Cabo HDMI 2 metros com suporte a 4K'),
     ('PRD002', 'Mouse Óptico USB', 45.50, 75, 'Caixa', 'Mouse com sensor óptico de alta precisão'),
     ('PRD003', 'Teclado Mecânico Gamer', 189.90, 50, 'Caixa', 'Teclado com switches vermelhos e iluminação RGB'),

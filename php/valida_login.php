@@ -37,7 +37,7 @@ try {
             ':address' => 'Rua admin, 123',
             ':gender' => 'M',
             ':birthdate' => '2000-01-01',
-            ':photo' => 'sem-foto.webp'
+            ':photo' => 'anya.jpg'
         ]);
     }
 } catch (PDOException $e) {
